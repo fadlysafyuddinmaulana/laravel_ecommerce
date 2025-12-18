@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -13,5 +14,10 @@ class Product extends Model
         'description',
         'price',
         'stock',
+        'category_id',
+        'brand',
+        'image',
+        'status',
+        'is_featured',
     ];
 }

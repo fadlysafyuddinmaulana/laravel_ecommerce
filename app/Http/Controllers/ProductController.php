@@ -28,6 +28,12 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric',
             'stock'       => 'required|integer|min:0',
+
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'brand'       => 'nullable|string|max:25',
+            'image'       => 'nullable|string', // atau 'image' jika upload file
+            'status'      => 'nullable|string|max:20',
+            'is_featured' => 'boolean',
         ]);
 
         $product = Product::create($data);
@@ -55,6 +61,12 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price'       => 'sometimes|required|numeric',
             'stock'       => 'sometimes|required|integer|min:0',
+
+            'category_id' => 'nullable|integer|exists:categories,id',
+            'brand'       => 'nullable|string|max:25',
+            'image'       => 'nullable|string',
+            'status'      => 'nullable|string|max:20',
+            'is_featured' => 'boolean',
         ]);
 
         $product->update($data);
