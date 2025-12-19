@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
 
 // Contoh bawaan Sanctum:
 Route::get('/user', function (Request $request) {
@@ -10,3 +11,5 @@ Route::get('/user', function (Request $request) {
 
 // CRUD Products
 Route::apiResource('products', ProductController::class);
+// CRUD Customers
+Route::apiResource('customers', CustomerController::class);
