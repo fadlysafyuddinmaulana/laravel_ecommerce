@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             
-            $table->unsignedBigInteger('user_id');
             $table->string('employee_code', 20)->unique();
             $table->string('first_name',100);
             $table->string('last_name',100);
@@ -23,6 +22,7 @@ return new class extends Migration
             $table->string('phone',20)->nullable();
             $table->string('username')->unique();
             $table->text('password');
+            $table->string('profile_image')->default('avatar.png');
             
             $table->string('position',50);   
             $table->string('department',50);
