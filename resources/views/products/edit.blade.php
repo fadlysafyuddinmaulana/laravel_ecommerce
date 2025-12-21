@@ -2,6 +2,14 @@
 
 @section('title', 'Edit Product')
 
+@section('page-title', 'Edit Product')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
+    <li class="breadcrumb-item active">Edit</li>
+@endsection
+
 @section('content')
 <div class="container">
     <h1 class="mb-4">Edit Product #{{ $product->id }}</h1>
@@ -44,10 +52,16 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Category ID</label>
-            <input type="number" name="category_id" class="form-control"
-                   value="{{ old('category_id', $product->category_id) }}">
-            <small class="text-muted">Optional: Enter valid category ID</small>
+            <label class="form-label">Category</label>
+            <select name="category_id" class="form-control">
+                <option value="">-- Select Category --</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+            <small class="text-muted">Optional: Select product category</small>
         </div>
 
         <div class="mb-3">

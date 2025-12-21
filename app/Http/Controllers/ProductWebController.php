@@ -3,32 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductWebController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::query();
+        $query = Product::join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'categories.name as category_name');
         
         // filter by category if provided
-        if ($request->has('category_id')) {
-            $query->where('category_id', $request->category_id);
+        if ($request->has('category_id') && $request->category_id != '') {
+            $query->where('products.category_id', $request->category_id);
         }
 
         // search by name if provided
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('products.name', 'like', '%' . $request->search . '%');
         }
 
-        $products = $query->orderBy('created_at', 'desc')->paginate(10);
+        $products = $query->orderBy('products.created_at', 'desc')->get();
+        $categories = Category::orderBy('name')->get();
         
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'categories'));
     }
 
     public function create()
     {
-        return view('products.create');
+        $categories = Category::orderBy('name')->get();
+        return view('products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -59,7 +63,8 @@ class ProductWebController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit',compact('product'));
+        $categories = Category::orderBy('name')->get();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, Product $product)
