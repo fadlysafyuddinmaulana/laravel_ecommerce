@@ -6,39 +6,44 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dashboard') - {{ config('app.name') }}</title>
     
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" crossorigin="anonymous">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     
-    <!-- OverlayScrollbars -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') }}">
     
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous">
+    <!-- DataTables -->
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     
     <!-- AdminLTE -->
-    <link rel="stylesheet" href="{{ asset('assets/AdminLTE-4.0.0-rc4/dist/css/adminlte.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/dist/css/adminlte.min.css') }}">
     
     @stack('styles')
 </head>
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
-    <div class="app-wrapper">
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
         <!-- Header -->
         @include('layouts.partials.header')
         
         <!-- Sidebar -->
         @include('layouts.partials.sidebar')
         
-        <!-- Main Content -->
-        <main class="app-main">
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
             <!-- Content Header -->
-            <div class="app-content-header">
+            <div class="content-header">
                 <div class="container-fluid">
-                    <div class="row">
+                    <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h3 class="mb-0">@yield('page-title', 'Dashboard')</h3>
+                            <h1 class="m-0">@yield('page-title', 'Dashboard')</h1>
                         </div>
                         <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-end">
+                            <ol class="breadcrumb float-sm-right">
                                 @yield('breadcrumb')
                             </ol>
                         </div>
@@ -46,38 +51,25 @@
                 </div>
             </div>
             
-            <!-- Content -->
-            <div class="app-content">
+            <!-- Main Content -->
+            <div class="content">
                 <div class="container-fluid">
                     @yield('content')
                 </div>
             </div>
-        </main>
+        </div>
         
         <!-- Footer -->
         @include('layouts.partials.footer')
     </div>
     
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets/AdminLTE-4.0.0-rc4/dist/js/adminlte.js') }}"></script>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarWrapper = document.querySelector('.sidebar-wrapper');
-            if (sidebarWrapper && typeof OverlayScrollbarsGlobal !== 'undefined') {
-                OverlayScrollbarsGlobal.OverlayScrollbars(sidebarWrapper, {
-                    scrollbars: {
-                        theme: 'os-theme-light',
-                        autoHide: 'leave',
-                        clickScroll: true
-                    }
-                });
-            }
-        });
-    </script>
+    <!-- jQuery -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
     
     @stack('scripts')
 </body>
