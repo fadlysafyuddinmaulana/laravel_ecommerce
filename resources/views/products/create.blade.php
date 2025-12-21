@@ -2,6 +2,14 @@
 
 @section('title', 'Create Product')
 
+@section('page-title', 'Create Product')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Products</a></li>
+    <li class="breadcrumb-item active">Create</li>
+@endsection
+
 @section('content')
 <div class="container">
     <h1 class="mb-4">Create Product</h1>
@@ -16,72 +24,124 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
-        @csrf
-        
-        <div class="mb-3">
-            <label class="form-label">Name *</label>
-            <input type="text" name="name" class="form-control"
-                   value="{{ old('name', 'Samsung Galaxy S24') }}" required>
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title">Create New Product</h3>
         </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data">
+            @csrf
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" name="name" class="form-control" id="name"
+                           value="{{ old('name') }}" placeholder="Enter product name" required>
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Description</label>
-            <textarea name="description" class="form-control" rows="4">{{ old('description', 'Smartphone flagship dengan layar Dynamic AMOLED 6.2 inch, kamera 50MP, chipset Snapdragon 8 Gen 3, RAM 8GB, storage 256GB, baterai 4000mAh') }}</textarea>
-        </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea name="description" class="form-control" id="description" rows="4" 
+                              placeholder="Enter product description">{{ old('description') }}</textarea>
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Price *</label>
-            <input type="number" step="0.01" name="price" class="form-control"
-                   value="{{ old('price', '12999000') }}" required>
-        </div>
+                <div class="form-group">
+                    <label for="price">Price *</label>
+                    <input type="number" step="0.01" name="price" class="form-control" id="price"
+                           value="{{ old('price') }}" placeholder="Enter price" required>
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Stock *</label>
-            <input type="number" name="stock" class="form-control"
-                   value="{{ old('stock', '50') }}" required min="0">
-        </div>
+                <div class="form-group">
+                    <label for="stock">Stock *</label>
+                    <input type="number" name="stock" class="form-control" id="stock"
+                           value="{{ old('stock', '0') }}" placeholder="Enter stock quantity" required min="0">
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Category ID</label>
-            <input type="number" name="category_id" class="form-control"
-                   value="{{ old('category_id', '1') }}">
-            <small class="text-muted">Optional: Enter valid category ID</small>
-        </div>
+                <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select name="category_id" class="form-control" id="category_id">
+                        <option value="">-- Select Category --</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Brand</label>
-            <input type="text" name="brand" class="form-control" maxlength="25"
-                   value="{{ old('brand', 'Samsung') }}">
-        </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <input type="text" name="brand" class="form-control" id="brand" maxlength="25"
+                           value="{{ old('brand') }}" placeholder="Enter brand name">
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Image</label>
-            <input type="file" name="image" class="form-control" accept="image/*">
-            <small class="text-muted">Select product image (jpg, png, jpeg, gif - max 2MB)</small>
-        </div>
+                <div class="form-group">
+                    <label for="image">Product Image</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="image" class="custom-file-input" id="image" accept="image/*">
+                            <label class="custom-file-label" for="image">Choose file</label>
+                        </div>
+                        <div class="input-group-append">
+                            <span class="input-group-text">Upload</span>
+                        </div>
+                    </div>
+                    <small class="text-muted">Select product image (jpg, png, jpeg, webp - max 2MB)</small>
+                </div>
 
-        <div class="mb-3">
-            <label class="form-label">Status</label>
-            <select name="status" class="form-control">
-                <option value="">-- Select Status --</option>
-                <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>Active</option>
-                <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                <option value="discontinued" {{ old('status') == 'discontinued' ? 'selected' : '' }}>Discontinued</option>
-            </select>
-        </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select name="status" class="form-control" id="status">
+                        <option value="">-- Select Status --</option>
+                        <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                        <option value="discontinued" {{ old('status') == 'discontinued' ? 'selected' : '' }}>Discontinued</option>
+                    </select>
+                </div>
 
-        <div class="mb-3 form-check">
-            <input type="hidden" name="is_featured" value="0">
-            <input type="checkbox" name="is_featured" value="1" class="form-check-input" id="isFeatured"
-                   {{ old('is_featured') ? 'checked' : '' }}>
-            <label class="form-check-label" for="isFeatured">Featured Product</label>
-        </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="hidden" name="is_featured" value="0">
+                        <input type="checkbox" name="is_featured" value="1" class="form-check-input" id="isFeatured"
+                               {{ old('is_featured') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="isFeatured">Featured Product</label>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
 
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">Create Product</button>
-            <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
-        </div>
-    </form>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Create Product</button>
+                <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection
+
+@push('styles')
+    <!-- DataTables -->
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+@endpush
+
+@push('scripts')
+    <!-- jQuery -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- bs-custom-file-input -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
+@endpush
