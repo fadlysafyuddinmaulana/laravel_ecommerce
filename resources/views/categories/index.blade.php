@@ -47,8 +47,8 @@
                                         <td><strong>{{ $category->name }}</strong></td>
                                         <td>{{ $category->description ?? '-' }}</td>
                                         <td class="text-center align-middle">
-                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{{ route('categories.destroy', $category) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this category?')">Delete</a>
+                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+                                            <a href="{{ route('categories.destroy', $category) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this category?')"><i class="fa-solid fa-trash-can"></i></a>
                                         </td>
                                     </tr>
                                 @empty

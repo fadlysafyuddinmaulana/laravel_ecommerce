@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProductWebController;
 use App\Http\Controllers\CategoryWebController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,3 +22,10 @@ Route::post('/categories', [CategoryWebController::class, 'store'])->name('categ
 Route::get('/categories/{category}/edit', [CategoryWebController::class, 'edit'])->name('categories.edit');
 Route::put('/categories/{category}', [CategoryWebController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{category}', [CategoryWebController::class, 'destroy'])->name('categories.destroy');
+
+Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
+Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+Route::put('/employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
+Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy'])->name('employees.destroy');

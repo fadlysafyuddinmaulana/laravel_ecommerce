@@ -10,13 +10,11 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid">
-        
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        
-        <div class="row">
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    
+    <div class="row">
             <div class="col-12">
                 <form method="GET" action="{{ route('products.index') }}" class="row g-2 mb-3 justify-content-end">
                     <div class="col-md-3">
@@ -85,8 +83,8 @@
                                             @endif
                                         </td>
                                         <td class="text-center align-middle">
-                                            <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{{ route('products.destroy', $product) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this product?')">Delete</a>
+                                            <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+                                            <a href="{{ route('products.destroy', $product) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this product?')"><i class="fa-solid fa-trash-can"></i></a>
                                         </td>
                                     </tr>
                                 @empty
@@ -104,7 +102,6 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
-    </div>
 @endsection
 
 @push('styles')
