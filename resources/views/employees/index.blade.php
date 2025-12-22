@@ -1,51 +1,32 @@
 @extends('layouts.app')
 
-@section('title', 'Products')
+@section('title', 'Employees')
 
-@section('page-title', 'Products')
+@section('page-title', 'Employees')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-    <li class="breadcrumb-item active">Products</li>
+    <li class="breadcrumb-item active">Employees</li>
 @endsection
 
 @section('content')
-    <div class="row">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-12">
-                <form method="GET" action="{{ route('products.index') }}" class="row g-2 mb-3 justify-content-end">
-                    <div class="col-md-3">
-                        <select name="category_id" class="form-control">
-                            <option value="">-- All Categories --</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-primary w-100" type="submit">Filter</button>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="{{ route('products.index') }}" class="btn btn-secondary w-100">Reset</a>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" id="bulkDeleteBtn" class="btn btn-danger w-100" disabled>
-                            <i class="fa-solid fa-trash-can"></i> Delete Selected
-                        </button>
-                    </div>
-                    <div class="col-md-2">
-                        <a href="{{ route('products.create') }}" class="btn btn-success w-100">+ New Product</a>
-                    </div>
-                </form>
+                <div class="mb-3 text-right">
+                    <button type="button" id="bulkDeleteBtn" class="btn btn-danger" disabled>
+                        <i class="fa-solid fa-trash-can"></i> Delete Selected
+                    </button>
+                    <a href="{{ route('employees.create') }}" class="btn btn-success">+ New Employee</a>
+                </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Product List</h3>
+                        <h3 class="card-title">Employee List</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <form id="bulkDeleteForm" action="{{ route('products.bulk-delete') }}" method="POST">
+                        <form id="bulkDeleteForm" action="{{ route('employees.bulk-delete') }}" method="POST">
                             @csrf
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -54,48 +35,41 @@
                                             <input type="checkbox" id="selectAll">
                                         </th>
                                         <th class="text-center" width="5%">No</th>
-                                        <th class="text-center">Name</th>
-                                        <th class="text-center">Brand</th>
-                                        <th class="text-center">Category</th>
-                                        <th class="text-center">Price</th>
-                                        <th class="text-center">Stock</th>
-                                        <th class="text-center">Image</th>
-                                        <th class="text-center" width="180">Actions</th>
-                                    </tr>
-                                </thead>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Position</th>
+                                    <th class="text-center">Department</th>
+                                    <th class="text-center">Email</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center" width="180">Actions</th>
+                                </tr>
+                            </thead>
                             <tbody>
-                                @php $no = 1; @endphp
-                                @forelse($products as $product)
-                                    <tr data-description="{{ $product->description ?? '-' }}"
-                                        data-status="{{ $product->status ?? 'active' }}"
-                                        data-featured="{{ $product->is_featured ? 'Yes' : 'No' }}"
-                                        data-created="{{ $product->created_at ? date('M d, Y', strtotime($product->created_at)) : '-' }}">
+                                @forelse($employees as $employee)
+                                    <tr data-hire-date="{{ $employee->hire_date ? date('m/d/Y', strtotime($employee->hire_date)) : '-' }}"
+                                        data-salary="{{ $employee->salary ? '$' . number_format($employee->salary, 0, ',', ',') : '-' }}">
                                         <td class="text-center">
-                                            <input type="checkbox" class="row-checkbox" name="ids[]" value="{{ $product->id }}">
+                                            <input type="checkbox" class="row-checkbox" name="ids[]" value="{{ $employee->id }}">
                                         </td>
-                                        <td class="text-center">{{ $no++ }}</td>
+                                        <td class="text-center"></td>
                                         <td>
-                                            <strong>{{ $product->name }}</strong><br>
-                                            <small class="text-muted">{{ Str::limit($product->description, 40) }}</small>
+                                            <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong>
                                         </td>
-                                        <td class="text-center">{{ $product->brand ?? '-' }}</td>
-                                        <td>{{ $product->category_name ?? '-' }}</td>
-                                        <td class="text-center">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
-                                        <td class="text-center">{{ $product->stock }}</td>
+                                        <td>{{ $employee->position }}</td>
+                                        <td>{{ $employee->department }}</td>
+                                        <td>{{ $employee->email ?? '-' }}</td>
                                         <td class="text-center">
-                                            @if($product->image)
-                                                <img src="{{ asset('storage/' . $product->image) }}" alt=""
-                                                    style="max-height: 60px;">
+                                            @if($employee->status == 'active')
+                                                <span class="badge badge-success">Active</span>
                                             @else
-                                                -
+                                                <span class="badge badge-secondary">Inactive</span>
                                             @endif
                                         </td>
                                         <td class="text-center align-middle">
                                             <button class="btn btn-sm btn-info details-control">
                                                 <i class="fa-regular fa-folder-closed"></i>
                                             </button>
-                                            <a href="{{ route('products.edit', $product) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline delete-form">
+                                            <a href="{{ route('employees.edit', $employee) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
+                                            <form action="{{ route('employees.destroy', $employee) }}" method="POST" class="d-inline delete-form">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash-can"></i></button>
@@ -104,7 +78,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="9" class="text-center">No products found.</td>
+                                        <td colspan="8" class="text-center">No employees found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -118,26 +92,35 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+    </div>
 @endsection
 
 @push('styles')
+    <!-- DataTables -->
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    
     <style>
-        .product-details {
+        .employee-details {
             padding: 15px;
             background-color: #f8f9fa;
             border-left: 3px solid #17a2b8;
         }
-        .product-details dl {
+        .employee-details dl {
             margin-bottom: 0;
             display: grid;
             grid-template-columns: 150px 1fr;
             gap: 10px;
         }
-        .product-details dt {
+        .employee-details dt {
             font-weight: 600;
             color: #495057;
         }
-        .product-details dd {
+        .employee-details dd {
             margin-bottom: 0;
             color: #6c757d;
         }
@@ -164,16 +147,12 @@
         $(function() {
             // Format function for row details
             function format(rowData) {
-                return '<div class="product-details">' +
+                return '<div class="employee-details">' +
                     '<dl>' +
-                    '<dt>Full Description</dt>' +
-                    '<dd>' + rowData.description + '</dd>' +
-                    '<dt>Status</dt>' +
-                    '<dd>' + rowData.status + '</dd>' +
-                    '<dt>Featured</dt>' +
-                    '<dd>' + rowData.featured + '</dd>' +
-                    '<dt>Created Date</dt>' +
-                    '<dd>' + rowData.created + '</dd>' +
+                    '<dt>Hire Date</dt>' +
+                    '<dd>' + rowData.hireDate + '</dd>' +
+                    '<dt>Salary</dt>' +
+                    '<dd>' + rowData.salary + '</dd>' +
                     '</dl>' +
                     '</div>';
             }
@@ -183,7 +162,7 @@
                 "autoWidth": false,
                 "columnDefs": [{
                     "orderable": false,
-                    "targets": [0, 1, 8],
+                    "targets": [0, 1, 7],
                     "searchable": false
                 }],
                 "order": [
@@ -216,10 +195,8 @@
                 } else {
                     // Open this row
                     var rowData = {
-                        description: tr.data('description'),
-                        status: tr.data('status'),
-                        featured: tr.data('featured'),
-                        created: tr.data('created')
+                        hireDate: tr.data('hire-date'),
+                        salary: tr.data('salary')
                     };
                     row.child(format(rowData)).show();
                     tr.addClass('shown');
@@ -276,7 +253,7 @@
                 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: `You are about to delete ${checkedCount} product(s)!`,
+                    text: `You are about to delete ${checkedCount} employee(s)!`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#d33',

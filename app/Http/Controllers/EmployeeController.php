@@ -99,4 +99,19 @@ class EmployeeController extends Controller
             'message' => 'Employee deleted successfully.',
         ], response::HTTP_OK);
     }
+
+    /**
+     * Bulk delete employees.
+     */
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:employees,id',
+        ]);
+
+        $count = Employee::whereIn('id', $request->ids)->delete();
+        
+        return redirect()->route('employees.index')->with('success', "$count employee(s) deleted successfully.");
+    }
 }

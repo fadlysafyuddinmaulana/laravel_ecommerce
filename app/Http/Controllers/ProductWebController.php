@@ -101,4 +101,16 @@ class ProductWebController extends Controller
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
         
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:products,id',
+        ]);
+
+        $count = Product::whereIn('id', $request->ids)->delete();
+        
+        return redirect()->route('products.index')->with('success', "$count product(s) deleted successfully.");
+    }
 }
