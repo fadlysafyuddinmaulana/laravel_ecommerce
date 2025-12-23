@@ -51,4 +51,4 @@ Route::post('/products/bulk-delete', [ProductWebController::class, 'bulkDelete']
 Route::post('/categories/bulk-delete', [CategoryWebController::class, 'bulkDelete'])->name('categories.bulk-delete');
 Route::post('/employees/bulk-delete', [EmployeeWebController::class, 'bulkDelete'])->name('employees.bulk-delete');
 Route::post('/departments/bulk-delete', [DepartmentWebController::class, 'bulkDelete'])->name('departments.bulk-delete');
-Route::post('/positions/bulk-delete', [PositionWebController::class, 'bulkDelete'])->name('positions.bulk-delete');
+Route::post('/positions/bulk-delete', [PositionsWebController::class, 'bulkDelete'])->name('positions.bulk-delete');

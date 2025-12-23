@@ -10,17 +10,17 @@
 
 ## 📋 Table of Contents
 
-1. [Ringkasan Executive](#ringkasan-executive)
-2. [Struktur Folder Lengkap](#struktur-folder-lengkap)
-3. [Alur MVC Detail](#alur-mvc-detail)
-4. [Database Schema](#database-schema)
-5. [Controllers](#controllers)
-6. [Models](#models)
-7. [Views](#views)
-8. [Routes](#routes)
-9. [Perubahan dari Awal hingga Sekarang](#perubahan-dari-awal-hingga-sekarang)
-10. [Fitur yang Sudah Diimplementasi](#fitur-yang-sudah-diimplementasi)
-11. [Catatan Penting](#catatan-penting)
+1. [Ringkasan Executive](#-ringkasan-executive)
+2. [Struktur Folder Lengkap](#-struktur-folder-lengkap)
+3. [Alur MVC Detail](#-alur-mvc-detail)
+4. [Database Schema](#️-database-schema)
+5. [Controllers](#-controllers)
+6. [Models](#-models)
+7. [Views](#-views)
+8. [Routes](#️-routes)
+9. [Perubahan dari Awal hingga Sekarang](#-perubahan-dari-awal-hingga-sekarang)
+10. [Fitur yang Sudah Diimplementasi](#-fitur-yang-sudah-diimplementasi)
+11. [Catatan Penting](#-catatan-penting)
 
 ---
 
@@ -32,7 +32,7 @@ Laravel E-Commerce adalah aplikasi manajemen e-commerce berbasis web dengan arsi
 
 ### Arsitektur
 
-```
+```text
 ┌────────────────────────────────────────────┐
 │           DUAL ARCHITECTURE                │
 ├────────────────────────────────────────────┤
@@ -61,7 +61,7 @@ Laravel E-Commerce adalah aplikasi manajemen e-commerce berbasis web dengan arsi
 
 ## 📂 Struktur Folder Lengkap
 
-```
+```text
 laravel_ecommerce/
 │
 ├── .github/
@@ -190,7 +190,7 @@ laravel_ecommerce/
 
 ### 1. REQUEST FLOW (Web)
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                      USER ACTION (Browser)                       │
 │  User mengakses URL: /products                                  │
@@ -243,7 +243,7 @@ laravel_ecommerce/
 
 ### 2. CREATE/STORE FLOW (Detailed)
 
-```
+```text
 USER CLICK "New Product" BUTTON
     ↓
 GET /products/create
@@ -671,35 +671,48 @@ public function bulkDelete(Request $request)
 
 **Special Features**:
 
-1. **Auto-Generate Employee Code**:
+1.  **Auto-Generate Employee Code**:
 
-   ```php
-   $data['employee_code'] = Employee::generateEmployeeCode();
-   ```
+    ```php
+    $data['employee_code'] = Employee::generateEmployeeCode();
+    ```
 
-2. **Password Hashing**:
+2.  **Password Hashing**:
 
-   ```php
-   $data['password'] = Hash::make($data['password']);
-   ```
+    ```php
+    $data['password'] = Hash::make($data['password']);
+    ```
 
-3. **Password Optional pada Update**:
+3.  **Password Optional pada Update**:
 
-   ```php
-   if ($request->filled('password')) {
-       $data['password'] = Hash::make($data['password']);
-   } else {
-       unset($data['password']);
-   }
-   ```
+    ```php
+    if ($request->filled('password')) {
+        $data['password'] = Hash::make($data['password']);
+    } else {
+        unset($data['password']);
+    }
+    ```
 
-4. **Profile Image Upload**:
-   ```php
-   if ($request->hasFile('profile_image')) {
-       $path = $request->file('profile_image')->store('employees', 'public');
-       $data['profile_image'] = $path;
-   }
-   ```
+4.  **Profile Image Upload**:
+    <<<<<<< HEAD
+
+    ```php
+    if ($request->hasFile('profile_image')) {
+        $path = $request->file('profile_image')->store('employees', 'public');
+        $data['profile_image'] = $path;
+    }
+    ```
+
+    =======
+
+        ```php
+        if ($request->hasFile('profile_image')) {
+            $path = $request->file('profile_image')->store('employees', 'public');
+            $data['profile_image'] = $path;
+        }
+        ```
+
+    > > > > > > > cbd07e384c4376946b8f21531cdc28acd9448250
 
 **Methods**:
 
@@ -953,7 +966,7 @@ class Department extends Model
 
 **File**: `layouts/partials/sidebar.blade.php`
 
-```
+```text
 📂 Dashboard (/)
 │
 📂 Products (dropdown)
@@ -1225,7 +1238,7 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 ### Commit Timeline
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │ 24b12a1 - Implement product management API             │
 │           (Initial commit - API only)                   │
@@ -1392,7 +1405,7 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 ### 📁 **Category Management**
 
-#### CRUD Operations
+#### CRUD Operations - Categories
 
 - [x] List categories dengan DataTables
 - [x] Create category
@@ -1400,7 +1413,7 @@ Route::apiResource('customers', CustomerController::class)->names([
 - [x] Delete category dengan konfirmasi
 - [x] Bulk delete categories
 
-#### Features
+#### Category Features
 
 - [x] Search by category name
 - [x] Description field (optional)
@@ -1410,7 +1423,7 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 ### 👥 **Employee Management**
 
-#### CRUD Operations
+#### CRUD Operations - Employees
 
 - [x] List employees dengan DataTables
 - [x] Create employee dengan auto-code
