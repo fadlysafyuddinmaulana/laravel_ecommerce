@@ -1,17 +1,17 @@
-name: "CodeQL"
+name: 'CodeQL'
 
 on:
   push:
     branches:
       - master
-      - "!dependabot/**"
+      - '!dependabot/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches:
       - master
-      - "!dependabot/**"
+      - '!dependabot/**'
   schedule:
-    - cron: "0 0 * * 0"
+    - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: "javascript"
+          languages: 'javascript'
           config-file: ./.github/codeql/codeql-config.yml
           queries: +security-and-quality
 
@@ -41,4 +41,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
-          category: "/language:javascript"
+          category: '/language:javascript'

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\Product;
 use Illuminate\Http\Request;
 
 class EmployeeWebController extends Controller
@@ -13,9 +12,7 @@ class EmployeeWebController extends Controller
      */
     public function index()
     {
-        $query = Employee::query();
-
-        $employees = $query->orderBy('created_at', 'desc')->get();
+        $employees = Employee::with(['position','department'])->orderBy('created_at', 'desc')->get();
 
         return view('employees.index', compact('employees'));
     }
@@ -26,7 +23,9 @@ class EmployeeWebController extends Controller
     public function create()
     {
         $nextEmployeeCode = Employee::generateEmployeeCode();
-        return view('employees.create', compact('nextEmployeeCode'));
+        $positions = \App\Models\Positions::all();
+        $departments = \App\Models\Department::all();
+        return view('employees.create', compact('nextEmployeeCode', 'positions', 'departments'));
     }
 
     /**
@@ -70,7 +69,9 @@ class EmployeeWebController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('employees.edit', compact('employee'));
+        $positions = \App\Models\Positions::all();
+        $departments = \App\Models\Department::all();
+        return view('employees.edit', compact('employee', 'positions', 'departments'));
     }
 
     /**

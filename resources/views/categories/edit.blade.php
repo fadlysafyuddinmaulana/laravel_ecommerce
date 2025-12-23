@@ -35,9 +35,9 @@
             @method('PUT')
             <div class="card-body">
                 <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" name="name" class="form-control" id="name"
-                           value="{{ old('name', $category->name) }}" placeholder="Enter category name" required>
+                    <label for="category_name">Name *</label>
+                    <input type="text" name="category_name" class="form-control" id="category_name"
+                           value="{{ old('category_name', $category->category_name) }}" placeholder="Enter category name" required>
                 </div>
 
                 <div class="form-group">

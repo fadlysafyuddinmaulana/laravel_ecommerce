@@ -7,7 +7,7 @@ on:
       - v4-dev
   pull_request:
     branches:
-      - "**"
+      - '**'
 
 env:
   FORCE_COLOR: 2
@@ -20,12 +20,12 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - "14.x"
-          - "16.x"
+          - '14.x'
+          - '16.x'
         os:
-          - "ubuntu-latest"
-          - "macos-latest"
-          - "windows-latest"
+          - 'ubuntu-latest'
+          - 'macos-latest'
+          - 'windows-latest'
 
     steps:
       - name: Clone repository
@@ -60,4 +60,4 @@ jobs:
         run: npm run bundlewatch
         if: startsWith(matrix.os, 'ubuntu') && startsWith(matrix.node, '16')
         env:
-          BUNDLEWATCH_GITHUB_TOKEN: "${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}"
+          BUNDLEWATCH_GITHUB_TOKEN: '${{ secrets.BUNDLEWATCH_GITHUB_TOKEN }}'

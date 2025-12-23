@@ -22,9 +22,9 @@ Route::post('/products', [ProductWebController::class, 'store'])->name('products
 
 **Penjelasan:**
 
--   Mendefinisikan endpoint POST `/products`
--   Mengarahkan ke method `store` di `ProductWebController`
--   Memberikan nama route `products.store` untuk referensi di template Blade
+- Mendefinisikan endpoint POST `/products`
+- Mengarahkan ke method `store` di `ProductWebController`
+- Memberikan nama route `products.store` untuk referensi di template Blade
 
 ---
 
@@ -41,10 +41,10 @@ Route::post('/products', [ProductWebController::class, 'store'])->name('products
 
 **Penjelasan setiap atribut:**
 
--   `method="POST"` → HTTP method untuk create data baru
--   `action="{{ route('products.store') }}"` → URL tujuan (mengarah ke route yang sudah didefinisikan)
--   `@csrf` → Token keamanan Laravel untuk mencegah Cross-Site Request Forgery (CSRF) attack
--   `enctype="multipart/form-data"` → Encoding type yang diperlukan untuk upload file/gambar
+- `method="POST"` → HTTP method untuk create data baru
+- `action="{{ route('products.store') }}"` → URL tujuan (mengarah ke route yang sudah didefinisikan)
+- `@csrf` → Token keamanan Laravel untuk mencegah Cross-Site Request Forgery (CSRF) attack
+- `enctype="multipart/form-data"` → Encoding type yang diperlukan untuk upload file/gambar
 
 ---
 
@@ -76,18 +76,18 @@ $data = $request->validate([
 
 **Rules validasi yang digunakan:**
 
--   `required` → Field wajib diisi
--   `nullable` → Field boleh kosong
--   `string` → Tipe data string/text
--   `numeric` → Harus angka (bisa decimal)
--   `integer` → Harus angka bulat
--   `min:0` → Minimal nilai 0
--   `max:255` → Maksimal 255 karakter
--   `exists:categories,id` → Harus ada di tabel categories kolom id
--   `image` → Harus file gambar
--   `mimes:jpg,jpeg,png,webp` → Format gambar yang diizinkan
--   `max:2048` → Maksimal ukuran file 2MB (2048 KB)
--   `boolean` → Nilai true/false (1/0)
+- `required` → Field wajib diisi
+- `nullable` → Field boleh kosong
+- `string` → Tipe data string/text
+- `numeric` → Harus angka (bisa decimal)
+- `integer` → Harus angka bulat
+- `min:0` → Minimal nilai 0
+- `max:255` → Maksimal 255 karakter
+- `exists:categories,id` → Harus ada di tabel categories kolom id
+- `image` → Harus file gambar
+- `mimes:jpg,jpeg,png,webp` → Format gambar yang diizinkan
+- `max:2048` → Maksimal ukuran file 2MB (2048 KB)
+- `boolean` → Nilai true/false (1/0)
 
 ---
 
@@ -109,9 +109,9 @@ if ($request->hasFile('image')) {
 
 **Path lengkap file:**
 
--   Actual location: `storage/app/public/products/abc123.jpg`
--   Public URL: `http://localhost:8000/storage/products/abc123.jpg`
--   Symlink: `public/storage` → `storage/app/public` (dibuat dengan `php artisan storage:link`)
+- Actual location: `storage/app/public/products/abc123.jpg`
+- Public URL: `http://localhost:8000/storage/products/abc123.jpg`
+- Symlink: `public/storage` → `storage/app/public` (dibuat dengan `php artisan storage:link`)
 
 ---
 
@@ -128,33 +128,33 @@ $product = Product::create($data);
 1. **Eloquent ORM** Laravel mengkonversi method `create()` menjadi SQL query
 2. Laravel mengeksekusi SQL INSERT seperti ini:
 
-    ```sql
-    INSERT INTO products (
-        name,
-        description,
-        price,
-        stock,
-        category_id,
-        brand,
-        image,
-        status,
-        is_featured,
-        created_at,
-        updated_at
-    ) VALUES (
-        'Samsung Galaxy S24',
-        'Smartphone flagship...',
-        12999000,
-        50,
-        1,
-        'Samsung',
-        'products/abc123.jpg',
-        'active',
-        0,
-        '2025-12-22 10:30:00',
-        '2025-12-22 10:30:00'
-    )
-    ```
+   ```sql
+   INSERT INTO products (
+       name,
+       description,
+       price,
+       stock,
+       category_id,
+       brand,
+       image,
+       status,
+       is_featured,
+       created_at,
+       updated_at
+   ) VALUES (
+       'Samsung Galaxy S24',
+       'Smartphone flagship...',
+       12999000,
+       50,
+       1,
+       'Samsung',
+       'products/abc123.jpg',
+       'active',
+       0,
+       '2025-12-22 10:30:00',
+       '2025-12-22 10:30:00'
+   )
+   ```
 
 3. **Data dikirim ke MySQL** database yang dikonfigurasi di `config/database.php`
 4. **MySQL menyimpan** data ke table `products`
@@ -162,10 +162,10 @@ $product = Product::create($data);
 
 **Kenapa bisa otomatis?**
 
--   Model `Product` extends `Eloquent\Model`
--   Eloquent tahu table name dari nama model (Product → products)
--   Eloquent tahu kolom-kolom dari migrasi database
--   Property `$fillable` di model menentukan kolom mana yang boleh di-mass assign
+- Model `Product` extends `Eloquent\Model`
+- Eloquent tahu table name dari nama model (Product → products)
+- Eloquent tahu kolom-kolom dari migrasi database
+- Property `$fillable` di model menentukan kolom mana yang boleh di-mass assign
 
 ---
 
@@ -177,10 +177,10 @@ return redirect()->route('products.index')->with('success', 'Product created suc
 
 **Penjelasan:**
 
--   `redirect()` → Buat response redirect
--   `->route('products.index')` → Ke route bernama 'products.index' (halaman list products)
--   `->with('success', 'Product created successfully.')` → Bawa flash message dengan key 'success'
--   Flash message hanya tersedia untuk 1 request berikutnya (ditampilkan di `index.blade.php`)
+- `redirect()` → Buat response redirect
+- `->route('products.index')` → Ke route bernama 'products.index' (halaman list products)
+- `->with('success', 'Product created successfully.')` → Bawa flash message dengan key 'success'
+- Flash message hanya tersedia untuk 1 request berikutnya (ditampilkan di `index.blade.php`)
 
 ---
 
@@ -192,9 +192,9 @@ REST adalah arsitektur untuk membuat web service dengan prinsip-prinsip:
 
 #### 1. **Stateless (Tanpa Status)**
 
--   Setiap request dari client ke server harus mengandung semua informasi yang diperlukan
--   Server tidak menyimpan session/state dari client
--   Setiap request adalah independent (tidak tergantung request sebelumnya)
+- Setiap request dari client ke server harus mengandung semua informasi yang diperlukan
+- Server tidak menyimpan session/state dari client
+- Setiap request adalah independent (tidak tergantung request sebelumnya)
 
 **Contoh:**
 
@@ -210,9 +210,9 @@ Request 2: Get profile + token → Server validasi token setiap request
 
 #### 2. **Resource-based (Berbasis Resource)**
 
--   Fokus pada **resource** (products, customers, orders, dll) bukan action
--   Resource diakses melalui URL yang konsisten
--   Menggunakan **HTTP methods** untuk menentukan action
+- Fokus pada **resource** (products, customers, orders, dll) bukan action
+- Resource diakses melalui URL yang konsisten
+- Menggunakan **HTTP methods** untuk menentukan action
 
 **Contoh:**
 
@@ -234,16 +234,16 @@ DELETE /api/products/1     → Delete product #1
 
 #### 3. **HTTP Methods untuk CRUD**
 
--   **GET** → Read data (tidak mengubah data)
--   **POST** → Create data baru
--   **PUT/PATCH** → Update data existing
--   **DELETE** → Hapus data
+- **GET** → Read data (tidak mengubah data)
+- **POST** → Create data baru
+- **PUT/PATCH** → Update data existing
+- **DELETE** → Hapus data
 
 #### 4. **JSON Response**
 
--   Format data standar untuk API
--   Mudah dibaca manusia dan machine
--   Supported oleh semua bahasa programming
+- Format data standar untuk API
+- Mudah dibaca manusia dan machine
+- Supported oleh semua bahasa programming
 
 ---
 
@@ -261,12 +261,12 @@ Route::delete('/products/{product}', [ProductWebController::class, 'destroy']);
 
 **Karakteristik:**
 
--   ✅ Return: **HTML Views** (Blade templates)
--   ✅ Session: Menggunakan **session & cookies**
--   ✅ CSRF: **Wajib pakai** token `@csrf`
--   ✅ Auth: **Session-based** authentication
--   ✅ Middleware: `web` (includes session, CSRF protection, cookie encryption)
--   ✅ Untuk: **Browser / Human users**
+- ✅ Return: **HTML Views** (Blade templates)
+- ✅ Session: Menggunakan **session & cookies**
+- ✅ CSRF: **Wajib pakai** token `@csrf`
+- ✅ Auth: **Session-based** authentication
+- ✅ Middleware: `web` (includes session, CSRF protection, cookie encryption)
+- ✅ Untuk: **Browser / Human users**
 
 **Controller Return:**
 
@@ -294,13 +294,13 @@ Route::apiResource('products', ProductController::class)->names([
 
 **Karakteristik:**
 
--   ✅ Return: **JSON data**
--   ✅ Stateless: **Tidak pakai session**
--   ✅ CSRF: **Tidak pakai** token (diganti dengan token authentication)
--   ✅ Auth: **Token-based** (Bearer token, Sanctum, Passport)
--   ✅ Middleware: `api` (includes rate limiting, JSON response)
--   ✅ Prefix: Otomatis dapat prefix `/api` (jadi `/api/products`)
--   ✅ Untuk: **Mobile apps, Frontend frameworks (React/Vue/Angular), Third-party services**
+- ✅ Return: **JSON data**
+- ✅ Stateless: **Tidak pakai session**
+- ✅ CSRF: **Tidak pakai** token (diganti dengan token authentication)
+- ✅ Auth: **Token-based** (Bearer token, Sanctum, Passport)
+- ✅ Middleware: `api` (includes rate limiting, JSON response)
+- ✅ Prefix: Otomatis dapat prefix `/api` (jadi `/api/products`)
+- ✅ Untuk: **Mobile apps, Frontend frameworks (React/Vue/Angular), Third-party services**
 
 **Controller Return:**
 
@@ -331,29 +331,29 @@ public function index()
 
 #### GET (Read)
 
--   **Tidak mengubah data** di server
--   **Idempotent**: Dipanggil berapa kalipun hasilnya sama
--   **Cacheable**: Bisa di-cache oleh browser
--   **Safe**: Aman dipanggil berkali-kali
+- **Tidak mengubah data** di server
+- **Idempotent**: Dipanggil berapa kalipun hasilnya sama
+- **Cacheable**: Bisa di-cache oleh browser
+- **Safe**: Aman dipanggil berkali-kali
 
 #### POST (Create)
 
--   **Membuat data baru**
--   **Not idempotent**: Setiap call membuat data baru
--   Mengirim data dalam **request body**
+- **Membuat data baru**
+- **Not idempotent**: Setiap call membuat data baru
+- Mengirim data dalam **request body**
 
 #### PUT/PATCH (Update)
 
--   **PUT**: Replace seluruh resource
--   **PATCH**: Update sebagian field saja
--   **Idempotent**: Hasil sama jika dipanggil berkali-kali
--   Mengirim data dalam **request body**
+- **PUT**: Replace seluruh resource
+- **PATCH**: Update sebagian field saja
+- **Idempotent**: Hasil sama jika dipanggil berkali-kali
+- Mengirim data dalam **request body**
 
 #### DELETE (Delete)
 
--   **Menghapus data**
--   **Idempotent**: Hapus berkali-kali, hasilnya tetap data terhapus
--   Biasanya tidak perlu request body
+- **Menghapus data**
+- **Idempotent**: Hapus berkali-kali, hasilnya tetap data terhapus
+- Biasanya tidak perlu request body
 
 ---
 
@@ -386,22 +386,22 @@ Accept: application/json
 
 ```json
 {
-    "success": true,
-    "message": "Product created successfully",
-    "data": {
-        "id": 15,
-        "name": "iPhone 15 Pro",
-        "description": "Latest flagship iPhone with A17 Pro chip",
-        "price": 15999000,
-        "stock": 20,
-        "brand": "Apple",
-        "category_id": 2,
-        "status": "active",
-        "is_featured": true,
-        "image": null,
-        "created_at": "2025-12-22T10:30:00.000000Z",
-        "updated_at": "2025-12-22T10:30:00.000000Z"
-    }
+  "success": true,
+  "message": "Product created successfully",
+  "data": {
+    "id": 15,
+    "name": "iPhone 15 Pro",
+    "description": "Latest flagship iPhone with A17 Pro chip",
+    "price": 15999000,
+    "stock": 20,
+    "brand": "Apple",
+    "category_id": 2,
+    "status": "active",
+    "is_featured": true,
+    "image": null,
+    "created_at": "2025-12-22T10:30:00.000000Z",
+    "updated_at": "2025-12-22T10:30:00.000000Z"
+  }
 }
 ```
 
@@ -422,41 +422,41 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
 
 ```json
 {
-    "success": true,
-    "data": [
-        {
-            "id": 1,
-            "name": "Samsung Galaxy S24",
-            "description": "Flagship Android phone",
-            "price": 12999000,
-            "stock": 50,
-            "brand": "Samsung",
-            "category_id": 1,
-            "status": "active",
-            "is_featured": false,
-            "image": "products/galaxy-s24.jpg",
-            "created_at": "2025-12-20T08:00:00.000000Z",
-            "updated_at": "2025-12-20T08:00:00.000000Z"
-        },
-        {
-            "id": 15,
-            "name": "iPhone 15 Pro",
-            "description": "Latest flagship iPhone with A17 Pro chip",
-            "price": 15999000,
-            "stock": 20,
-            "brand": "Apple",
-            "category_id": 2,
-            "status": "active",
-            "is_featured": true,
-            "image": null,
-            "created_at": "2025-12-22T10:30:00.000000Z",
-            "updated_at": "2025-12-22T10:30:00.000000Z"
-        }
-    ],
-    "meta": {
-        "total": 2,
-        "count": 2
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Samsung Galaxy S24",
+      "description": "Flagship Android phone",
+      "price": 12999000,
+      "stock": 50,
+      "brand": "Samsung",
+      "category_id": 1,
+      "status": "active",
+      "is_featured": false,
+      "image": "products/galaxy-s24.jpg",
+      "created_at": "2025-12-20T08:00:00.000000Z",
+      "updated_at": "2025-12-20T08:00:00.000000Z"
+    },
+    {
+      "id": 15,
+      "name": "iPhone 15 Pro",
+      "description": "Latest flagship iPhone with A17 Pro chip",
+      "price": 15999000,
+      "stock": 20,
+      "brand": "Apple",
+      "category_id": 2,
+      "status": "active",
+      "is_featured": true,
+      "image": null,
+      "created_at": "2025-12-22T10:30:00.000000Z",
+      "updated_at": "2025-12-22T10:30:00.000000Z"
     }
+  ],
+  "meta": {
+    "total": 2,
+    "count": 2
+  }
 }
 ```
 
@@ -477,21 +477,21 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
 
 ```json
 {
-    "success": true,
-    "data": {
-        "id": 15,
-        "name": "iPhone 15 Pro",
-        "description": "Latest flagship iPhone with A17 Pro chip",
-        "price": 15999000,
-        "stock": 20,
-        "brand": "Apple",
-        "category_id": 2,
-        "status": "active",
-        "is_featured": true,
-        "image": null,
-        "created_at": "2025-12-22T10:30:00.000000Z",
-        "updated_at": "2025-12-22T10:30:00.000000Z"
-    }
+  "success": true,
+  "data": {
+    "id": 15,
+    "name": "iPhone 15 Pro",
+    "description": "Latest flagship iPhone with A17 Pro chip",
+    "price": 15999000,
+    "stock": 20,
+    "brand": "Apple",
+    "category_id": 2,
+    "status": "active",
+    "is_featured": true,
+    "image": null,
+    "created_at": "2025-12-22T10:30:00.000000Z",
+    "updated_at": "2025-12-22T10:30:00.000000Z"
+  }
 }
 ```
 
@@ -518,22 +518,22 @@ Accept: application/json
 
 ```json
 {
-    "success": true,
-    "message": "Product updated successfully",
-    "data": {
-        "id": 15,
-        "name": "iPhone 15 Pro",
-        "description": "Latest flagship iPhone with A17 Pro chip",
-        "price": 14999000,
-        "stock": 15,
-        "brand": "Apple",
-        "category_id": 2,
-        "status": "active",
-        "is_featured": true,
-        "image": null,
-        "created_at": "2025-12-22T10:30:00.000000Z",
-        "updated_at": "2025-12-22T10:45:00.000000Z"
-    }
+  "success": true,
+  "message": "Product updated successfully",
+  "data": {
+    "id": 15,
+    "name": "iPhone 15 Pro",
+    "description": "Latest flagship iPhone with A17 Pro chip",
+    "price": 14999000,
+    "stock": 15,
+    "brand": "Apple",
+    "category_id": 2,
+    "status": "active",
+    "is_featured": true,
+    "image": null,
+    "created_at": "2025-12-22T10:30:00.000000Z",
+    "updated_at": "2025-12-22T10:45:00.000000Z"
+  }
 }
 ```
 
@@ -554,8 +554,8 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
 
 ```json
 {
-    "success": true,
-    "message": "Product deleted successfully"
+  "success": true,
+  "message": "Product deleted successfully"
 }
 ```
 
@@ -581,13 +581,13 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
 
 ```json
 {
-    "success": false,
-    "message": "Validation failed",
-    "errors": {
-        "name": ["The name field is required."],
-        "price": ["The price must be at least 0."],
-        "stock": ["The stock field is required."]
-    }
+  "success": false,
+  "message": "Validation failed",
+  "errors": {
+    "name": ["The name field is required."],
+    "price": ["The price must be at least 0."],
+    "stock": ["The stock field is required."]
+  }
 }
 ```
 
@@ -607,8 +607,8 @@ Accept: application/json
 
 ```json
 {
-    "success": false,
-    "message": "Unauthenticated"
+  "success": false,
+  "message": "Unauthenticated"
 }
 ```
 
@@ -618,39 +618,39 @@ Accept: application/json
 
 ### 1. **Separation of Concerns**
 
--   Backend (API) dan Frontend terpisah
--   Backend fokus ke business logic & database
--   Frontend fokus ke UI/UX
--   Bisa dikembangkan secara parallel oleh team berbeda
+- Backend (API) dan Frontend terpisah
+- Backend fokus ke business logic & database
+- Frontend fokus ke UI/UX
+- Bisa dikembangkan secara parallel oleh team berbeda
 
 ### 2. **Multi-platform**
 
--   Satu API bisa digunakan oleh:
-    -   Website (React, Vue, Angular)
-    -   Mobile apps (iOS/Swift, Android/Kotlin, React Native, Flutter)
-    -   Desktop apps (Electron)
-    -   IoT devices
-    -   Third-party integrations
+- Satu API bisa digunakan oleh:
+  - Website (React, Vue, Angular)
+  - Mobile apps (iOS/Swift, Android/Kotlin, React Native, Flutter)
+  - Desktop apps (Electron)
+  - IoT devices
+  - Third-party integrations
 
 ### 3. **Scalability**
 
--   API server bisa di-scale independent dari frontend
--   Load balancing lebih mudah
--   Caching lebih efektif
--   Microservices architecture
+- API server bisa di-scale independent dari frontend
+- Load balancing lebih mudah
+- Caching lebih efektif
+- Microservices architecture
 
 ### 4. **Reusability**
 
--   Satu endpoint bisa dipakai banyak client
--   Tidak perlu duplicate logic
--   Update backend tidak affect frontend (selama API contract tidak berubah)
+- Satu endpoint bisa dipakai banyak client
+- Tidak perlu duplicate logic
+- Update backend tidak affect frontend (selama API contract tidak berubah)
 
 ### 5. **Modern Architecture**
 
--   Standar industri saat ini
--   Mudah di-test (unit test, integration test)
--   Documentation tools (Swagger, Postman)
--   Version control yang jelas (v1, v2, dll)
+- Standar industri saat ini
+- Mudah di-test (unit test, integration test)
+- Documentation tools (Swagger, Postman)
+- Version control yang jelas (v1, v2, dll)
 
 ---
 
@@ -736,13 +736,13 @@ User melihat hasil
 
 ### RESTful API adalah:
 
--   Arsitektur untuk web service
--   Menggunakan HTTP methods (GET, POST, PUT, DELETE)
--   Fokus pada resource, bukan action
--   Stateless (tidak pakai session)
--   Return JSON (bukan HTML)
--   Bisa digunakan multi-platform
--   Standar modern untuk aplikasi saat ini
+- Arsitektur untuk web service
+- Menggunakan HTTP methods (GET, POST, PUT, DELETE)
+- Fokus pada resource, bukan action
+- Stateless (tidak pakai session)
+- Return JSON (bukan HTML)
+- Bisa digunakan multi-platform
+- Standar modern untuk aplikasi saat ini
 
 ### Proyek Laravel Anda:
 

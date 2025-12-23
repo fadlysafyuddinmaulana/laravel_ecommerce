@@ -128,13 +128,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
+                            <a href="{{ route('positions.index') }}" class="nav-link {{ request()->routeIs('positions.*') ? 'active' : '' }}">
                                 <i class="fas fa-briefcase nav-icon"></i>
                                 <p>Positions</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">
+                            <a href="{{ route('departments.index') }}" class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">
                                 <i class="fas fa-building nav-icon"></i>
                                 <p>Departments</p>
                             </a>

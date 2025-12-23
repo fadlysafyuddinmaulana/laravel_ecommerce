@@ -6,7 +6,8 @@ title: Browser Support
 AdminLTE comes with the same browser support as Bootstrap 4.
 
 > ##### Excerpt from Bootstrap's official Documentation!
-> Bootstrap supports the __latest, stable releases__ of all major browsers and platforms. On Windows, __we support Internet Explorer 10-11 / Microsoft Edge__.
+>
+> Bootstrap supports the **latest, stable releases** of all major browsers and platforms. On Windows, **we support Internet Explorer 10-11 / Microsoft Edge**.
 >
 > For more details [look here](https://getbootstrap.com/docs/4.4/getting-started/browsers-devices/#supported-browsers).
 

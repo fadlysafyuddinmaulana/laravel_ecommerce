@@ -52,7 +52,7 @@
                                             <input type="checkbox" class="row-checkbox" name="ids[]" value="{{ $category->id }}">
                                         </td>
                                         <td class="text-center">{{ $no++ }}</td>
-                                        <td><strong>{{ $category->name }}</strong></td>
+                                        <td><strong>{{ $category->category_name }}</strong></td>
                                         <td>{{ $category->description ?? '-' }}</td>
                                         <td class="text-center align-middle">
                                             <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>

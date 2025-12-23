@@ -1,17 +1,17 @@
-import { defineConfig } from 'astro/config'
-import mdx from '@astrojs/mdx'
+import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
   build: {
     // Example: Generate `page.html` instead of `page/index.html` during build.
-    format: 'file'
+    format: 'file',
   },
   markdown: {
     shikiConfig: {
-      theme: 'dark-plus'
-    }
+      theme: 'dark-plus',
+    },
   },
   integrations: [mdx()],
   srcDir: './src/html',
@@ -20,14 +20,14 @@ export default defineConfig({
   outDir: './dist/html',
   server: {
     host: '0.0.0.0',
-    port: 3000
+    port: 3000,
   },
   vite: {
     server: {
       host: '0.0.0.0',
       watch: {
-        ignored: ['!**/dist/**']
-      }
-    }
-  }
-})
+        ignored: ['!**/dist/**'],
+      },
+    },
+  },
+});

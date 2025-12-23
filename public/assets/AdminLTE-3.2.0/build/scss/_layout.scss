@@ -20,7 +20,7 @@ body,
   }
 
   .layout-boxed & {
-    @include box-shadow(0 0 10 rgba($black, .3));
+    @include box-shadow(0 0 10 rgba($black, 0.3));
 
     &,
     &::before {
@@ -120,7 +120,13 @@ body,
     a.anchor {
       display: block;
       position: relative;
-      top: calc((#{$main-header-height-inner} + #{$main-header-bottom-border-width} + (#{$main-header-link-padding-y} * 2)) / -1);
+      top: calc(
+        (
+            #{$main-header-height-inner} + #{$main-header-bottom-border-width} +
+              (#{$main-header-link-padding-y} * 2)
+          ) /
+          -1
+      );
     }
 
     .main-sidebar:hover {
@@ -141,21 +147,21 @@ body,
 
     // Sidebar variants brand-link fix
     @each $name, $color in $theme-colors {
-      .sidebar-dark-#{$name} .brand-link:not([class*="navbar"]) {
+      .sidebar-dark-#{$name} .brand-link:not([class*='navbar']) {
         background-color: $sidebar-dark-bg;
       }
 
-      .sidebar-light-#{$name} .brand-link:not([class*="navbar"]) {
+      .sidebar-light-#{$name} .brand-link:not([class*='navbar']) {
         background-color: $sidebar-light-bg;
       }
     }
 
     @each $name, $color in $colors {
-      .sidebar-dark-#{$name} .brand-link:not([class*="navbar"]) {
+      .sidebar-dark-#{$name} .brand-link:not([class*='navbar']) {
         background-color: $sidebar-dark-bg;
       }
 
-      .sidebar-light-#{$name} .brand-link:not([class*="navbar"]) {
+      .sidebar-light-#{$name} .brand-link:not([class*='navbar']) {
         background-color: $sidebar-light-bg;
       }
     }
@@ -249,7 +255,13 @@ body,
         a.anchor {
           display: block;
           position: relative;
-          top: calc((#{$main-header-height-inner} + #{$main-header-bottom-border-width} + (#{$main-header-link-padding-y} * 2)) / -1);
+          top: calc(
+            (
+                #{$main-header-height-inner} + #{$main-header-bottom-border-width} +
+                  (#{$main-header-link-padding-y} * 2)
+              ) /
+              -1
+          );
         }
 
         &.sidebar-collapse {
@@ -406,8 +418,8 @@ body,
 
     .main-header {
       .brand-image {
-        margin-top: -.5rem;
-        margin-right: .2rem;
+        margin-top: -0.5rem;
+        margin-right: 0.2rem;
         height: 33px;
       }
     }
@@ -424,7 +436,6 @@ body,
     }
   }
 }
-
 
 body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-mini) {
   .content-wrapper,
@@ -509,7 +520,9 @@ body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) {
 .main-sidebar {
   &,
   &::before {
-    $local-sidebar-transition: margin-left $transition-speed $transition-fn, width $transition-speed $transition-fn;
+    $local-sidebar-transition:
+      margin-left $transition-speed $transition-fn,
+      width $transition-speed $transition-fn;
     @include transition($local-sidebar-transition);
     width: $sidebar-width;
   }
@@ -637,7 +650,6 @@ body:not(.layout-fixed) {
   }
 }
 
-
 .hold-transition {
   .content-wrapper,
   .main-header,
@@ -651,18 +663,18 @@ body:not(.layout-fixed) {
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   background-color: $dark-main-bg;
   color: $white;
 
   .wrapper {
     .layout-navbar-fixed & {
       @each $name, $color in $theme-colors-alt {
-        .sidebar-dark-#{$name} .brand-link:not([class*="navbar"]) {
+        .sidebar-dark-#{$name} .brand-link:not([class*='navbar']) {
           background-color: $sidebar-dark-bg;
         }
 
-        .sidebar-light-#{$name} .brand-link:not([class*="navbar"]) {
+        .sidebar-light-#{$name} .brand-link:not([class*='navbar']) {
           background-color: $sidebar-light-bg;
         }
       }
@@ -674,11 +686,11 @@ body:not(.layout-fixed) {
 
         .layout#{$infix}-navbar-fixed & {
           @each $name, $color in $theme-colors-alt {
-            .sidebar-dark-#{$name} .brand-link:not([class*="navbar"]) {
+            .sidebar-dark-#{$name} .brand-link:not([class*='navbar']) {
               background-color: $sidebar-dark-bg;
             }
 
-            .sidebar-light-#{$name} .brand-link:not([class*="navbar"]) {
+            .sidebar-light-#{$name} .brand-link:not([class*='navbar']) {
               background-color: $sidebar-light-bg;
             }
           }

@@ -12,7 +12,9 @@
     thead tr:nth-child(1) th {
       background-color: $white;
       border-bottom: 0;
-      box-shadow: inset 0 1px 0 $table-border-color, inset 0 -1px 0 $table-border-color;
+      box-shadow:
+        inset 0 1px 0 $table-border-color,
+        inset 0 -1px 0 $table-border-color;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -22,7 +24,9 @@
       thead tr {
         &:nth-child(1) th {
           background-color: $table-dark-bg;
-          box-shadow: inset 0 1px 0 $table-dark-border-color, inset 0 -1px 0 $table-dark-border-color;
+          box-shadow:
+            inset 0 1px 0 $table-dark-border-color,
+            inset 0 -1px 0 $table-dark-border-color;
         }
       }
     }
@@ -79,19 +83,19 @@
   background-color: inherit !important;
 }
 
-[data-widget="expandable-table"] {
+[data-widget='expandable-table'] {
   cursor: pointer;
 
   i.expandable-table-caret {
     transition: transform $transition-speed linear;
   }
-  &[aria-expanded="true"] {
+  &[aria-expanded='true'] {
     i.expandable-table-caret {
       // stylelint-disable selector-max-attribute
-      &[class*="right"] {
+      &[class*='right'] {
         transform: rotate(90deg);
       }
-      &[class*="left"] {
+      &[class*='left'] {
         transform: rotate(-90deg);
       }
       // stylelint-enable selector-max-attribute
@@ -99,19 +103,19 @@
   }
 }
 
-[aria-expanded="true"] {
+[aria-expanded='true'] {
   cursor: pointer;
 
   i.expandable-table-caret {
     transition: transform $transition-speed linear;
   }
-  [data-widget="expandable-table"] {
+  [data-widget='expandable-table'] {
     i.expandable-table-caret {
       // stylelint-disable selector-max-attribute
-      &[class*="right"] {
+      &[class*='right'] {
         transform: rotate(90deg);
       }
-      &[class*="left"] {
+      &[class*='left'] {
         transform: rotate(-90deg);
       }
       // stylelint-enable selector-max-attribute
@@ -143,7 +147,7 @@
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .table-bordered {
     &,
     td,

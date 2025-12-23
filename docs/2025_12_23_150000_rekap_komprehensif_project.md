@@ -49,13 +49,13 @@ Laravel E-Commerce adalah aplikasi manajemen e-commerce berbasis web dengan arsi
 
 ### Tech Stack
 
--   **Backend**: Laravel 12.x, PHP 8.2+
--   **Frontend**: Blade Templates, AdminLTE 3.2.0
--   **Database**: MySQL/PostgreSQL
--   **UI Library**: Bootstrap 4, DataTables, SweetAlert2
--   **Icons**: Font Awesome 7.1.0
--   **Build Tool**: Vite, NPM
--   **Authentication**: Laravel Sanctum (API)
+- **Backend**: Laravel 12.x, PHP 8.2+
+- **Frontend**: Blade Templates, AdminLTE 3.2.0
+- **Database**: MySQL/PostgreSQL
+- **UI Library**: Bootstrap 4, DataTables, SweetAlert2
+- **Icons**: Font Awesome 7.1.0
+- **Build Tool**: Vite, NPM
+- **Authentication**: Laravel Sanctum (API)
 
 ---
 
@@ -333,18 +333,18 @@ CREATE TABLE `products` (
 
 **Indexes**:
 
--   PRIMARY KEY: `id`
--   INDEX: `category_id` (untuk join cepat)
--   INDEX: `status` (untuk filter)
--   INDEX: `is_featured` (untuk query featured products)
+- PRIMARY KEY: `id`
+- INDEX: `category_id` (untuk join cepat)
+- INDEX: `status` (untuk filter)
+- INDEX: `is_featured` (untuk query featured products)
 
 **Validasi**:
 
--   `name`: Required, max 255 karakter
--   `price`: Required, numeric, > 0
--   `stock`: Required, integer, >= 0
--   `category_id`: Nullable, harus exist di categories table
--   `image`: Nullable, format image (jpg/png/webp), max 2MB
+- `name`: Required, max 255 karakter
+- `price`: Required, numeric, > 0
+- `stock`: Required, integer, >= 0
+- `category_id`: Nullable, harus exist di categories table
+- `image`: Nullable, format image (jpg/png/webp), max 2MB
 
 ---
 
@@ -365,13 +365,13 @@ CREATE TABLE `categories` (
 **Solusi**:
 
 1. **Option A**: Rename column di migration
-    ```sql
-    ALTER TABLE categories CHANGE category_name name VARCHAR(255);
-    ```
+   ```sql
+   ALTER TABLE categories CHANGE category_name name VARCHAR(255);
+   ```
 2. **Option B**: Update Model untuk mapping
-    ```php
-    protected $casts = ['category_name' => 'name'];
-    ```
+   ```php
+   protected $casts = ['category_name' => 'name'];
+   ```
 
 ---
 
@@ -400,9 +400,9 @@ CREATE TABLE `employees` (
 
 **Unique Constraints**:
 
--   `employee_code`: Auto-generated (EMP001, EMP002, ...)
--   `email`: Unique jika diisi
--   `username`: Unique, required
+- `employee_code`: Auto-generated (EMP001, EMP002, ...)
+- `email`: Unique jika diisi
+- `username`: Unique, required
 
 **Auto-Code Algorithm**:
 
@@ -475,8 +475,8 @@ CREATE TABLE `departments` (
 
 Laravel E-Commerce menggunakan **dual controller pattern**:
 
--   **`*WebController.php`** → Server-side rendering (Blade views)
--   **`*Controller.php`** → RESTful API (JSON responses)
+- **`*WebController.php`** → Server-side rendering (Blade views)
+- **`*Controller.php`** → RESTful API (JSON responses)
 
 ### 1. ProductWebController.php
 
@@ -506,10 +506,10 @@ public function index(Request $request)
 
 **Fungsi**:
 
--   Join dengan categories untuk mendapat nama kategori
--   Filter optional by category_id
--   Order by created_at descending (terbaru di atas)
--   Return view dengan data products dan categories
+- Join dengan categories untuk mendapat nama kategori
+- Filter optional by category_id
+- Order by created_at descending (terbaru di atas)
+- Return view dengan data products dan categories
 
 ---
 
@@ -525,8 +525,8 @@ public function create()
 
 **Fungsi**:
 
--   Load categories untuk dropdown
--   Return form create
+- Load categories untuk dropdown
+- Return form create
 
 ---
 
@@ -562,10 +562,10 @@ public function store(Request $request)
 
 **Fungsi**:
 
--   Validasi input
--   Upload image ke `storage/app/public/products/`
--   Simpan path relatif ke database (`products/xyz.jpg`)
--   Redirect dengan flash message
+- Validasi input
+- Upload image ke `storage/app/public/products/`
+- Simpan path relatif ke database (`products/xyz.jpg`)
+- Redirect dengan flash message
 
 ---
 
@@ -608,8 +608,8 @@ public function update(Request $request, Product $product)
 
 **Logic Upload**:
 
--   Jika ada file baru → upload dan update path
--   Jika tidak ada file → jangan ubah path lama
+- Jika ada file baru → upload dan update path
+- Jika tidak ada file → jangan ubah path lama
 
 ---
 
@@ -649,19 +649,19 @@ public function bulkDelete(Request $request)
 
 **Similar Structure** dengan ProductWebController, tetapi lebih sederhana:
 
--   Tidak ada file upload
--   Tidak ada filter/search
--   Hanya CRUD basic
+- Tidak ada file upload
+- Tidak ada filter/search
+- Hanya CRUD basic
 
 **Methods**:
 
--   `index()` - List categories dengan DataTables
--   `create()` - Form create
--   `store()` - Save category baru
--   `edit()` - Form edit
--   `update()` - Update category
--   `destroy()` - Delete category
--   `bulkDelete()` - Bulk delete categories
+- `index()` - List categories dengan DataTables
+- `create()` - Form create
+- `store()` - Save category baru
+- `edit()` - Form edit
+- `update()` - Update category
+- `destroy()` - Delete category
+- `bulkDelete()` - Bulk delete categories
 
 ---
 
@@ -673,43 +673,43 @@ public function bulkDelete(Request $request)
 
 1. **Auto-Generate Employee Code**:
 
-    ```php
-    $data['employee_code'] = Employee::generateEmployeeCode();
-    ```
+   ```php
+   $data['employee_code'] = Employee::generateEmployeeCode();
+   ```
 
 2. **Password Hashing**:
 
-    ```php
-    $data['password'] = Hash::make($data['password']);
-    ```
+   ```php
+   $data['password'] = Hash::make($data['password']);
+   ```
 
 3. **Password Optional pada Update**:
 
-    ```php
-    if ($request->filled('password')) {
-        $data['password'] = Hash::make($data['password']);
-    } else {
-        unset($data['password']);
-    }
-    ```
+   ```php
+   if ($request->filled('password')) {
+       $data['password'] = Hash::make($data['password']);
+   } else {
+       unset($data['password']);
+   }
+   ```
 
 4. **Profile Image Upload**:
-    ```php
-    if ($request->hasFile('profile_image')) {
-        $path = $request->file('profile_image')->store('employees', 'public');
-        $data['profile_image'] = $path;
-    }
-    ```
+   ```php
+   if ($request->hasFile('profile_image')) {
+       $path = $request->file('profile_image')->store('employees', 'public');
+       $data['profile_image'] = $path;
+   }
+   ```
 
 **Methods**:
 
--   `index()` - List employees dengan row expansion
--   `create()` - Form create dengan preview kode
--   `store()` - Save employee dengan auto-code & hash password
--   `edit()` - Form edit
--   `update()` - Update dengan password optional
--   `destroy()` - Delete employee
--   `bulkDelete()` - Bulk delete employees
+- `index()` - List employees dengan row expansion
+- `create()` - Form create dengan preview kode
+- `store()` - Save employee dengan auto-code & hash password
+- `edit()` - Form edit
+- `update()` - Update dengan password optional
+- `destroy()` - Delete employee
+- `bulkDelete()` - Bulk delete employees
 
 ---
 
@@ -719,10 +719,10 @@ public function bulkDelete(Request $request)
 
 **Karakteristik**:
 
--   Return JSON responses
--   Stateless (tidak pakai session)
--   Authentication via Sanctum (Bearer token)
--   Registered di `routes/api.php` dengan `apiResource()`
+- Return JSON responses
+- Stateless (tidak pakai session)
+- Authentication via Sanctum (Bearer token)
+- Registered di `routes/api.php` dengan `apiResource()`
 
 **Example Response**:
 
@@ -940,12 +940,12 @@ class Department extends Model
 
 **Sections**:
 
--   `@yield('title')` - Page title untuk `<title>` tag
--   `@yield('page-title')` - H1 heading di content header
--   `@yield('breadcrumb')` - Breadcrumb navigation
--   `@yield('content')` - Main content area
--   `@stack('styles')` - Page-specific CSS
--   `@stack('scripts')` - Page-specific JavaScript
+- `@yield('title')` - Page title untuk `<title>` tag
+- `@yield('page-title')` - H1 heading di content header
+- `@yield('breadcrumb')` - Breadcrumb navigation
+- `@yield('content')` - Main content area
+- `@stack('styles')` - Page-specific CSS
+- `@stack('scripts')` - Page-specific JavaScript
 
 ---
 
@@ -1002,37 +1002,38 @@ class Department extends Model
 **JavaScript Initialization**:
 
 ```javascript
-$("#example1").DataTable({
-    responsive: true,
-    autoWidth: false,
-    columnDefs: [
-        {
-            orderable: false,
-            targets: [0, 8], // Checkbox & Actions tidak bisa di-sort
-            searchable: false,
-        },
-    ],
-    order: [[2, "asc"]], // Default sort by column 2 (Name)
-    fnDrawCallback: function (oSettings) {
-        // Auto numbering
-        var api = this.api();
-        var startIndex = api.context[0]._iDisplayStart;
-        api.column(0, { order: "applied" })
-            .nodes()
-            .each(function (cell, i) {
-                cell.innerHTML = startIndex + i + 1;
-            });
+$('#example1').DataTable({
+  responsive: true,
+  autoWidth: false,
+  columnDefs: [
+    {
+      orderable: false,
+      targets: [0, 8], // Checkbox & Actions tidak bisa di-sort
+      searchable: false,
     },
+  ],
+  order: [[2, 'asc']], // Default sort by column 2 (Name)
+  fnDrawCallback: function (oSettings) {
+    // Auto numbering
+    var api = this.api();
+    var startIndex = api.context[0]._iDisplayStart;
+    api
+      .column(0, { order: 'applied' })
+      .nodes()
+      .each(function (cell, i) {
+        cell.innerHTML = startIndex + i + 1;
+      });
+  },
 });
 ```
 
 **Features**:
 
--   Pagination (10/25/50/100 per page)
--   Search/Filter real-time
--   Sorting per kolom
--   Auto-numbering (konsisten saat pindah halaman)
--   Responsive layout
+- Pagination (10/25/50/100 per page)
+- Search/Filter real-time
+- Sorting per kolom
+- Auto-numbering (konsisten saat pindah halaman)
+- Responsive layout
 
 ---
 
@@ -1055,21 +1056,21 @@ $("#example1").DataTable({
 **JavaScript**:
 
 ```javascript
-$(".details-control").on("click", function () {
-    var tr = $(this).closest("tr");
-    var row = table.row(tr);
+$('.details-control').on('click', function () {
+  var tr = $(this).closest('tr');
+  var row = table.row(tr);
 
-    if (row.child.isShown()) {
-        row.child.hide();
-        btn.html('<i class="fa-regular fa-folder-closed"></i>');
-    } else {
-        var rowData = {
-            hireDate: tr.data("hire-date"),
-            salary: tr.data("salary"),
-        };
-        row.child(format(rowData)).show();
-        btn.html('<i class="fa-regular fa-folder-open"></i>');
-    }
+  if (row.child.isShown()) {
+    row.child.hide();
+    btn.html('<i class="fa-regular fa-folder-closed"></i>');
+  } else {
+    var rowData = {
+      hireDate: tr.data('hire-date'),
+      salary: tr.data('salary'),
+    };
+    row.child(format(rowData)).show();
+    btn.html('<i class="fa-regular fa-folder-open"></i>');
+  }
 });
 ```
 
@@ -1077,17 +1078,17 @@ $(".details-control").on("click", function () {
 
 ```javascript
 function format(rowData) {
-    return (
-        '<div class="employee-details">' +
-        "<dl>" +
-        "<dt>Hire Date</dt><dd>" +
-        rowData.hireDate +
-        "</dd>" +
-        "<dt>Salary</dt><dd>" +
-        rowData.salary +
-        "</dd>" +
-        "</dl></div>"
-    );
+  return (
+    '<div class="employee-details">' +
+    '<dl>' +
+    '<dt>Hire Date</dt><dd>' +
+    rowData.hireDate +
+    '</dd>' +
+    '<dt>Salary</dt><dd>' +
+    rowData.salary +
+    '</dd>' +
+    '</dl></div>'
+  );
 }
 ```
 
@@ -1098,23 +1099,23 @@ function format(rowData) {
 **Delete Confirmation**:
 
 ```javascript
-$(".btn-delete").on("click", function (e) {
-    e.preventDefault();
-    var form = $(this).closest("form");
+$('.btn-delete').on('click', function (e) {
+  e.preventDefault();
+  var form = $(this).closest('form');
 
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#d33",
-        cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-        if (result.isConfirmed) {
-            form.submit();
-        }
-    });
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, delete it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      form.submit();
+    }
+  });
 });
 ```
 
@@ -1295,48 +1296,48 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 #### 1. **Infrastructure**
 
--   ✅ Laravel 12.x setup
--   ✅ AdminLTE 3.2.0 integration (downgrade dari 4.0.0-rc4)
--   ✅ Font Awesome upgrade dari v6 → v7.1.0
--   ✅ DataTables integration
--   ✅ SweetAlert2 integration
+- ✅ Laravel 12.x setup
+- ✅ AdminLTE 3.2.0 integration (downgrade dari 4.0.0-rc4)
+- ✅ Font Awesome upgrade dari v6 → v7.1.0
+- ✅ DataTables integration
+- ✅ SweetAlert2 integration
 
 #### 2. **Database**
 
--   ✅ Products table
--   ✅ Categories table (⚠️ dengan inconsistency nama kolom)
--   ✅ Customers table
--   ✅ Employees table
--   ✅ Positions table (skeleton)
--   ✅ Departments table (skeleton)
+- ✅ Products table
+- ✅ Categories table (⚠️ dengan inconsistency nama kolom)
+- ✅ Customers table
+- ✅ Employees table
+- ✅ Positions table (skeleton)
+- ✅ Departments table (skeleton)
 
 #### 3. **Backend**
 
--   ✅ Dual controller pattern (Web + API)
--   ✅ File upload implementation
--   ✅ Auto-code generation (Employee)
--   ✅ Password hashing (Employee)
--   ✅ Validation rules
--   ✅ Flash messages
--   ✅ Bulk delete functionality
+- ✅ Dual controller pattern (Web + API)
+- ✅ File upload implementation
+- ✅ Auto-code generation (Employee)
+- ✅ Password hashing (Employee)
+- ✅ Validation rules
+- ✅ Flash messages
+- ✅ Bulk delete functionality
 
 #### 4. **Frontend**
 
--   ✅ Master layout dengan partials
--   ✅ Products CRUD views
--   ✅ Categories CRUD views
--   ✅ Employees CRUD views
--   ✅ DataTables integration
--   ✅ Row expansion (Employee)
--   ✅ SweetAlert2 confirmations
--   ✅ Image preview
+- ✅ Master layout dengan partials
+- ✅ Products CRUD views
+- ✅ Categories CRUD views
+- ✅ Employees CRUD views
+- ✅ DataTables integration
+- ✅ Row expansion (Employee)
+- ✅ SweetAlert2 confirmations
+- ✅ Image preview
 
 #### 5. **Documentation**
 
--   ✅ Database & API explanation (Indonesian)
--   ✅ Project documentation (English)
--   ✅ Change log (Indonesian)
--   ✅ Copilot instructions (.github)
+- ✅ Database & API explanation (Indonesian)
+- ✅ Project documentation (English)
+- ✅ Change log (Indonesian)
+- ✅ Copilot instructions (.github)
 
 ---
 
@@ -1346,23 +1347,23 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 #### AdminLTE Integration
 
--   [x] Master layout dengan sidebar + header + footer
--   [x] Responsive design (mobile-friendly)
--   [x] Active menu highlighting
--   [x] Breadcrumb navigation
--   [x] DataTables untuk semua list page
--   [x] Bootstrap 4 styling
--   [x] Font Awesome 7.1.0 icons
+- [x] Master layout dengan sidebar + header + footer
+- [x] Responsive design (mobile-friendly)
+- [x] Active menu highlighting
+- [x] Breadcrumb navigation
+- [x] DataTables untuk semua list page
+- [x] Bootstrap 4 styling
+- [x] Font Awesome 7.1.0 icons
 
 #### Interactive Elements
 
--   [x] SweetAlert2 delete confirmation
--   [x] Success toast notification (top-right)
--   [x] Flash messages (session-based)
--   [x] Row expansion (Employee details)
--   [x] Bulk select checkboxes
--   [x] Auto-numbering pada DataTables
--   [x] Image preview di edit form
+- [x] SweetAlert2 delete confirmation
+- [x] Success toast notification (top-right)
+- [x] Flash messages (session-based)
+- [x] Row expansion (Employee details)
+- [x] Bulk select checkboxes
+- [x] Auto-numbering pada DataTables
+- [x] Image preview di edit form
 
 ---
 
@@ -1370,22 +1371,22 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 #### CRUD Operations
 
--   [x] List products dengan join categories
--   [x] Create product dengan image upload
--   [x] Edit product (preserve image lama)
--   [x] Delete product dengan konfirmasi
--   [x] Bulk delete products
+- [x] List products dengan join categories
+- [x] Create product dengan image upload
+- [x] Edit product (preserve image lama)
+- [x] Delete product dengan konfirmasi
+- [x] Bulk delete products
 
 #### Features
 
--   [x] Filter by category dropdown
--   [x] Search by product name
--   [x] Show product details (row expansion)
--   [x] Status badge (active/inactive)
--   [x] Featured product checkbox
--   [x] Price formatting (Rp.)
--   [x] Stock management
--   [x] Brand field
+- [x] Filter by category dropdown
+- [x] Search by product name
+- [x] Show product details (row expansion)
+- [x] Status badge (active/inactive)
+- [x] Featured product checkbox
+- [x] Price formatting (Rp.)
+- [x] Stock management
+- [x] Brand field
 
 ---
 
@@ -1393,17 +1394,17 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 #### CRUD Operations
 
--   [x] List categories dengan DataTables
--   [x] Create category
--   [x] Edit category
--   [x] Delete category dengan konfirmasi
--   [x] Bulk delete categories
+- [x] List categories dengan DataTables
+- [x] Create category
+- [x] Edit category
+- [x] Delete category dengan konfirmasi
+- [x] Bulk delete categories
 
 #### Features
 
--   [x] Search by category name
--   [x] Description field (optional)
--   [x] Simple form (no image upload)
+- [x] Search by category name
+- [x] Description field (optional)
+- [x] Simple form (no image upload)
 
 ---
 
@@ -1411,33 +1412,33 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 #### CRUD Operations
 
--   [x] List employees dengan DataTables
--   [x] Create employee dengan auto-code
--   [x] Edit employee (password optional)
--   [x] Delete employee dengan konfirmasi
--   [x] Bulk delete employees
+- [x] List employees dengan DataTables
+- [x] Create employee dengan auto-code
+- [x] Edit employee (password optional)
+- [x] Delete employee dengan konfirmasi
+- [x] Bulk delete employees
 
 #### Special Features
 
--   [x] **Auto-generate employee code** (EMP001, EMP002, ...)
--   [x] **Password hashing** dengan bcrypt
--   [x] **Row expansion** untuk hire_date & salary
--   [x] **Profile image upload** (prepared, not yet in form)
--   [x] Status badge (active/inactive)
--   [x] Username unique validation
--   [x] Email unique validation (optional)
--   [x] Position & Department fields
+- [x] **Auto-generate employee code** (EMP001, EMP002, ...)
+- [x] **Password hashing** dengan bcrypt
+- [x] **Row expansion** untuk hire_date & salary
+- [x] **Profile image upload** (prepared, not yet in form)
+- [x] Status badge (active/inactive)
+- [x] Username unique validation
+- [x] Email unique validation (optional)
+- [x] Position & Department fields
 
 ---
 
 ### 🔐 **Security Features**
 
--   [x] CSRF protection (@csrf token)
--   [x] Password hashing (Hash::make)
--   [x] Mass-assignment protection ($fillable)
--   [x] Validation rules
--   [x] Unique constraints (email, username, employee_code)
--   [x] File upload validation (type, size)
+- [x] CSRF protection (@csrf token)
+- [x] Password hashing (Hash::make)
+- [x] Mass-assignment protection ($fillable)
+- [x] Validation rules
+- [x] Unique constraints (email, username, employee_code)
+- [x] File upload validation (type, size)
 
 ---
 
@@ -1445,27 +1446,27 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 #### Products API
 
--   [x] GET /api/products (list all)
--   [x] POST /api/products (create)
--   [x] GET /api/products/{id} (show single)
--   [x] PUT/PATCH /api/products/{id} (update)
--   [x] DELETE /api/products/{id} (delete)
+- [x] GET /api/products (list all)
+- [x] POST /api/products (create)
+- [x] GET /api/products/{id} (show single)
+- [x] PUT/PATCH /api/products/{id} (update)
+- [x] DELETE /api/products/{id} (delete)
 
 #### Categories API
 
--   [x] GET /api/categories
--   [x] POST /api/categories
--   [x] GET /api/categories/{id}
--   [x] PUT/PATCH /api/categories/{id}
--   [x] DELETE /api/categories/{id}
+- [x] GET /api/categories
+- [x] POST /api/categories
+- [x] GET /api/categories/{id}
+- [x] PUT/PATCH /api/categories/{id}
+- [x] DELETE /api/categories/{id}
 
 #### Customers API
 
--   [x] GET /api/customers
--   [x] POST /api/customers
--   [x] GET /api/customers/{id}
--   [x] PUT/PATCH /api/customers/{id}
--   [x] DELETE /api/customers/{id}
+- [x] GET /api/customers
+- [x] POST /api/customers
+- [x] GET /api/customers/{id}
+- [x] PUT/PATCH /api/customers/{id}
+- [x] DELETE /api/customers/{id}
 
 ---
 
@@ -1481,8 +1482,8 @@ Route::apiResource('customers', CustomerController::class)->names([
 
 **Impact**:
 
--   Query join menggunakan `categories.name` akan error
--   Perlu mapping manual atau rename column
+- Query join menggunakan `categories.name` akan error
+- Perlu mapping manual atau rename column
 
 **Solutions**:
 
@@ -1505,8 +1506,8 @@ $table->string('name');
 
 **Impact**:
 
--   Typo bisa menyebabkan confusion
--   Belum dipakai karena masih skeleton
+- Typo bisa menyebabkan confusion
+- Belum dipakai karena masih skeleton
 
 **Solution**:
 
@@ -1521,13 +1522,13 @@ mv resources/views/posistion resources/views/position
 
 **Problem**: Ada 2 controller untuk Employee:
 
--   `EmployeeController.php`
--   `EmployeeWebController.php`
+- `EmployeeController.php`
+- `EmployeeWebController.php`
 
 **Observation**:
 
--   Routes menggunakan `EmployeeWebController`
--   `EmployeeController` mungkin backup/duplicate
+- Routes menggunakan `EmployeeWebController`
+- `EmployeeController` mungkin backup/duplicate
 
 **Recommendation**: Delete salah satu atau dokumentasikan fungsinya
 
@@ -1537,12 +1538,12 @@ mv resources/views/posistion resources/views/position
 
 **Files yang belum diimplementasi**:
 
--   `DepartmentController.php` - Hanya struktur default
--   `PositionController.php` - Hanya struktur default
--   `PositionWebController.php` - Hanya struktur default
--   `Department.php` model - Tidak ada $fillable
--   `Position.php` model - Tidak ada $fillable
--   `resources/views/posistion/` - Copy dari products, belum disesuaikan
+- `DepartmentController.php` - Hanya struktur default
+- `PositionController.php` - Hanya struktur default
+- `PositionWebController.php` - Hanya struktur default
+- `Department.php` model - Tidak ada $fillable
+- `Position.php` model - Tidak ada $fillable
+- `resources/views/posistion/` - Copy dari products, belum disesuaikan
 
 **Status**: Prepared for future implementation
 
@@ -1554,9 +1555,9 @@ mv resources/views/posistion resources/views/position
 
 **Missing**:
 
--   Upload logic di controller sudah ada
--   Form field sudah ada
--   Preview belum ditampilkan di index
+- Upload logic di controller sudah ada
+- Form field sudah ada
+- Preview belum ditampilkan di index
 
 **To Do**: Test upload functionality
 
@@ -1566,36 +1567,36 @@ mv resources/views/posistion resources/views/position
 
 #### 1. **Naming Conventions**
 
--   Controllers: `PascalCase` + suffix `Controller` atau `WebController`
--   Models: `PascalCase` singular
--   Tables: `snake_case` plural
--   Routes: `kebab-case` dengan prefix jelas
--   Views: `kebab-case.blade.php`
+- Controllers: `PascalCase` + suffix `Controller` atau `WebController`
+- Models: `PascalCase` singular
+- Tables: `snake_case` plural
+- Routes: `kebab-case` dengan prefix jelas
+- Views: `kebab-case.blade.php`
 
 #### 2. **Security**
 
--   CSRF token untuk semua POST/PUT/DELETE
--   Password hashing dengan bcrypt
--   Mass-assignment protection dengan $fillable
--   File upload validation (type + size)
--   Unique constraints di database
+- CSRF token untuk semua POST/PUT/DELETE
+- Password hashing dengan bcrypt
+- Mass-assignment protection dengan $fillable
+- File upload validation (type + size)
+- Unique constraints di database
 
 #### 3. **Code Organization**
 
--   Partials untuk reusable components (header, sidebar, footer)
--   Stack untuk page-specific CSS/JS
--   Flash messages untuk user feedback
--   Route model binding untuk cleaner code
--   Validation di controller (bukan di model)
+- Partials untuk reusable components (header, sidebar, footer)
+- Stack untuk page-specific CSS/JS
+- Flash messages untuk user feedback
+- Route model binding untuk cleaner code
+- Validation di controller (bukan di model)
 
 #### 4. **User Experience**
 
--   Confirm before delete (SweetAlert2)
--   Success toast notification
--   Loading states (DataTables)
--   Responsive layout
--   Clear error messages
--   Auto-numbering di tabel
+- Confirm before delete (SweetAlert2)
+- Success toast notification
+- Loading states (DataTables)
+- Responsive layout
+- Clear error messages
+- Auto-numbering di tabel
 
 ---
 
@@ -1603,35 +1604,35 @@ mv resources/views/posistion resources/views/position
 
 #### Priority 1 (Critical)
 
--   [ ] Fix category table naming inconsistency
--   [ ] Remove duplicate EmployeeController
--   [ ] Fix folder typo (posistion → position)
+- [ ] Fix category table naming inconsistency
+- [ ] Remove duplicate EmployeeController
+- [ ] Fix folder typo (posistion → position)
 
 #### Priority 2 (Important)
 
--   [ ] Implement Position management (CRUD)
--   [ ] Implement Department management (CRUD)
--   [ ] Complete profile image upload untuk Employee
--   [ ] Add relationship methods di Models (belongsTo, hasMany)
--   [ ] Soft delete implementation
+- [ ] Implement Position management (CRUD)
+- [ ] Implement Department management (CRUD)
+- [ ] Complete profile image upload untuk Employee
+- [ ] Add relationship methods di Models (belongsTo, hasMany)
+- [ ] Soft delete implementation
 
 #### Priority 3 (Enhancement)
 
--   [ ] Add authentication/authorization
--   [ ] Implement role-based access control
--   [ ] Export to Excel/PDF
--   [ ] Advanced search/filter
--   [ ] Dashboard analytics
--   [ ] Activity logs/audit trail
+- [ ] Add authentication/authorization
+- [ ] Implement role-based access control
+- [ ] Export to Excel/PDF
+- [ ] Advanced search/filter
+- [ ] Dashboard analytics
+- [ ] Activity logs/audit trail
 
 #### Priority 4 (Nice to Have)
 
--   [ ] Multi-language support (i18n)
--   [ ] Email notifications
--   [ ] Image cropping/resizing
--   [ ] Barcode/QR code generation
--   [ ] Inventory alerts
--   [ ] Sales reporting
+- [ ] Multi-language support (i18n)
+- [ ] Email notifications
+- [ ] Image cropping/resizing
+- [ ] Barcode/QR code generation
+- [ ] Inventory alerts
+- [ ] Sales reporting
 
 ---
 
@@ -1650,21 +1651,21 @@ Project Laravel E-Commerce ini telah berhasil mengimplementasikan:
 
 ### Current State
 
--   **Database**: 6 tables (3 fully implemented, 3 skeleton)
--   **Controllers**: 12 files (6 functional, 6 skeleton/backup)
--   **Models**: 7 models (4 functional, 3 skeleton)
--   **Views**: 20+ Blade templates
--   **Routes**: 21+ web routes, 15+ API routes
--   **Assets**: AdminLTE 3.2.0, Font Awesome 7.1.0, DataTables, SweetAlert2
+- **Database**: 6 tables (3 fully implemented, 3 skeleton)
+- **Controllers**: 12 files (6 functional, 6 skeleton/backup)
+- **Models**: 7 models (4 functional, 3 skeleton)
+- **Views**: 20+ Blade templates
+- **Routes**: 21+ web routes, 15+ API routes
+- **Assets**: AdminLTE 3.2.0, Font Awesome 7.1.0, DataTables, SweetAlert2
 
 ### Code Quality
 
--   ✅ Laravel conventions
--   ✅ RESTful routing
--   ✅ MVC pattern
--   ✅ DRY principle
--   ✅ Secure coding
--   ⚠️ Needs: Relationships, Testing, Documentation cleanup
+- ✅ Laravel conventions
+- ✅ RESTful routing
+- ✅ MVC pattern
+- ✅ DRY principle
+- ✅ Secure coding
+- ⚠️ Needs: Relationships, Testing, Documentation cleanup
 
 ### Ready for Production?
 
@@ -1681,11 +1682,11 @@ Project Laravel E-Commerce ini telah berhasil mengimplementasikan:
 
 **Dokumentasi ini dibuat untuk**:
 
--   Referensi development team
--   Onboarding developer baru
--   Code review
--   Project handover
--   GitHub Copilot AI Agent
+- Referensi development team
+- Onboarding developer baru
+- Code review
+- Project handover
+- GitHub Copilot AI Agent
 
 **Versi**: 2.0  
 **Tanggal**: 23 Desember 2025  

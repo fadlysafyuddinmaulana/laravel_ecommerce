@@ -2,6 +2,7 @@
 layout: page
 title: Plugins
 ---
+
 AdminLTE comes with color overrides & extras for the following plugins.
 
 ### Bootstrap Slider
@@ -14,7 +15,7 @@ Example:
 
 ```html
 <div class="slider-red">
-  <input type="text" value="" class="slider form-control" data-slider...>
+  <input type="text" value="" class="slider form-control" data-slider... />
 </div>
 ```
 
@@ -27,10 +28,9 @@ Example:
 
 ```html
 <div class="slider-red">
-  <input type="text" value="" class="slider slider-vertical form-control" data-slider...>
+  <input type="text" value="" class="slider slider-vertical form-control" data-slider... />
 </div>
 ```
-
 
 ### iCheck Bootstrap
 
@@ -42,13 +42,10 @@ Example:
 
 ```html
 <div class="icheck-primary">
-  <input type="checkbox" id="checkbox1">
-  <label for="checkbox1">
-    Checkbox Label
-  </label>
+  <input type="checkbox" id="checkbox1" />
+  <label for="checkbox1"> Checkbox Label </label>
 </div>
 ```
-
 
 ### Pace
 
@@ -85,11 +82,9 @@ You can override the color for all pace themes, load your desired theme and add 
 
 Example: `<body class="pace-success">`
 
-
 ### SweetAlert
 
 If you use SweetAlert and load the SweetAlert CSS before AdminLTE's CSS, then the colors of any icon changes to AdminLTE's default colors.
-
 
 ### Toastr
 

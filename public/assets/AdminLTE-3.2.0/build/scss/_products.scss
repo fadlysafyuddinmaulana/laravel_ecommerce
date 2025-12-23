@@ -8,7 +8,7 @@
   padding: 0;
 
   > .item {
-    @include clearfix ();
+    @include clearfix();
 
     @if $enable-rounded {
       @include border-radius($border-radius);
@@ -16,7 +16,6 @@
 
     background-color: $white;
     padding: 10px 0;
-
   }
 
   .product-img {
@@ -54,8 +53,7 @@
   }
 }
 
-
-@include dark-mode () {
+@include dark-mode() {
   .products-list > .item {
     background-color: $dark;
     color: $white;

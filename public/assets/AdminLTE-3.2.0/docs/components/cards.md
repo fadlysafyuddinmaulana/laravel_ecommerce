@@ -6,8 +6,8 @@ title: Cards Component
 The card component is the most widely used component through out this template. You can use it for anything from displaying charts to just blocks of text. It comes in many different styles that we will explore below.
 
 ##### Default Card Markup
-{: .text-bold .text-dark .mt-5}
 
+{: .text-bold .text-dark .mt-5}
 
 <div class="card">
   <div class="card-header">
@@ -36,25 +36,24 @@ The card component is the most widely used component through out this template. 
     <!-- /.card-tools -->
   </div>
   <!-- /.card-header -->
-  <div class="card-body">
-    The body of the card
-  </div>
+  <div class="card-body">The body of the card</div>
   <!-- /.card-body -->
-  <div class="card-footer">
-    The footer of the card
-  </div>
+  <div class="card-footer">The footer of the card</div>
   <!-- /.card-footer -->
 </div>
 <!-- /.card -->
 ```
+
 {: .max-height-300}
 
 ##### Card Variants
+
 {: .text-bold .text-dark .mt-5}
 
 You can change the style of the card by adding any of the contextual classes.
 
 ###### Default
+
 {: .text-bold .text-dark}
 
 <div class="row">
@@ -178,6 +177,7 @@ You can change the style of the card by adding any of the contextual classes.
 ```
 
 ###### Outline
+
 {: .text-bold .text-dark}
 
 <div class="row">
@@ -286,8 +286,8 @@ You can change the style of the card by adding any of the contextual classes.
 <div class="card card-outline card-dark">...</div>
 ```
 
-
 ###### Background Color
+
 {: .text-bold .text-dark}
 
 <div class="row">
@@ -396,8 +396,8 @@ You can change the style of the card by adding any of the contextual classes.
 <div class="card bg-dark">...</div>
 ```
 
-
 ###### Gradient Background Color
+
 {: .text-bold .text-dark}
 
 <div class="row">
@@ -506,13 +506,13 @@ You can change the style of the card by adding any of the contextual classes.
 <div class="card bg-gradient-dark">...</div>
 ```
 
-
 ##### Card Tools
+
 {: .text-bold .text-dark .mt-5}
 
 Cards can contain tools to deploy a specific event or provide simple info. The following examples makes use of multiple AdminLTE components within the header of the card.
 
-AdminLTE data-card-widget attribute provides cards with the ability to collapse or be removed. The buttons are placed in the card-tools which is placed in the card-header. 
+AdminLTE data-card-widget attribute provides cards with the ability to collapse or be removed. The buttons are placed in the card-tools which is placed in the card-header.
 
 ```html
 <div class="card card-primary">
@@ -521,29 +521,34 @@ AdminLTE data-card-widget attribute provides cards with the ability to collapse 
 
     <div class="card-tools">
       <!-- This will cause the card to maximize when clicked -->
-      <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="maximize">
+        <i class="fas fa-expand"></i>
+      </button>
       <!-- This will cause the card to collapse when clicked -->
-      <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="collapse">
+        <i class="fas fa-minus"></i>
+      </button>
       <!-- This will cause the card to be removed when clicked -->
-      <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
     <!-- /.card-tools -->
   </div>
   <!-- /.card-header -->
-  <div class="card-body">
-    The body of the card
-  </div>
+  <div class="card-body">The body of the card</div>
   <!-- /.card-body -->
 </div>
 <!-- /.card -->
 ```
+
 {: .max-height-300}
 
-
 ##### Loading Style
+
 {: .text-bold .text-dark .mt-5}
 
-To simulate a loading state, simply place this code before the `.card` closing tag. 
+To simulate a loading state, simply place this code before the `.card` closing tag.
 
 ```html
 <div class="overlay">
@@ -605,7 +610,6 @@ To simulate a loading state, simply place this code before the `.card` closing t
     </div>
   </div>
 </div>
-
 
 You can also use a dark loading style with adding `.dark` to `.overlay` like this code.
 

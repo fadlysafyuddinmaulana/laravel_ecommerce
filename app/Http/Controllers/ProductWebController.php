@@ -11,7 +11,7 @@ class ProductWebController extends Controller
     public function index(Request $request)
     {
         $query = Product::join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.*', 'categories.name as category_name');
+            ->select('products.*', 'categories.category_name as category_name');
         
         // filter by category if provided
         if ($request->has('category_id') && $request->category_id != '') {
@@ -24,14 +24,14 @@ class ProductWebController extends Controller
         }
 
         $products = $query->orderBy('products.created_at', 'desc')->get();
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::orderBy('category_name')->get();
         
         return view('products.index', compact('products', 'categories'));
     }
 
     public function create()
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::orderBy('category_name')->get();
         return view('products.create', compact('categories'));
     }
 
@@ -63,7 +63,7 @@ class ProductWebController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::orderBy('name')->get();
+        $categories = Category::orderBy('category_name')->get();
         return view('products.edit', compact('product', 'categories'));
     }
 

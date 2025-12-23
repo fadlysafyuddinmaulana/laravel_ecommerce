@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "stylelint-config-twbs-bootstrap"
-  ],
+  "extends": ["stylelint-config-twbs-bootstrap"],
   "reportInvalidScopeDisables": true,
   "reportNeedlessDisables": true,
   "overrides": [
@@ -13,11 +11,7 @@
           "border": "none",
           "outline": "none"
         },
-        "function-disallowed-list": [
-          "calc",
-          "lighten",
-          "darken"
-        ],
+        "function-disallowed-list": ["calc", "lighten", "darken"],
         "keyframes-name-pattern": null,
         "property-disallowed-list": [
           "border-radius",

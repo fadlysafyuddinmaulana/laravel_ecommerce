@@ -15,20 +15,19 @@ The timeline component displays an event history. You can use it for description
     <span class="bg-green">23 Aug. 2019</span>
   </div>
   <div>
-  <!-- Before each timeline item corresponds to one icon on the left scale -->
+    <!-- Before each timeline item corresponds to one icon on the left scale -->
     <i class="fas fa-envelope bg-blue"></i>
     <!-- Timeline item -->
     <div class="timeline-item">
-    <!-- Time -->
+      <!-- Time -->
       <span class="time"><i class="fas fa-clock"></i> 12:05</span>
       <!-- Header. Optional -->
       <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
       <!-- Body -->
       <div class="timeline-body">
-        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-        weebly ning heekya handango imeem plugg dopplr jibjab, movity
-        jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-        quora plaxo ideeli hulu weebly balihoo...
+        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango
+        imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo
+        kaboodle quora plaxo ideeli hulu weebly balihoo...
       </div>
       <!-- Placement of additional controls. Optional -->
       <div class="timeline-footer">
@@ -43,6 +42,7 @@ The timeline component displays an event history. You can use it for description
   </div>
 </div>
 ```
+
 {: .max-height-300}
 
 ##### Extra style

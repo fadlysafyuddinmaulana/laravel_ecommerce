@@ -25,12 +25,12 @@ Proyek ini adalah aplikasi **Laravel E-Commerce** dengan fitur manajemen produk 
 
 ### Fitur Utama:
 
--   ✅ **Dashboard** - Halaman utama admin
--   ✅ **Product Management** - CRUD untuk produk
--   ✅ **Category Management** - CRUD untuk kategori
--   ✅ **Image Upload** - Upload gambar produk
--   ✅ **DataTables Integration** - Tabel dinamis dengan search & pagination
--   ✅ **Responsive UI** - AdminLTE 3.2.0
+- ✅ **Dashboard** - Halaman utama admin
+- ✅ **Product Management** - CRUD untuk produk
+- ✅ **Category Management** - CRUD untuk kategori
+- ✅ **Image Upload** - Upload gambar produk
+- ✅ **DataTables Integration** - Tabel dinamis dengan search & pagination
+- ✅ **Responsive UI** - AdminLTE 3.2.0
 
 ---
 
@@ -115,9 +115,9 @@ class Product extends Model
 
 **Fungsi**:
 
--   Mendefinisikan tabel `products`
--   Menentukan kolom yang bisa diisi mass-assignment (`$fillable`)
--   Eloquent ORM untuk query database
+- Mendefinisikan tabel `products`
+- Menentukan kolom yang bisa diisi mass-assignment (`$fillable`)
+- Eloquent ORM untuk query database
 
 ---
 
@@ -129,63 +129,63 @@ class Product extends Model
 
 1. **`index(Request $request)`** - Menampilkan daftar produk
 
-    ```
-    Route: GET /products
-    Flow:
-    - Join dengan tabel categories
-    - Filter by category_id (optional)
-    - Search by name (optional)
-    - Return view 'products.index' dengan data products & categories
-    ```
+   ```
+   Route: GET /products
+   Flow:
+   - Join dengan tabel categories
+   - Filter by category_id (optional)
+   - Search by name (optional)
+   - Return view 'products.index' dengan data products & categories
+   ```
 
 2. **`create()`** - Form tambah produk
 
-    ```
-    Route: GET /products/create
-    Flow:
-    - Ambil semua kategori untuk dropdown
-    - Return view 'products.create'
-    ```
+   ```
+   Route: GET /products/create
+   Flow:
+   - Ambil semua kategori untuk dropdown
+   - Return view 'products.create'
+   ```
 
 3. **`store(Request $request)`** - Simpan produk baru
 
-    ```
-    Route: POST /products
-    Flow:
-    - Validasi input (name, price, stock, dll)
-    - Upload image ke storage/app/public/products
-    - Simpan data ke database
-    - Redirect ke products.index dengan pesan sukses
-    ```
+   ```
+   Route: POST /products
+   Flow:
+   - Validasi input (name, price, stock, dll)
+   - Upload image ke storage/app/public/products
+   - Simpan data ke database
+   - Redirect ke products.index dengan pesan sukses
+   ```
 
 4. **`edit(Product $product)`** - Form edit produk
 
-    ```
-    Route: GET /products/{product}/edit
-    Flow:
-    - Route model binding otomatis load product by ID
-    - Ambil semua kategori untuk dropdown
-    - Return view 'products.edit' dengan data product
-    ```
+   ```
+   Route: GET /products/{product}/edit
+   Flow:
+   - Route model binding otomatis load product by ID
+   - Ambil semua kategori untuk dropdown
+   - Return view 'products.edit' dengan data product
+   ```
 
 5. **`update(Request $request, Product $product)`** - Update produk
 
-    ```
-    Route: PUT /products/{product}
-    Flow:
-    - Validasi input
-    - Upload image baru jika ada
-    - Update data di database
-    - Redirect ke products.index dengan pesan sukses
-    ```
+   ```
+   Route: PUT /products/{product}
+   Flow:
+   - Validasi input
+   - Upload image baru jika ada
+   - Update data di database
+   - Redirect ke products.index dengan pesan sukses
+   ```
 
 6. **`destroy(Product $product)`** - Hapus produk
-    ```
-    Route: DELETE /products/{product}
-    Flow:
-    - Soft/hard delete product
-    - Redirect ke products.index dengan pesan sukses
-    ```
+   ```
+   Route: DELETE /products/{product}
+   Flow:
+   - Soft/hard delete product
+   - Redirect ke products.index dengan pesan sukses
+   ```
 
 ---
 
@@ -194,23 +194,21 @@ class Product extends Model
 **Location**: `resources/views/products/`
 
 1. **`index.blade.php`** - Daftar produk
-
-    - DataTables dengan search & pagination
-    - Filter by category dropdown
-    - Button: Create, Edit, Delete
-    - Tampilkan: Name, Brand, Category, Price, Stock, Status, Image
+   - DataTables dengan search & pagination
+   - Filter by category dropdown
+   - Button: Create, Edit, Delete
+   - Tampilkan: Name, Brand, Category, Price, Stock, Status, Image
 
 2. **`create.blade.php`** - Form tambah produk
-
-    - Input: Name, Description, Price, Stock
-    - Select: Category, Status
-    - File upload: Image
-    - Checkbox: Is Featured
+   - Input: Name, Description, Price, Stock
+   - Select: Category, Status
+   - File upload: Image
+   - Checkbox: Is Featured
 
 3. **`edit.blade.php`** - Form edit produk
-    - Pre-filled form dengan data product
-    - Preview image saat ini
-    - Logic upload image baru/keep existing
+   - Pre-filled form dengan data product
+   - Preview image saat ini
+   - Logic upload image baru/keep existing
 
 ---
 
@@ -234,8 +232,8 @@ class Category extends Model
 
 **Fungsi**:
 
--   Mendefinisikan tabel `categories`
--   Mass-assignment untuk `name` dan `description`
+- Mendefinisikan tabel `categories`
+- Mass-assignment untuk `name` dan `description`
 
 ---
 
@@ -247,58 +245,58 @@ class Category extends Model
 
 1. **`index(Request $request)`** - Daftar kategori
 
-    ```
-    Route: GET /categories
-    Flow:
-    - Query semua kategori
-    - Search by name (optional)
-    - Order by created_at DESC
-    - Return view 'categories.index'
-    ```
+   ```
+   Route: GET /categories
+   Flow:
+   - Query semua kategori
+   - Search by name (optional)
+   - Order by created_at DESC
+   - Return view 'categories.index'
+   ```
 
 2. **`create()`** - Form tambah kategori
 
-    ```
-    Route: GET /categories/create
-    Flow: Return view 'categories.create'
-    ```
+   ```
+   Route: GET /categories/create
+   Flow: Return view 'categories.create'
+   ```
 
 3. **`store(Request $request)`** - Simpan kategori
 
-    ```
-    Route: POST /categories
-    Flow:
-    - Validasi: name (required), description (nullable)
-    - Create category
-    - Redirect dengan success message
-    ```
+   ```
+   Route: POST /categories
+   Flow:
+   - Validasi: name (required), description (nullable)
+   - Create category
+   - Redirect dengan success message
+   ```
 
 4. **`edit(Category $category)`** - Form edit kategori
 
-    ```
-    Route: GET /categories/{category}/edit
-    Flow:
-    - Route model binding
-    - Return view 'categories.edit'
-    ```
+   ```
+   Route: GET /categories/{category}/edit
+   Flow:
+   - Route model binding
+   - Return view 'categories.edit'
+   ```
 
 5. **`update(Request $request, Category $category)`** - Update kategori
 
-    ```
-    Route: PUT /categories/{category}
-    Flow:
-    - Validasi input
-    - Update category
-    - Redirect dengan success message
-    ```
+   ```
+   Route: PUT /categories/{category}
+   Flow:
+   - Validasi input
+   - Update category
+   - Redirect dengan success message
+   ```
 
 6. **`destroy(Category $category)`** - Hapus kategori
-    ```
-    Route: DELETE /categories/{category}
-    Flow:
-    - Delete category
-    - Redirect dengan success message
-    ```
+   ```
+   Route: DELETE /categories/{category}
+   Flow:
+   - Delete category
+   - Redirect dengan success message
+   ```
 
 ---
 
@@ -307,18 +305,16 @@ class Category extends Model
 **Location**: `resources/views/categories/`
 
 1. **`index.blade.php`** - Daftar kategori
-
-    - DataTables integration
-    - Columns: No, Name, Description, Actions
-    - Button: New Category, Edit, Delete
+   - DataTables integration
+   - Columns: No, Name, Description, Actions
+   - Button: New Category, Edit, Delete
 
 2. **`create.blade.php`** - Form tambah kategori
-
-    - Input: Name (required)
-    - Textarea: Description (optional)
+   - Input: Name (required)
+   - Textarea: Description (optional)
 
 3. **`edit.blade.php`** - Form edit kategori
-    - Pre-filled form dengan data kategori
+   - Pre-filled form dengan data kategori
 
 ---
 
@@ -364,56 +360,53 @@ Route::delete('/categories/{category}', [CategoryWebController::class, 'destroy'
 
 #### 1. **Controllers**
 
--   **`ProductWebController.php`** ✏️ Modified
-    -   Added image upload logic
-    -   Added category join & filter
-    -   Added search functionality
-    -   Updated validation rules
+- **`ProductWebController.php`** ✏️ Modified
+  - Added image upload logic
+  - Added category join & filter
+  - Added search functionality
+  - Updated validation rules
 
 #### 2. **Database Migrations**
 
--   **`2025_12_18_162839_create_categories_table.php`** ✏️ Modified
-    -   Changed column name from `name` to `category_name`
-    -   Added description field
+- **`2025_12_18_162839_create_categories_table.php`** ✏️ Modified
+  - Changed column name from `name` to `category_name`
+  - Added description field
 
 #### 3. **Views - Layouts**
 
--   **`resources/views/layouts/app.blade.php`** ✏️ Modified
+- **`resources/views/layouts/app.blade.php`** ✏️ Modified
+  - Restructured layout dengan partials
+  - Added DataTables CSS/JS
+  - Added stack untuk styles & scripts
 
-    -   Restructured layout dengan partials
-    -   Added DataTables CSS/JS
-    -   Added stack untuk styles & scripts
-
--   **`resources/views/pages/dashboard.blade.php`** ✏️ Modified
-    -   Updated template extends & sections
+- **`resources/views/pages/dashboard.blade.php`** ✏️ Modified
+  - Updated template extends & sections
 
 #### 4. **Views - Products**
 
--   **`resources/views/products/index.blade.php`** ✏️ Modified
+- **`resources/views/products/index.blade.php`** ✏️ Modified
+  - Added category filter dropdown
+  - Added DataTables integration
+  - Added image preview column
+  - Added search functionality
 
-    -   Added category filter dropdown
-    -   Added DataTables integration
-    -   Added image preview column
-    -   Added search functionality
+- **`resources/views/products/create.blade.php`** ✏️ Modified
+  - Added category dropdown
+  - Added image upload field
+  - Added is_featured checkbox
+  - Added status select
 
--   **`resources/views/products/create.blade.php`** ✏️ Modified
-
-    -   Added category dropdown
-    -   Added image upload field
-    -   Added is_featured checkbox
-    -   Added status select
-
--   **`resources/views/products/edit.blade.php`** ✏️ Modified
-    -   Similar to create.blade.php
-    -   Added current image preview
-    -   Pre-filled form values
+- **`resources/views/products/edit.blade.php`** ✏️ Modified
+  - Similar to create.blade.php
+  - Added current image preview
+  - Pre-filled form values
 
 #### 5. **Routes**
 
--   **`routes/web.php`** ✏️ Modified
-    -   Added all product routes (CRUD)
-    -   Added all category routes (CRUD)
-    -   Changed dashboard route
+- **`routes/web.php`** ✏️ Modified
+  - Added all product routes (CRUD)
+  - Added all category routes (CRUD)
+  - Changed dashboard route
 
 ---
 
@@ -421,32 +414,32 @@ Route::delete('/categories/{category}', [CategoryWebController::class, 'destroy'
 
 #### 1. **Controllers**
 
--   ✨ `app/Http/Controllers/CategoryController.php` (API - tidak digunakan)
--   ✨ `app/Http/Controllers/CategoryWebController.php` (Web CRUD)
+- ✨ `app/Http/Controllers/CategoryController.php` (API - tidak digunakan)
+- ✨ `app/Http/Controllers/CategoryWebController.php` (Web CRUD)
 
 #### 2. **Views - Categories**
 
--   ✨ `resources/views/categories/index.blade.php`
--   ✨ `resources/views/categories/create.blade.php`
--   ✨ `resources/views/categories/edit.blade.php`
+- ✨ `resources/views/categories/index.blade.php`
+- ✨ `resources/views/categories/create.blade.php`
+- ✨ `resources/views/categories/edit.blade.php`
 
 #### 3. **Views - Layouts (Partials)**
 
--   ✨ `resources/views/layouts/partials/header.blade.php` - Top navbar
--   ✨ `resources/views/layouts/partials/sidebar.blade.php` - Side menu
--   ✨ `resources/views/layouts/partials/footer.blade.php` - Footer
+- ✨ `resources/views/layouts/partials/header.blade.php` - Top navbar
+- ✨ `resources/views/layouts/partials/sidebar.blade.php` - Side menu
+- ✨ `resources/views/layouts/partials/footer.blade.php` - Footer
 
 #### 4. **Documentation**
 
--   ✨ `PENJELASAN_DATABASE_DAN_API.md` - Database & API docs
+- ✨ `PENJELASAN_DATABASE_DAN_API.md` - Database & API docs
 
 #### 5. **Assets**
 
--   ✨ `public/assets/` - AdminLTE 3.2.0 template files
+- ✨ `public/assets/` - AdminLTE 3.2.0 template files
 
 #### 6. **Routes Backup**
 
--   ✨ `routes/web_backup.php` - Backup file
+- ✨ `routes/web_backup.php` - Backup file
 
 ---
 
@@ -454,14 +447,14 @@ Route::delete('/categories/{category}', [CategoryWebController::class, 'destroy'
 
 #### 1. **Old Partials (Moved)**
 
--   🗑️ `resources/views/partials/footer.blade.php` → Moved to `layouts/partials/`
--   🗑️ `resources/views/partials/header.blade.php` → Moved to `layouts/partials/`
--   🗑️ `resources/views/partials/sidebar.blade.php` → Moved to `layouts/partials/`
+- 🗑️ `resources/views/partials/footer.blade.php` → Moved to `layouts/partials/`
+- 🗑️ `resources/views/partials/header.blade.php` → Moved to `layouts/partials/`
+- 🗑️ `resources/views/partials/sidebar.blade.php` → Moved to `layouts/partials/`
 
 #### 2. **AdminLTE 4.0 RC (Removed)**
 
--   🗑️ `assets/AdminLTE-4.0.0-rc4/` - Complete folder (300+ files)
--   🗑️ `assets/AdminLTE-4.0.0-rc4.zip`
+- 🗑️ `assets/AdminLTE-4.0.0-rc4/` - Complete folder (300+ files)
+- 🗑️ `assets/AdminLTE-4.0.0-rc4.zip`
 
 **Reason**: Switched to stable AdminLTE 3.2.0 from RC version 4.0
 
@@ -577,30 +570,30 @@ laravel_ecommerce/
 
 ### ✅ **Products**
 
--   [x] List products dengan DataTables
--   [x] Create product dengan image upload
--   [x] Edit product
--   [x] Delete product
--   [x] Filter by category
--   [x] Search by name
--   [x] Join dengan categories table
+- [x] List products dengan DataTables
+- [x] Create product dengan image upload
+- [x] Edit product
+- [x] Delete product
+- [x] Filter by category
+- [x] Search by name
+- [x] Join dengan categories table
 
 ### ✅ **Categories**
 
--   [x] List categories dengan DataTables
--   [x] Create category
--   [x] Edit category
--   [x] Delete category
--   [x] Search by name
+- [x] List categories dengan DataTables
+- [x] Create category
+- [x] Edit category
+- [x] Delete category
+- [x] Search by name
 
 ### ✅ **UI/UX**
 
--   [x] AdminLTE 3.2.0 template
--   [x] Responsive layout
--   [x] DataTables pagination & search
--   [x] Success/Error flash messages
--   [x] Breadcrumb navigation
--   [x] Active menu indicator
+- [x] AdminLTE 3.2.0 template
+- [x] Responsive layout
+- [x] DataTables pagination & search
+- [x] Success/Error flash messages
+- [x] Breadcrumb navigation
+- [x] Active menu indicator
 
 ---
 
@@ -609,31 +602,29 @@ laravel_ecommerce/
 ### **🐛 Bugs**
 
 1. ❌ Inkonsistensi nama kolom:
-
-    - Migration: `category_name`
-    - Model: `name`
-    - **Fix**: Update migration atau model agar sama
+   - Migration: `category_name`
+   - Model: `name`
+   - **Fix**: Update migration atau model agar sama
 
 2. ❌ Delete button menggunakan `<a>` tag bukan `<form>`
-
-    - DELETE request seharusnya pakai form + method spoofing
-    - **Fix**: Ganti dengan form DELETE proper
+   - DELETE request seharusnya pakai form + method spoofing
+   - **Fix**: Ganti dengan form DELETE proper
 
 3. ❌ Category relationship tidak didefinisikan di Model
-    - Product model tidak punya `belongsTo(Category::class)`
-    - **Fix**: Tambahkan Eloquent relationships
+   - Product model tidak punya `belongsTo(Category::class)`
+   - **Fix**: Tambahkan Eloquent relationships
 
 ### **📋 Todo**
 
--   [ ] Tambah validation error display di form
--   [ ] Implementasi Brand management
--   [ ] Implementasi Reviews management
--   [ ] Implementasi Stock management
--   [ ] Add Customer & Employee CRUD
--   [ ] Implementasi authentication/login
--   [ ] Image deletion saat update/delete product
--   [ ] Add soft deletes
--   [ ] Add seeder untuk sample data
+- [ ] Tambah validation error display di form
+- [ ] Implementasi Brand management
+- [ ] Implementasi Reviews management
+- [ ] Implementasi Stock management
+- [ ] Add Customer & Employee CRUD
+- [ ] Implementasi authentication/login
+- [ ] Image deletion saat update/delete product
+- [ ] Add soft deletes
+- [ ] Add seeder untuk sample data
 
 ---
 
@@ -644,22 +635,22 @@ laravel_ecommerce/
 1. **User** akses `/products/create`
 2. **Route** match `products.create`
 3. **Controller** `ProductWebController@create`:
-    ```php
-    public function create() {
-        $categories = Category::orderBy('name')->get();
-        return view('products.create', compact('categories'));
-    }
-    ```
+   ```php
+   public function create() {
+       $categories = Category::orderBy('name')->get();
+       return view('products.create', compact('categories'));
+   }
+   ```
 4. **View** `products/create.blade.php` render form
 5. **User** submit form ke `/products` (POST)
 6. **Route** match `products.store`
 7. **Controller** `ProductWebController@store`:
-    ```php
-    - Validate input
-    - Upload image → storage/app/public/products/
-    - Product::create($data)
-    - Redirect dengan success message
-    ```
+   ```php
+   - Validate input
+   - Upload image → storage/app/public/products/
+   - Product::create($data)
+   - Redirect dengan success message
+   ```
 8. **Database** insert new row di `products` table
 9. **User** redirect ke `/products` dengan pesan "Product created successfully"
 
@@ -684,9 +675,9 @@ laravel_ecommerce/
 
 Proyek ini mengimplementasikan **MVC pattern** dengan baik:
 
--   **Model**: Handle database logic (Product, Category)
--   **View**: Blade templates dengan AdminLTE
--   **Controller**: Business logic untuk CRUD operations
+- **Model**: Handle database logic (Product, Category)
+- **View**: Blade templates dengan AdminLTE
+- **Controller**: Business logic untuk CRUD operations
 
 Struktur kode mengikuti Laravel conventions dengan route model binding, validation, dan Eloquent ORM. UI responsif dengan DataTables untuk user experience yang lebih baik.
 

@@ -54,8 +54,8 @@
                                         <td>
                                             <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong>
                                         </td>
-                                        <td>{{ $employee->position }}</td>
-                                        <td>{{ $employee->department }}</td>
+                                        <td>{{ $employee->position->position_name ?? 'N/A' }}</td>
+                                        <td>{{ $employee->department->department_name ?? 'N/A' }}</td>
                                         <td>{{ $employee->email ?? '-' }}</td>
                                         <td class="text-center">
                                             @if($employee->status == 'active')

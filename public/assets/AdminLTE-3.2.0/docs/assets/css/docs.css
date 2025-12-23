@@ -27,7 +27,7 @@
 .slider::before {
   background-color: #fff;
   bottom: 4px;
-  content: "";
+  content: '';
   height: 16px;
   left: 4px;
   position: absolute;

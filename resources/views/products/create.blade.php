@@ -63,7 +63,7 @@
                         <option value="">-- Select Category --</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
+                                {{ $category->category_name }}
                             </option>
                         @endforeach
                     </select>
@@ -120,6 +120,20 @@
 @endsection
 
 @push('styles')
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <style>
+        .select2-container--bootstrap4 .select2-selection--single {
+            height: calc(2.25rem + 2px) !important;
+        }
+        .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+            line-height: calc(2.25rem) !important;
+        }
+        .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
+            height: calc(2.25rem) !important;
+        }
+    </style>
     <!-- DataTables -->
     <link rel="stylesheet"
         href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
@@ -130,11 +144,26 @@
 @endpush
 
 @push('scripts')
+    <!-- Select2 -->
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js') }}"></script>
     <!-- bs-custom-file-input -->
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
     <!-- Page specific script -->
     <script>
         $(function () {
+            // Initialize Select2
+            $('#category_id').select2({
+                theme: 'bootstrap4',
+                placeholder: '-- Select Category --',
+                allowClear: true
+            });
+            
+            $('#status').select2({
+                theme: 'bootstrap4',
+                placeholder: '-- Select Status --',
+                allowClear: true
+            });
+            
             bsCustomFileInput.init();
         });
     </script>

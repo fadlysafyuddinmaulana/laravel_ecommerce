@@ -14,15 +14,16 @@ Highly customizable and easy to use. Fits many screen resolutions from small mob
 **Production Deployment & Cross-Platform Compatibility** - This release resolves critical production deployment issues:
 
 - **Fixed Production Builds** - Resolved CSS/JS path issues, sidebar navigation, and image loading in all deployment scenarios
-- **Smart Path Resolution** - Automatic relative path calculation works for root deployment, sub-folders, and CDN hosting  
+- **Smart Path Resolution** - Automatic relative path calculation works for root deployment, sub-folders, and CDN hosting
 - **RTL CSS Fix** - Eliminated rtlcss interference with standard LTR production builds
 - **Updated Dependencies** - Bootstrap 5.3.7, Bootstrap Icons 1.13.1, OverlayScrollbars 2.11.0
 - **Zero Console Errors** - Fixed all CDN integrity mismatches and runtime issues
 - **FTP/Static Host Ready** - Perfect compatibility with traditional hosting and modern static platforms
 
 **Key Improvements:**
+
 - ✅ Development and production environments now behave identically
-- ✅ Images, CSS, and JavaScript load correctly in any deployment structure  
+- ✅ Images, CSS, and JavaScript load correctly in any deployment structure
 - ✅ Sidebar navigation displays properly with badges and arrow indicators
 - ✅ All CDN resources load without console errors
 - ✅ Complete production build included in repository for easy deployment
@@ -34,7 +35,7 @@ See the [CHANGELOG.md](CHANGELOG.md) for complete details.
 AdminLTE.io just opened a new premium templates page. Hand picked to ensure the best quality and the most affordable
 prices. Visit <https://adminlte.io/premium> for more information.
 
-!["AdminLTE Presentation"](https://adminlte.io/AdminLTE3.png "AdminLTE Presentation")
+!["AdminLTE Presentation"](https://adminlte.io/AdminLTE3.png 'AdminLTE Presentation')
 
 **AdminLTE** has been carefully coded with clear comments in all of its JS, SCSS and HTML files.
 SCSS has been used to increase code customizability.
@@ -46,15 +47,15 @@ SCSS has been used to increase code customizability.
 To start developing with AdminLTE:
 
 1. **Install dependencies:** `npm install`
-2. **Start development server:** `npm start` *(opens browser at http://localhost:3000)*
+2. **Start development server:** `npm start` _(opens browser at http://localhost:3000)_
 3. **Start coding!** Files auto-compile and refresh on changes
 
 ### Production Build
 
 To build for production:
 
-1. **Full production build:** `npm run production` *(includes linting and optimization)*
-2. **Quick build:** `npm run build` *(faster for development/testing)*
+1. **Full production build:** `npm run production` _(includes linting and optimization)_
+2. **Quick build:** `npm run build` _(faster for development/testing)_
 
 ### Available Scripts
 
@@ -68,8 +69,9 @@ To build for production:
 ## Browser Support
 
 AdminLTE supports all modern browsers with the latest Bootstrap 5.3.7:
+
 - Chrome (latest)
-- Firefox (latest) 
+- Firefox (latest)
 - Safari (latest)
 - Edge (latest)
 

@@ -13,7 +13,7 @@ class CategoryWebController extends Controller
         
         // search by name if provided
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('category_name', 'like', '%' . $request->search . '%');
         }
 
         $categories = $query->orderBy('created_at', 'desc')->get();
@@ -29,8 +29,8 @@ class CategoryWebController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'category_name' => 'required|string|max:255',
+            'description'   => 'nullable|string',
         ]);
 
         $category = Category::create($data);
@@ -46,8 +46,8 @@ class CategoryWebController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'category_name' => 'required|string|max:255',
+            'description'   => 'nullable|string',
         ]);
 
         $category->update($data);

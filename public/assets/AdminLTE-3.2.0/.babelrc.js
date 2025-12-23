@@ -6,8 +6,8 @@ module.exports = {
         loose: true,
         bugfixes: true,
         modules: false,
-        exclude: ['transform-typeof-symbol']
-      }
-    ]
-  ]
+        exclude: ['transform-typeof-symbol'],
+      },
+    ],
+  ],
 };

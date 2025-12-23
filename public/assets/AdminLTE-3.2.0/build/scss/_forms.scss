@@ -112,7 +112,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 
 .warning-feedback {
   @include font-size($form-feedback-font-size);
-  color: theme-color("warning");
+  color: theme-color('warning');
   display: none;
   margin-top: $form-feedback-margin-top;
   width: 100%;
@@ -121,11 +121,11 @@ label:not(.form-check-label):not(.custom-file-label) {
 .warning-tooltip {
   @include border-radius($form-feedback-tooltip-border-radius);
   @include font-size($form-feedback-tooltip-font-size);
-  background-color: rgba(theme-color("warning"), $form-feedback-tooltip-opacity);
-  color: color-yiq(theme-color("warning"));
+  background-color: rgba(theme-color('warning'), $form-feedback-tooltip-opacity);
+  color: color-yiq(theme-color('warning'));
   display: none;
   line-height: $form-feedback-tooltip-line-height;
-  margin-top: .1rem;
+  margin-top: 0.1rem;
   max-width: 100%; // Contain to parent when possible
   padding: $form-feedback-tooltip-padding-y $form-feedback-tooltip-padding-x;
   position: absolute;
@@ -135,7 +135,7 @@ label:not(.form-check-label):not(.custom-file-label) {
 
 .form-control {
   &.is-warning {
-    border-color: theme-color("warning");
+    border-color: theme-color('warning');
 
     @if $enable-validation-icons {
       // padding-right: $input-height-inner;
@@ -146,8 +146,8 @@ label:not(.form-check-label):not(.custom-file-label) {
     }
 
     &:focus {
-      border-color: theme-color("warning");
-      box-shadow: 0 0 0 $input-focus-width rgba(theme-color("warning"), .25);
+      border-color: theme-color('warning');
+      box-shadow: 0 0 0 $input-focus-width rgba(theme-color('warning'), 0.25);
     }
 
     ~ .warning-feedback,
@@ -169,7 +169,7 @@ textarea.form-control {
 
 .custom-select {
   &.is-warning {
-    border-color: theme-color("warning");
+    border-color: theme-color('warning');
 
     @if $enable-validation-icons {
       // padding-right: $custom-select-feedback-icon-padding-right;
@@ -177,8 +177,8 @@ textarea.form-control {
     }
 
     &:focus {
-      border-color: theme-color("warning");
-      box-shadow: 0 0 0 $input-focus-width rgba(theme-color("warning"), .25);
+      border-color: theme-color('warning');
+      box-shadow: 0 0 0 $input-focus-width rgba(theme-color('warning'), 0.25);
     }
 
     ~ .warning-feedback,
@@ -187,7 +187,6 @@ textarea.form-control {
     }
   }
 }
-
 
 .form-control-file {
   &.is-warning {
@@ -201,7 +200,7 @@ textarea.form-control {
 .form-check-input {
   &.is-warning {
     ~ .form-check-label {
-      color: theme-color("warning");
+      color: theme-color('warning');
     }
 
     ~ .warning-feedback,
@@ -213,10 +212,10 @@ textarea.form-control {
 
 .custom-control-input.is-warning {
   ~ .custom-control-label {
-    color: theme-color("warning");
+    color: theme-color('warning');
 
     &::before {
-      border-color: theme-color("warning");
+      border-color: theme-color('warning');
     }
   }
 
@@ -227,18 +226,18 @@ textarea.form-control {
 
   &:checked {
     ~ .custom-control-label::before {
-      @include gradient-bg(lighten(theme-color("warning"), 10%));
-      border-color: lighten(theme-color("warning"), 10%);
+      @include gradient-bg(lighten(theme-color('warning'), 10%));
+      border-color: lighten(theme-color('warning'), 10%);
     }
   }
 
   &:focus {
     ~ .custom-control-label::before {
-      box-shadow: 0 0 0 $input-focus-width rgba(theme-color("warning"), .25);
+      box-shadow: 0 0 0 $input-focus-width rgba(theme-color('warning'), 0.25);
     }
 
     &:not(:checked) ~ .custom-control-label::before {
-      border-color: theme-color("warning");
+      border-color: theme-color('warning');
     }
   }
 }
@@ -247,7 +246,7 @@ textarea.form-control {
 .custom-file-input {
   &.is-warning {
     ~ .custom-file-label {
-      border-color: theme-color("warning");
+      border-color: theme-color('warning');
     }
 
     ~ .warning-feedback,
@@ -257,8 +256,8 @@ textarea.form-control {
 
     &:focus {
       ~ .custom-file-label {
-        border-color: theme-color("warning");
-        box-shadow: 0 0 0 $input-focus-width rgba(theme-color("warning"), .25);
+        border-color: theme-color('warning');
+        box-shadow: 0 0 0 $input-focus-width rgba(theme-color('warning'), 0.25);
       }
     }
   }
@@ -358,7 +357,7 @@ body.text-sm {
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .form-control:not(.form-control-navbar):not(.form-control-sidebar),
   .custom-select,
   .custom-file-label,
@@ -382,7 +381,7 @@ body.text-sm {
   .custom-select {
     background: $dark $custom-select-dark-background;
 
-    &[multiple]{
+    &[multiple] {
       background: $dark;
     }
   }

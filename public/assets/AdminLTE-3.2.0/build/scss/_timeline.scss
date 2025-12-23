@@ -11,7 +11,7 @@
     @include border-radius($border-radius);
     background-color: $gray-300;
     bottom: 0;
-    content: "";
+    content: '';
     left: 31px;
     margin: 0;
     position: absolute;
@@ -22,7 +22,7 @@
   > div {
     &::before,
     &::after {
-      content: "";
+      content: '';
       display: table;
     }
 
@@ -133,7 +133,7 @@
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .timeline {
     &::before {
       background-color: $gray-600;

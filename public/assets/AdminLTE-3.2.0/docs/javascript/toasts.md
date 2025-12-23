@@ -6,20 +6,23 @@ title: Toasts Plugin
 The toasts plugin provides simple functionality to create easily a bootstrap toast.
 
 ##### Usage
+
 This plugin can be activated as a jQuery plugin.
 
 ###### jQuery
+
 {: .text-bold }
-The jQuery API provides more customizable options that allows the developer to handle checking and unchecking the todo list checkbox events. 
+The jQuery API provides more customizable options that allows the developer to handle checking and unchecking the todo list checkbox events.
+
 ```js
 $(document).Toasts('create', {
   title: 'Toast Title',
-  body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-})
+  body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.',
+});
 ```
 
-
 ##### Options
+
 {: .mt-4}
 
 |---
@@ -28,7 +31,7 @@ $(document).Toasts('create', {
 |position | String | Position.TOP_RIGHT | Position of the toast, available options: `topRight`, `topLeft`, `bottomRight` & `bottomLeft`
 |fixed | Boolean | true | Whether to set toasts container fixed.
 |autohide | Boolean | false | Whether to auto hide toast
-|autoremove | Boolean | true | Whether to auto remove toast after closing 
+|autoremove | Boolean | true | Whether to auto remove toast after closing
 |delay | Integer | 1000 | Auto Hide delay
 |fade | Boolean | true | Whether to fade toast
 |icon | String | null | Icon class (e.g. `fas fa-exclamation-triangle`)
@@ -43,8 +46,8 @@ $(document).Toasts('create', {
 |---
 {: .table .table-bordered .bg-light}
 
-
 ##### Events
+
 {: .mt-4}
 All event are sent to `body`.
 
@@ -58,8 +61,8 @@ All event are sent to `body`.
 
 Example: `$('body').on('created.lte.toast', handleCreateEvent)`
 
-
 ##### Methods
+
 {: .mt-4}
 
 |---

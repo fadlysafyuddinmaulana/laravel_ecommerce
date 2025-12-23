@@ -29,8 +29,8 @@ body.iframe-mode-fullscreen {
       color: $danger;
       position: absolute;
       line-height: 1;
-      right: .125rem;
-      top: .125rem;
+      right: 0.125rem;
+      top: 0.125rem;
       z-index: 10;
       visibility: hidden;
 
@@ -133,7 +133,7 @@ body.iframe-mode-fullscreen {
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .content-wrapper.iframe-mode {
     .tab-loading {
       background-color: $dark;

@@ -60,8 +60,10 @@
 
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" name="phone" class="form-control" id="phone"
-                           value="{{ old('phone', $employee->phone) }}">
+                    <input type="tel" name="phone" class="form-control" id="phone"
+                           value="{{ old('phone', $employee->phone) }}" placeholder="Enter phone number">
+                    <input type="hidden" name="phone_country" id="phone_country">
+                    <small class="text-muted">International format with country code</small>
                 </div>
 
                 <div class="form-group">
@@ -98,21 +100,42 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="position">Position *</label>
-                    <input type="text" name="position" class="form-control" id="position"
-                           value="{{ old('position', $employee->position) }}" required>
+                    <label for="position_code">Position *</label>
+                    <select name="position_code" id="position_code" class="form-control">
+                        <option value="">-- Select Position --</option>
+                        @foreach($positions as $position)
+                            <option value="{{ $position->position_code }}" {{ old('position_code', $employee->position) == $position->position_code ? 'selected' : '' }}>
+                                {{ $position->position_name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="department">Department *</label>
-                    <input type="text" name="department" class="form-control" id="department"
-                           value="{{ old('department', $employee->department) }}" required>
+                    <label for="department_code">Department *</label>
+                    <select name="department_code" id="department_code" class="form-control">
+                        <option value="">-- Select Department --</option>
+                        @foreach($departments as $department)
+                            <option value="{{ $department->department_code }}" {{ old('department_code', $employee->department) == $department->department_code ? 'selected' : '' }}>
+                                {{ $department->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label for="hire_date">Hire Date</label>
-                    <input type="date" name="hire_date" class="form-control" id="hire_date"
-                           value="{{ old('hire_date', $employee->hire_date) }}">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="text" name="hire_date" class="form-control" id="hire_date"
+                               value="{{ old('hire_date', $employee->hire_date) }}"
+                               data-inputmask-alias="datetime"
+                               data-inputmask-inputformat="yyyy-mm-dd"
+                               data-mask
+                               placeholder="yyyy-mm-dd">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -133,3 +156,99 @@
     </div>
 </div>
 @endsection
+
+@push('styles')
+<!-- intl-tel-input -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/css/intlTelInput.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<!-- Custom styles for intl-tel-input -->
+<style>
+    .iti {
+        width: 100%;
+    }
+    .iti__flag-container {
+        z-index: 2;
+    }
+    .select2-container--bootstrap4 .select2-selection--single {
+        height: calc(2.25rem + 2px) !important;
+    }
+    .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+        line-height: calc(2.25rem) !important;
+    }
+    .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow {
+        height: calc(2.25rem) !important;
+    }
+</style>
+@endpush
+
+@push('scripts')
+<!-- intl-tel-input -->
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/js/intlTelInput.min.js"></script>
+<!-- Select2 -->
+<script src="{{ asset('assets/AdminLTE-3.2.0/plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- InputMask -->
+<script src="{{ asset('assets/AdminLTE-3.2.0/plugins/moment/moment.min.js') }}"></script>
+<script src="{{ asset('assets/AdminLTE-3.2.0/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+<!-- bs-custom-file-input -->
+<script src="{{ asset('assets/AdminLTE-3.2.0/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+<script>
+$(function () {
+    // Initialize intl-tel-input
+    const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "id",
+        preferredCountries: ["id", "us", "gb", "sg", "my"],
+        separateDialCode: true,
+        autoPlaceholder: "polite",
+        formatOnDisplay: true,
+        nationalMode: false,
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.11/build/js/utils.js"
+    });
+
+    // Save country code on country change
+    phoneInput.addEventListener('countrychange', function() {
+        const countryData = iti.getSelectedCountryData();
+        document.getElementById('phone_country').value = countryData.iso2;
+    });
+
+    // Form validation on submit
+    $('form').on('submit', function(e) {
+        if (phoneInput.value.trim()) {
+            if (!iti.isValidNumber()) {
+                e.preventDefault();
+                alert('Please enter a valid phone number for the selected country');
+                phoneInput.focus();
+                return false;
+            }
+            // Set full international number
+            phoneInput.value = iti.getNumber();
+        }
+    });
+    
+    // Initialize Select2
+    $('#position_code').select2({
+        theme: 'bootstrap4',
+        placeholder: '-- Select Position --',
+        allowClear: true
+    });
+    
+    $('#department_code').select2({
+        theme: 'bootstrap4',
+        placeholder: '-- Select Department --',
+        allowClear: true
+    });
+    
+    $('#status').select2({
+        theme: 'bootstrap4',
+        minimumResultsForSearch: -1
+    });
+    
+    // Initialize InputMask for date
+    $('[data-mask]').inputmask();
+    
+    bsCustomFileInput.init();
+});
+</script>
+@endpush

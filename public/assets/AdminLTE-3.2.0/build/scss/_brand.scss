@@ -20,12 +20,12 @@
     font-size: inherit;
   }
 
-  [class*="sidebar-dark"] & {
+  [class*='sidebar-dark'] & {
     border-bottom: 1px solid lighten($dark, 10%);
 
     &,
     .pushmenu {
-      color: rgba($white, .8);
+      color: rgba($white, 0.8);
 
       &:hover {
         color: $white;
@@ -33,12 +33,12 @@
     }
   }
 
-  [class*="sidebar-light"] & {
+  [class*='sidebar-light'] & {
     border-bottom: 1px solid $gray-300;
 
     &,
     .pushmenu {
-      color: rgba($black, .8);
+      color: rgba($black, 0.8);
 
       &:hover {
         color: $black;
@@ -58,9 +58,9 @@
 
   .brand-image {
     float: left;
-    line-height: .8;
-    margin-left: .8rem;
-    margin-right: .5rem;
+    line-height: 0.8;
+    margin-left: 0.8rem;
+    margin-right: 0.5rem;
     margin-top: -3px;
     max-height: 33px;
     width: auto;
@@ -68,19 +68,19 @@
 
   .brand-image-xs {
     float: left;
-    line-height: .8;
-    margin-top: -.1rem;
+    line-height: 0.8;
+    margin-top: -0.1rem;
     max-height: 33px;
     width: auto;
   }
 
   .brand-image-xl {
-    line-height: .8;
+    line-height: 0.8;
     max-height: 40px;
     width: auto;
 
     &.single {
-      margin-top: -.3rem;
+      margin-top: -0.3rem;
     }
   }
 
@@ -88,18 +88,18 @@
   .text-sm & {
     .brand-image {
       height: 29px;
-      margin-bottom: -.25rem;
-      margin-left: .95rem;
-      margin-top: -.25rem;
+      margin-bottom: -0.25rem;
+      margin-left: 0.95rem;
+      margin-top: -0.25rem;
     }
 
     .brand-image-xs {
-      margin-top: -.2rem;
+      margin-top: -0.2rem;
       max-height: 29px;
     }
 
     .brand-image-xl {
-      margin-top: -.225rem;
+      margin-top: -0.225rem;
       max-height: 38px;
     }
   }
