@@ -1,64 +1,63 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthWebController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the login form.
      */
-    public function index()
+    public function showLoginForm()
     {
-        //
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
+        return view('auth.login', [
+            'layout' => 'layouts.auth',
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Handle an authentication attempt.
      */
-    public function create()
+    public function login(Request $request)
     {
-        //
+        $data = $request->validate([
+            'login'    => 'required|string', // username atau email
+            'password' => 'required|string',
+        ]);
+
+        $employee = Employee::where('username', $data['login'])
+            ->orWhere('email', $data['login'])
+            ->first();
+
+        if (! $employee || ! Hash::check($data['password'], $employee->password)) {
+            return back()
+                ->withInput($request->only('login'))
+                ->withErrors(['login' => 'Invalid credentials provided.']);
+        }
+
+        Auth::login($employee, $request->boolean('remember'));
+
+        return redirect()->route('dashboard');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Log the user out of the application.
      */
-    public function store(Request $request)
+    public function logout(Request $request)
     {
-        //
-    }
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('auth.login');
     }
 }

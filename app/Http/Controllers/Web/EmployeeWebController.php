@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class EmployeeWebController extends Controller
 {
@@ -40,11 +41,21 @@ class EmployeeWebController extends Controller
             'username'      => 'required|string|max:255|unique:employees',
             'password'      => 'required|string|min:8',
             'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'position'      => 'nullable|string|max:255',
-            'department'    => 'nullable|string|max:255',
+            'position_code' => 'required|string',
+            'department_code' => 'required|string',
             'hire_date'     => 'nullable|date',
             'status'        => 'nullable|string|max:20',
         ]);
+
+        // Mapping position_code ke position_id
+        $position = \App\Models\Positions::where('position_code', $data['position_code'])->first();
+        $data['position_id'] = $position ? $position->id : null;
+
+        // Mapping department_code ke department_id
+        $department = \App\Models\Department::where('department_code', $data['department_code'])->first();
+        $data['department_id'] = $department ? $department->id : null;
+
+        unset($data['position_code'], $data['department_code']);
 
         // Generate unique employee code
         $data['employee_code'] = Employee::generateEmployeeCode();
@@ -87,11 +98,21 @@ class EmployeeWebController extends Controller
             'username'      => 'required|string|max:255|unique:employees,username,' . $employee->id,
             'password'      => 'nullable|string|min:8',
             'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'position'      => 'nullable|string|max:255',
-            'department'    => 'nullable|string|max:255',
+            'position_code' => 'required|string',
+            'department_code' => 'required|string',
             'hire_date'     => 'nullable|date',
             'status'        => 'nullable|string|max:20',
         ]);
+
+        // Mapping position_code ke position_id
+        $position = \App\Models\Positions::where('position_code', $data['position_code'])->first();
+        $data['position_id'] = $position ? $position->id : null;
+
+        // Mapping department_code ke department_id
+        $department = \App\Models\Department::where('department_code', $data['department_code'])->first();
+        $data['department_id'] = $department ? $department->id : null;
+
+        unset($data['position_code'], $data['department_code']);
 
         // Hash password jika diisi
         if ($request->filled('password')) {

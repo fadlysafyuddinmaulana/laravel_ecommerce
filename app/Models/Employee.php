@@ -9,6 +9,23 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Employee extends Authenticatable
 {
+    /**
+     * Generate unique employee code (e.g. EMP0001, EMP0002, ...)
+     * @return string
+     */
+    public static function generateEmployeeCode()
+    {
+        $lastEmployee = self::orderByDesc('id')->first();
+        $lastCode = $lastEmployee ? $lastEmployee->employee_code : null;
+
+        if ($lastCode && preg_match('/EMP(\d+)/', $lastCode, $matches)) {
+            $nextNumber = (int)$matches[1] + 1;
+        } else {
+            $nextNumber = 1;
+        }
+
+        return 'EMP' . str_pad($nextNumber, 4, '0', STR_PAD_LEFT);
+    }
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
@@ -39,5 +56,16 @@ class Employee extends Authenticatable
         ];
     }
 
+    // Relasi ke tabel positions
+    public function position()
+    {
+        return $this->belongsTo(\App\Models\Positions::class, 'position_id');
+    }
+
+    // Relasi ke tabel departments
+    public function department()
+    {
+        return $this->belongsTo(\App\Models\Department::class, 'department_id');
+    }
     // relasi & generator code tetap seperti punyamu
 }

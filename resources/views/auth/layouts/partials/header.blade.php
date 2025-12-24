@@ -24,7 +24,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <span class="dropdown-header">
-                    <i class="fas fa-user mr-2"></i> {{ Auth::check() ? Auth::user()->first_name . ' ' . Auth::user()->last_name : 'Guest' }}
+                    <i class="fas fa-user mr-2"></i> {{ Auth::check() ? Auth::user()->name : 'Guest' }}
                 </span>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
@@ -35,15 +35,14 @@
                 </a>
                 <div class="dropdown-divider"></div>
                 @if(Auth::check())
-                <a href="#" class="dropdown-item text-danger" style="width:100%;text-align:left;"
-                   onclick="event.preventDefault(); document.getElementById('logout-link').submit();">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Sign out
-                </a>
-                <form id="logout-link" action="{{ route('auth.logout') }}" method="POST" style="display:none;">
+                <form id="logout-form" action="#" method="POST" class="d-inline">
                     @csrf
+                    <button type="submit" class="dropdown-item text-danger" style="width:100%;text-align:left;">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Sign out
+                    </button>
                 </form>
                 @else
-                <a href="{{ route('auth.login') }}" class="dropdown-item">
+                <a href="#" class="dropdown-item">
                     <i class="fas fa-sign-in-alt mr-2"></i> Login
                 </a>
                 @endif

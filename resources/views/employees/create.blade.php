@@ -92,7 +92,7 @@
                     <select name="position_code" id="position_code" class="form-control">
                         <option value="">-- Select Position --</option>
                         @foreach($positions as $position)
-                            <option value="{{ $position->position_code }}" {{ old('position_code') == $position->position_code ? 'selected' : '' }}>
+                            <option value="{{ $position->id }}" {{ old('position_code') == $position->id ? 'selected' : '' }}>
                                 {{ $position->position_name }}
                             </option>
                         @endforeach
@@ -104,7 +104,7 @@
                     <select name="department_code" id="department_code" class="form-control">
                         <option value="">-- Select Department --</option>
                         @foreach($departments as $department)
-                            <option value="{{ $department->department_code }}" {{ old('department_code') == $department->department_code ? 'selected' : '' }}>
+                            <option value="{{ $department->id }}" {{ old('department_code') == $department->id ? 'selected' : '' }}>
                                 {{ $department->name }}
                             </option>
                         @endforeach

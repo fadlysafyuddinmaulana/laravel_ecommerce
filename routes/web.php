@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\CategoryWebController;
 use App\Http\Controllers\Web\EmployeeWebController;
 use App\Http\Controllers\Web\DepartmentWebController;
 use App\Http\Controllers\Web\PositionsWebController;
+use App\Http\Controllers\Web\AuthWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,7 +16,9 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard', ['layout' => 'layouts.app']);
 })->name('dashboard');
 
-Route::get('/login', [ProductWebController::class, 'index'])->name('products.index');
+Route::get('/login', [AuthWebController::class, 'showLoginForm'])->name('auth.login');
+Route::post('/login', [AuthWebController::class, 'login'])->name('auth.login.post');
+Route::post('/logout', [AuthWebController::class, 'logout'])->name('auth.logout');
 
 Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');
 Route::get('/products/create', [ProductWebController::class, 'create'])->name('products.create');
@@ -57,4 +60,4 @@ Route::post('/products/bulk-delete', [ProductWebController::class, 'bulkDelete']
 Route::post('/categories/bulk-delete', [CategoryWebController::class, 'bulkDelete'])->name('categories.bulk-delete');
 Route::post('/employees/bulk-delete', [EmployeeWebController::class, 'bulkDelete'])->name('employees.bulk-delete');
 Route::post('/departments/bulk-delete', [DepartmentWebController::class, 'bulkDelete'])->name('departments.bulk-delete');
-Route::post('/positions/bulk-delete', [PositionWebController::class, 'bulkDelete'])->name('positions.bulk-delete');
+Route::post('/positions/bulk-delete', [PositionsWebController::class, 'bulkDelete'])->name('positions.bulk-delete');
