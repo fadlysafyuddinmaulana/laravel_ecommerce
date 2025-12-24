@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -13,11 +13,18 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-        return response()->json([
-            'success' => true,
-            'data' => $employees,
-        ], response::HTTP_OK);
+        $employees = Employee::orderBy('created_at', 'desc')->get();
+        return view('employee.index', compact('employees'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        // Generate next employee code for preview
+        $nextEmployeeCode = Employee::generateEmployeeCode();
+        return view('employee.create', compact('nextEmployeeCode'));
     }
 
     /**
@@ -26,26 +33,25 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'employee_code' => 'required|string|max:20|unique:employees',
             'first_name'    => 'required|string|max:100',
             'last_name'     => 'required|string|max:100',
             'email'         => 'nullable|string|email|max:150|unique:employees',
             'phone'         => 'nullable|string|max:20',
             'username'      => 'required|string|unique:employees',
             'password'      => 'required|string|min:8',
-            'profile_image' => 'nullable|string',
             'position'      => 'required|string|max:50',
             'department'    => 'required|string|max:50',
             'hire_date'     => 'nullable|date',
             'status'        => 'sometimes|string|in:active,inactive',
         ]);
 
-        $employee = Employee::create($data);
+        // Auto-generate employee code
+        $data['employee_code'] = Employee::generateEmployeeCode();
+        $data['password'] = Hash::make($data['password']);
+        
+        Employee::create($data);
 
-        return response()->json([
-            'success' => true,
-            'data'    => $employee,
-        ], response::HTTP_CREATED);
+        return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
     }
 
     /**
@@ -53,10 +59,15 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        return response()->json([
-            'success' => true,
-            'data'    => $employee,
-        ], response::HTTP_OK);
+        return view('employee.show', compact('employee'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Employee $employee)
+    {
+        return view('employee.edit', compact('employee'));
     }
 
     /**
@@ -65,26 +76,28 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $data = $request->validate([
-            'employee_code' => 'sometimes|string|max:20|unique:employees,employee_code,' . $employee->id,
-            'first_name'    => 'sometimes|string|max:100',
-            'last_name'     => 'sometimes|string|max:100',
+            'employee_code' => 'required|string|max:20|unique:employees,employee_code,' . $employee->id,
+            'first_name'    => 'required|string|max:100',
+            'last_name'     => 'required|string|max:100',
             'email'         => 'nullable|string|email|max:150|unique:employees,email,' . $employee->id,
             'phone'         => 'nullable|string|max:20',
-            'username'      => 'sometimes|string|unique:employees,username,' . $employee->id,
-            'password'      => 'sometimes|string|min:8',
-            'profile_image' => 'nullable|string',
-            'position'      => 'sometimes|string|max:50',
-            'department'    => 'sometimes|string|max:50',
+            'username'      => 'required|string|unique:employees,username,' . $employee->id,
+            'password'      => 'nullable|string|min:8',
+            'position'      => 'required|string|max:50',
+            'department'    => 'required|string|max:50',
             'hire_date'     => 'nullable|date',
-            'status'        => 'sometimes|string|in:active,inactive',
+            'status'        => 'required|string|in:active,inactive',
         ]);
+
+        if (!empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
 
         $employee->update($data);
 
-        return response()->json([
-            'success' => true,
-            'data'    => $employee,
-        ], response::HTTP_OK);
+        return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }
 
     /**
@@ -93,11 +106,7 @@ class EmployeeController extends Controller
     public function destroy(Employee $employee)
     {
         $employee->delete();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Employee deleted successfully.',
-        ], response::HTTP_OK);
+        return redirect()->route('employees.index')->with('success', 'Employee deleted successfully.');
     }
 
     /**
