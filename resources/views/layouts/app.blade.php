@@ -28,6 +28,17 @@
     
     @stack('styles')
 </head>
+<style>
+    /* Dropdown user hover */
+    .user-dropdown:hover .dropdown-menu {
+        display: block !important;
+        margin-top: 0;
+    }
+    .user-dropdown .dropdown-menu {
+        margin-top: 0;
+    }
+</style>
+</head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <!-- Header -->

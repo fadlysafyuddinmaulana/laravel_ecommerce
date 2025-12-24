@@ -24,6 +24,9 @@ return new class extends Migration
             $table->text('password');
             $table->string('profile_image')->default('avatar.png');
             
+            // Kolom role untuk menyimpan peran user (admin, staff, manager, dll)
+            $table->string('role', 30)->default('staff');
+
             $table->foreignId('position_id')->nullable()->constrained('positions')->onDelete('set null');   
             $table->foreignId('department_id')->nullable()->constrained('departments')->onDelete('set null');
             $table->date('hire_date')->nullable();     

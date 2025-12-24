@@ -59,8 +59,14 @@
                                         <td><strong>{{ $department->code }}</strong></td>
                                         <td>{{ $department->description ?? '-' }}</td>
                                         <td>{{ $department->manager ? ($department->manager->first_name . ' ' . $department->manager->last_name) : '-' }}</td>
-                                        <td>{{ $department->is_active ? '1' : '0' }}</td>
-                                        <td class="text-center al ign-middle">
+                                        <td class="text-center">
+                                            @if ($department->is_active == '1')
+                                                <span class="badge badge-success">Active</span>
+                                            @else
+                                                <span class="badge badge-danger">Inactive</span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center align-middle">
                                             <a href="{{ route('departments.edit', $department) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
                                             <form action="{{ route('departments.destroy', $department) }}" method="POST" class="d-inline delete-form">
                                                 @csrf

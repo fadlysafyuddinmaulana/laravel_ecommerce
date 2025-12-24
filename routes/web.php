@@ -1,15 +1,21 @@
 <?php
 
-use App\Http\Controllers\ProductWebController;
-use App\Http\Controllers\CategoryWebController;
-use App\Http\Controllers\EmployeeWebController;
-use App\Http\Controllers\DepartmentWebController;
-use App\Http\Controllers\PositionsWebController;
+use App\Http\Controllers\Web\ProductWebController;
+use App\Http\Controllers\Web\CategoryWebController;
+use App\Http\Controllers\Web\EmployeeWebController;
+use App\Http\Controllers\Web\DepartmentWebController;
+use App\Http\Controllers\Web\PositionsWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('pages.dashboard');
+    return view('user_page.pages.index');
+})->name('landing');
+
+Route::get('/dashboard', function () {
+    return view('pages.dashboard', ['layout' => 'layouts.app']);
 })->name('dashboard');
+
+Route::get('/login', [ProductWebController::class, 'index'])->name('products.index');
 
 Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');
 Route::get('/products/create', [ProductWebController::class, 'create'])->name('products.create');

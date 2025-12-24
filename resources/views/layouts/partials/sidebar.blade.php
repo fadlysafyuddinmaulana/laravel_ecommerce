@@ -141,6 +141,222 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Orders -->
+                <li class="nav-item {{ request()->routeIs('orders.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Orders
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('orders.index') ? 'active' : '' }}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>All Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('orders.history') ? 'active' : '' }}">
+                                <i class="fas fa-history nav-icon"></i>
+                                <p>Order History</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Payments -->
+                <li class="nav-item {{ request()->routeIs('payments.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-credit-card"></i>
+                        <p>
+                            Payments
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('payments.index') ? 'active' : '' }}">
+                                <i class="fas fa-money-check-alt nav-icon"></i>
+                                <p>All Payments</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('payments.confirmation') ? 'active' : '' }}">
+                                <i class="fas fa-check-circle nav-icon"></i>
+                                <p>Confirmations</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Shipping/Logistics -->
+                <li class="nav-item {{ request()->routeIs('shipping.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('shipping.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shipping-fast"></i>
+                        <p>
+                            Shipping
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('shipping.index') ? 'active' : '' }}">
+                                <i class="fas fa-truck nav-icon"></i>
+                                <p>All Shipments</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('shipping.tracking') ? 'active' : '' }}">
+                                <i class="fas fa-map-marker-alt nav-icon"></i>
+                                <p>Tracking</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Promotions & Coupons -->
+                <li class="nav-item {{ request()->routeIs('promotions.*') || request()->routeIs('coupons.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('promotions.*') || request()->routeIs('coupons.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-gift"></i>
+                        <p>
+                            Promotions
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('promotions.index') ? 'active' : '' }}">
+                                <i class="fas fa-bullhorn nav-icon"></i>
+                                <p>All Promotions</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('coupons.index') ? 'active' : '' }}">
+                                <i class="fas fa-ticket-alt nav-icon"></i>
+                                <p>Coupons</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Reports & Analytics -->
+                <li class="nav-item {{ request()->routeIs('reports.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-chart-bar"></i>
+                        <p>
+                            Reports
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('reports.sales') ? 'active' : '' }}">
+                                <i class="fas fa-chart-line nav-icon"></i>
+                                <p>Sales Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('reports.customers') ? 'active' : '' }}">
+                                <i class="fas fa-user-chart nav-icon"></i>
+                                <p>Customer Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('reports.products') ? 'active' : '' }}">
+                                <i class="fas fa-cube nav-icon"></i>
+                                <p>Product Report</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Settings -->
+                <li class="nav-item {{ request()->routeIs('settings.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('settings.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Settings
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('settings.store') ? 'active' : '' }}">
+                                <i class="fas fa-store nav-icon"></i>
+                                <p>Store Settings</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('settings.payment') ? 'active' : '' }}">
+                                <i class="fas fa-credit-card nav-icon"></i>
+                                <p>Payment Methods</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('settings.shipping') ? 'active' : '' }}">
+                                <i class="fas fa-shipping-fast nav-icon"></i>
+                                <p>Shipping Methods</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- User Management -->
+                <li class="nav-item {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-shield"></i>
+                        <p>
+                            User Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('users.index') ? 'active' : '' }}">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>All Users</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('roles.index') ? 'active' : '' }}">
+                                <i class="fas fa-user-tag nav-icon"></i>
+                                <p>Roles & Permissions</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Content Management -->
+                <li class="nav-item {{ request()->routeIs('pages.*') || request()->routeIs('banners.*') || request()->routeIs('blogs.*') || request()->routeIs('faqs.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('pages.*') || request()->routeIs('banners.*') || request()->routeIs('blogs.*') || request()->routeIs('faqs.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>
+                            Content Management
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('pages.index') ? 'active' : '' }}">
+                                <i class="fas fa-file-alt nav-icon"></i>
+                                <p>Pages</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('banners.index') ? 'active' : '' }}">
+                                <i class="fas fa-image nav-icon"></i>
+                                <p>Banners</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('blogs.index') ? 'active' : '' }}">
+                                <i class="fas fa-blog nav-icon"></i>
+                                <p>Blogs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link {{ request()->routeIs('faqs.index') ? 'active' : '' }}">
+                                <i class="fas fa-question-circle nav-icon"></i>
+                                <p>FAQs</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
