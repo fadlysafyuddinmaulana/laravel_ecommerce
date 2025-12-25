@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\EmployeeWebController;
 use App\Http\Controllers\Web\DepartmentWebController;
 use App\Http\Controllers\Web\PositionsWebController;
 use App\Http\Controllers\Web\AuthWebController;
+use App\Http\Controllers\Web\HomeWebController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,10 +17,15 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard', ['layout' => 'layouts.app']);
 })->name('dashboard');
 
+// Authentication Routes
 Route::get('/login', [AuthWebController::class, 'showLoginForm'])->name('auth.login');
 Route::post('/login', [AuthWebController::class, 'login'])->name('auth.login.post');
 Route::post('/logout', [AuthWebController::class, 'logout'])->name('auth.logout');
 
+Route::get('/home', [HomeWebController::class, 'index'])->name('landing');
+Route::get('/shop', [HomeWebController::class, 'shop'])->name('shop');
+
+// Resource Routes
 Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');
 Route::get('/products/create', [ProductWebController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductWebController::class, 'store'])->name('products.store');
@@ -27,6 +33,7 @@ Route::get('/products/{product}/edit', [ProductWebController::class, 'edit'])->n
 Route::put('/products/{product}', [ProductWebController::class, 'update'])->name('products.update');
 Route::delete('/products/{product}', [ProductWebController::class, 'destroy'])->name('products.destroy');
 
+// Category Routes
 Route::get('/categories', [CategoryWebController::class, 'index'])->name('categories.index');
 Route::get('/categories/create', [CategoryWebController::class, 'create'])->name('categories.create');
 Route::post('/categories', [CategoryWebController::class, 'store'])->name('categories.store');
@@ -34,6 +41,7 @@ Route::get('/categories/{category}/edit', [CategoryWebController::class, 'edit']
 Route::put('/categories/{category}', [CategoryWebController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{category}', [CategoryWebController::class, 'destroy'])->name('categories.destroy');
 
+// Employee Routes
 Route::get('/employees', [EmployeeWebController::class, 'index'])->name('employees.index');
 Route::get('/employees/create', [EmployeeWebController::class, 'create'])->name('employees.create');
 Route::post('/employees', [EmployeeWebController::class, 'store'])->name('employees.store');
@@ -41,6 +49,7 @@ Route::get('/employees/{employee}/edit', [EmployeeWebController::class, 'edit'])
 Route::put('/employees/{employee}', [EmployeeWebController::class, 'update'])->name('employees.update');
 Route::delete('/employees/{employee}', [EmployeeWebController::class, 'destroy'])->name('employees.destroy');
 
+// Department Routes
 Route::get('/departments', [DepartmentWebController::class, 'index'])->name('departments.index');
 Route::get('/departments/create', [DepartmentWebController::class, 'create'])->name('departments.create');
 Route::post('/departments', [DepartmentWebController::class, 'store'])->name('departments.store');
@@ -48,6 +57,7 @@ Route::get('/departments/{department}/edit', [DepartmentWebController::class, 'e
 Route::put('/departments/{department}', [DepartmentWebController::class, 'update'])->name('departments.update');
 Route::delete('/departments/{department}', [DepartmentWebController::class, 'destroy'])->name('departments.destroy');
 
+// Position Routes
 Route::get('/positions', [PositionsWebController::class, 'index'])->name('positions.index');
 Route::get('/positions/create', [PositionsWebController::class, 'create'])->name('positions.create');
 Route::post('/positions', [PositionsWebController::class, 'store'])->name('positions.store');

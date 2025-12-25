@@ -19,9 +19,7 @@ class AuthWebController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return view('auth.login', [
-            'layout' => 'layouts.auth',
-        ]);
+        return view('auth.login', [ 'layout' => 'layouts.auth',]);
     }
 
     /**

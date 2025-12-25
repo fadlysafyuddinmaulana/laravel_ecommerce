@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <!-- Font Awesome Icons (local & CDN) -->
-    <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-6.5.1-web/css/all.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
@@ -30,7 +29,7 @@
         @include('user_page.layouts.partials.header')
 
         <!-- Start Hero Section -->
-        @include('user_page.layouts.partials.hero')
+        {{-- @include('user_page.layouts.partials.hero') --}}
         <!-- End Hero Section -->
 
 		<!-- End Header/Navigation -->
