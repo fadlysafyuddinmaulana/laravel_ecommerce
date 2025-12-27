@@ -26,6 +26,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'customer_code'  => 'required|string|max:20|unique:customers',
             'first_name'      => 'required|string|max:255',
             'last_name'       => 'required|string|max:255',
             'gender'          => 'nullable|string|in:male,female',

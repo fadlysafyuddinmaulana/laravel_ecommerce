@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+
+            $table->string('customer_code', 20)->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->enum('gender', ['male', 'female'])->nullable();
