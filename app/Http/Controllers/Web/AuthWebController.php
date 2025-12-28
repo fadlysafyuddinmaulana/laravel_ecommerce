@@ -55,8 +55,8 @@ class AuthWebController extends Controller
         
         $customer = Customer::create($data);
         Auth::login($customer);
-        $customer->sendEmailVerificationNotification();
-        return redirect()->route('verification.notice');
+        // $customer->sendEmailVerificationNotification();
+        return redirect()->route('landing');
     }
 
     /**

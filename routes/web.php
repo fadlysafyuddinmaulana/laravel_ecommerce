@@ -11,20 +11,7 @@ use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\HomeWebController;
 use Illuminate\Support\Facades\Route;
 
-// Email Verification Routes
-Route::get('/email/verify', function () {
-    return view('auth.verify');
-})->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect()->route('landing');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('resent', true);
-})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
 Route::get('/', function () {
     return view('user_page.pages.index');
@@ -41,7 +28,7 @@ Route::get('/register', [AuthWebController::class, 'showRegisterForm'])->name('a
 Route::post('/register', [AuthWebController::class, 'register'])->name('auth.register.post');
 Route::post('/logout', [AuthWebController::class, 'logout'])->name('auth.logout');
 
-Route::get('/home', [HomeWebController::class, 'index'])->middleware(['auth', 'verified'])->name('landing');
+Route::get('/home', [HomeWebController::class, 'index'])->middleware(['auth'])->name('landing');
 Route::get('/shop', [HomeWebController::class, 'shop'])->name('shop');
 
 // Resource Routes
