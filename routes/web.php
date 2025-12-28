@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductWebController;
 use App\Http\Controllers\Web\CategoryWebController;
 use App\Http\Controllers\Web\EmployeeWebController;
@@ -9,10 +10,33 @@ use App\Http\Controllers\Web\DepartmentWebController;
 use App\Http\Controllers\Web\PositionsWebController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\HomeWebController;
-use Illuminate\Support\Facades\Route;
+
+// Email verification routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')  // pakai guard web (customers)
+  ->name('verification.notice');
 
 
+// Email verification routes
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')  // pakai guard web (customers)
+  ->name('verification.notice');
 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();      // set email_verified_at
+    return redirect()->route('landing'); // atau route lain
+})->middleware(['auth', 'signed'])
+  ->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])
+  ->name('verification.send');
+
+// Landing Page
 Route::get('/', function () {
     return view('user_page.pages.index');
 })->name('landing');
@@ -22,7 +46,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 // Authentication Routes
-Route::get('/login', [AuthWebController::class, 'showLoginForm'])->name('auth.login');
+Route::get('/login', [AuthWebController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthWebController::class, 'login'])->name('auth.login.post');
 Route::get('/register', [AuthWebController::class, 'showRegisterForm'])->name('auth.register');
 Route::post('/register', [AuthWebController::class, 'register'])->name('auth.register.post');

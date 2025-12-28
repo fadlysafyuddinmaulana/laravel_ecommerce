@@ -48,7 +48,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <input type="email" name="email" class="form-control" placeholder="e.g. johndoe@email.com"
-                                value="johndoe@email.com" required>
+                                value="fadly.m73@gmail.com" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-envelope"></span>
@@ -129,7 +129,7 @@
                     </div>
                 </form>
 
-                <a href="{{ route('auth.login') }}" class="text-center">I already have a membership</a>
+                <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
             </div>
             <!-- /.form-box -->
         </div>
