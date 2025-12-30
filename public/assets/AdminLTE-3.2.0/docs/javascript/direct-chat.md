@@ -3,27 +3,32 @@ layout: page
 title: Direct Chat Plugin
 ---
 
-The direct chat plugin provides simple functionality to the direct chat component. 
+The direct chat plugin provides simple functionality to the direct chat component.
 
 ##### Usage
-This plugin can be activated as a jQuery plugin or using the data api. 
+
+This plugin can be activated as a jQuery plugin or using the data api.
 
 ###### Data API
+
 {: .text-bold }
-Add `data-widget="chat-pane-toggle"` to a button to activate the plugin. 
+Add `data-widget="chat-pane-toggle"` to a button to activate the plugin.
+
 ```html
 <button class="btn btn-primary" data-widget="chat-pane-toggle">Toggle Chat Pane</button>
-``` 
-
-###### jQuery
-{: .text-bold }
-The jQuery API provides more customizable options that allows the developer to toggle the chat contact pane. 
-```js
-$('#chat-pane-toggle').DirectChat('toggle')
 ```
 
+###### jQuery
+
+{: .text-bold }
+The jQuery API provides more customizable options that allows the developer to toggle the chat contact pane.
+
+```js
+$('#chat-pane-toggle').DirectChat('toggle');
+```
 
 ##### Methods
+
 {: .mt-4}
 
 |---
@@ -34,8 +39,8 @@ $('#chat-pane-toggle').DirectChat('toggle')
 
 Example: `$('#chat-pane-toggle').DirectChat('toggle')`
 
-
 ##### Events
+
 {: .mt-4}
 
 |---

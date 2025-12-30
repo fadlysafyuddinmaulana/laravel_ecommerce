@@ -28,7 +28,6 @@
         font-size: $font-size-sm;
       }
     }
-
   }
 
   .navbar-nav {
@@ -36,7 +35,7 @@
       margin: 0;
     }
 
-    &[class*="-right"] {
+    &[class*='-right'] {
       .dropdown-menu {
         left: auto;
         margin-top: -3px;
@@ -58,13 +57,13 @@
 
 // Add this class to images within a nav-link
 .navbar-img {
-  height: calc(#{$main-header-height} * .5);
+  height: calc(#{$main-header-height} * 0.5);
   width: auto;
 }
 
 // Navbar badge
 .navbar-badge {
-  font-size: .6rem;
+  font-size: 0.6rem;
   font-weight: 300;
   padding: 2px 4px;
   position: absolute;

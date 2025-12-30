@@ -1,30 +1,27 @@
-import globals from 'globals'
-import pluginJs from '@eslint/js'
-import tseslint from 'typescript-eslint'
-import pluginUnicorn from 'eslint-plugin-unicorn'
-import astroPlugin from 'eslint-plugin-astro'
+import globals from 'globals';
+import pluginJs from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import pluginUnicorn from 'eslint-plugin-unicorn';
+import astroPlugin from 'eslint-plugin-astro';
 
 export default [
   {
     ignores: [
-      "dist/",
-      "node_modules/",
-      ".cache/",
-      ".astro/",
-      "**/*.min.js",
-      "**/plugins/",
-      "/.temp/",
-      "src/html/docs/",
-      "docs_html/",
-      "src/html/public/"
-    ]
+      'dist/',
+      'node_modules/',
+      '.cache/',
+      '.astro/',
+      '**/*.min.js',
+      '**/plugins/',
+      '/.temp/',
+      'src/html/docs/',
+      'docs_html/',
+      'src/html/public/',
+    ],
   },
-  ...tseslint.config(
-    pluginJs.configs.recommended,
-    ...tseslint.configs.recommended
-  ),
+  ...tseslint.config(pluginJs.configs.recommended, ...tseslint.configs.recommended),
   {
-    ...pluginUnicorn.configs['flat/recommended']
+    ...pluginUnicorn.configs['flat/recommended'],
   },
   ...astroPlugin.configs['flat/recommended'],
   {
@@ -32,14 +29,14 @@ export default [
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     rules: {
       'arrow-body-style': 'off',
       'capitalized-comments': 'off',
       'comma-dangle': ['error', 'never'],
-      'indent': ['error', 2, { 'MemberExpression': 'off', 'SwitchCase': 1 }],
+      indent: ['error', 2, { MemberExpression: 'off', SwitchCase: 1 }],
       'max-params': ['warn', 5],
       'multiline-ternary': ['error', 'always-multiline'],
       'new-cap': 'off',
@@ -49,7 +46,7 @@ export default [
       'operator-linebreak': ['error', 'after'],
       'no-unused-vars': 'warn',
       'no-new': 'off',
-      'semi': 'off',
+      semi: 'off',
       'unicorn/explicit-length-check': 'off',
       'unicorn/no-array-callback-reference': 'off',
       'unicorn/no-array-for-each': 'off',
@@ -64,19 +61,19 @@ export default [
       'unicorn/prefer-spread': 'off',
       'unicorn/prefer-string-replace-all': 'off',
       'unicorn/prevent-abbreviations': 'off',
-      'astro/no-set-html-directive': 'off'
-    }
+      'astro/no-set-html-directive': 'off',
+    },
   },
   {
     files: ['src/config/**'],
     languageOptions: {
       globals: {
-        ...globals.node
-      }
+        ...globals.node,
+      },
     },
     rules: {
       'no-console': 'off',
-      'unicorn/prefer-top-level-await': 'off'
-    }
-  }
-] 
+      'unicorn/prefer-top-level-await': 'off',
+    },
+  },
+];

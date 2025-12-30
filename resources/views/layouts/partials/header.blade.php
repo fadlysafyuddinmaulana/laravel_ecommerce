@@ -17,23 +17,36 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-        <!-- User Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
+        <!-- User Menu Dropdown (hover) -->
+        <li class="nav-item dropdown user-dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <i class="far fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-user mr-2"></i> {{ Auth::check() ? Auth::user()->name : 'Guest' }}
-                </a>
+                <span class="dropdown-header">
+                    <i class="fas fa-user mr-2"></i> {{ Auth::check() ? Auth::user()->first_name . ' ' . Auth::user()->last_name : 'Guest' }}
+                </span>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <i class="fas fa-cog mr-2"></i> Profile
+                    <i class="fas fa-id-badge mr-2"></i> Profile
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-cog mr-2"></i> Settings
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
+                @if(Auth::check())
+                <a href="#" class="dropdown-item text-danger" style="width:100%;text-align:left;"
+                   onclick="event.preventDefault(); document.getElementById('logout-link').submit();">
                     <i class="fas fa-sign-out-alt mr-2"></i> Sign out
                 </a>
+                <form id="logout-link" action="{{ route('auth.logout') }}" method="POST" style="display:none;">
+                    @csrf
+                </form>
+                @else
+                <a href="{{ route('auth.login') }}" class="dropdown-item">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </a>
+                @endif
             </div>
         </li>
         <li class="nav-item">

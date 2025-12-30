@@ -33,7 +33,7 @@
 .brand-link {
   &.logo-switch {
     &::before {
-      content: "\00a0";
+      content: '\00a0';
     }
   }
 }
@@ -41,7 +41,7 @@
 // Add sidebar-mini class to the body tag to activate this feature
 .sidebar-mini {
   @include media-breakpoint-up(lg) {
-    @include sidebar-mini-breakpoint ();
+    @include sidebar-mini-breakpoint();
   }
 }
 @include media-breakpoint-down(md) {
@@ -52,7 +52,7 @@
 
 .sidebar-mini-md {
   @include media-breakpoint-up(md) {
-    @include sidebar-mini-breakpoint ();
+    @include sidebar-mini-breakpoint();
   }
 }
 @include media-breakpoint-down(sm) {
@@ -63,7 +63,7 @@
 
 .sidebar-mini-xs {
   @include media-breakpoint-up(xs) {
-    @include sidebar-mini-breakpoint ();
+    @include sidebar-mini-breakpoint();
   }
 }
 
@@ -148,22 +148,22 @@
 
           .nav-treeview {
             .nav-link {
-              width: calc(#{$sidebar-width} - .2rem);
+              width: calc(#{$sidebar-width} - 0.2rem);
             }
 
             .nav-treeview {
               .nav-link {
-                width: calc(#{$sidebar-width} - .2rem * 2);
+                width: calc(#{$sidebar-width} - 0.2rem * 2);
               }
 
               .nav-treeview {
                 .nav-link {
-                  width: calc(#{$sidebar-width} - .2rem * 3);
+                  width: calc(#{$sidebar-width} - 0.2rem * 3);
                 }
 
                 .nav-treeview {
                   .nav-link {
-                    width: calc(#{$sidebar-width} - .2rem * 4);
+                    width: calc(#{$sidebar-width} - 0.2rem * 4);
                   }
                 }
               }
@@ -174,7 +174,7 @@
     }
     .nav-child-indent.nav-compact .nav-treeview {
       .nav-link {
-        width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2 - .5rem);
+        width: calc(#{$sidebar-width} - #{$sidebar-padding-x} * 2 - 0.5rem);
       }
 
       .nav-treeview {
@@ -207,27 +207,27 @@
       }
       .nav-treeview {
         .nav-link {
-          width: calc(#{$sidebar-width} - .5rem);
+          width: calc(#{$sidebar-width} - 0.5rem);
         }
 
         .nav-treeview {
           .nav-link {
-            width: calc(#{$sidebar-width} - .5rem * 2);
+            width: calc(#{$sidebar-width} - 0.5rem * 2);
           }
 
           .nav-treeview {
             .nav-link {
-              width: calc(#{$sidebar-width} - .5rem * 3);
+              width: calc(#{$sidebar-width} - 0.5rem * 3);
             }
 
             .nav-treeview {
               .nav-link {
-                width: calc(#{$sidebar-width} - .5rem * 4);
+                width: calc(#{$sidebar-width} - 0.5rem * 4);
               }
 
               .nav-treeview {
                 .nav-link {
-                  width: calc(#{$sidebar-width} - .5rem * 5);
+                  width: calc(#{$sidebar-width} - 0.5rem * 5);
                 }
               }
             }
@@ -247,7 +247,6 @@
   &.sidebar-mini-md,
   &.sidebar-mini-xs {
     .main-sidebar {
-
       // Hide the sidebar search results when mini mode is active.
       .sidebar-search-results {
         display: none;
@@ -353,22 +352,22 @@
 
               .nav-treeview {
                 .nav-link {
-                  width: calc(#{$sidebar-width} - .2rem);
+                  width: calc(#{$sidebar-width} - 0.2rem);
                 }
 
                 .nav-treeview {
                   .nav-link {
-                    width: calc(#{$sidebar-width} - .2rem * 2);
+                    width: calc(#{$sidebar-width} - 0.2rem * 2);
                   }
 
                   .nav-treeview {
                     .nav-link {
-                      width: calc(#{$sidebar-width} - .2rem * 3);
+                      width: calc(#{$sidebar-width} - 0.2rem * 3);
                     }
 
                     .nav-treeview {
                       .nav-link {
-                        width: calc(#{$sidebar-width} - .2rem * 4);
+                        width: calc(#{$sidebar-width} - 0.2rem * 4);
                       }
                     }
                   }
@@ -388,27 +387,27 @@
           }
           .nav-treeview {
             .nav-link {
-              width: calc(#{$sidebar-width} - .5rem);
+              width: calc(#{$sidebar-width} - 0.5rem);
             }
 
             .nav-treeview {
               .nav-link {
-                width: calc(#{$sidebar-width} - .5rem * 2);
+                width: calc(#{$sidebar-width} - 0.5rem * 2);
               }
 
               .nav-treeview {
                 .nav-link {
-                  width: calc(#{$sidebar-width} - .5rem * 3);
+                  width: calc(#{$sidebar-width} - 0.5rem * 3);
                 }
 
                 .nav-treeview {
                   .nav-link {
-                    width: calc(#{$sidebar-width} - .5rem * 4);
+                    width: calc(#{$sidebar-width} - 0.5rem * 4);
                   }
 
                   .nav-treeview {
                     .nav-link {
-                      width: calc(#{$sidebar-width} - .5rem * 5);
+                      width: calc(#{$sidebar-width} - 0.5rem * 5);
                     }
                   }
                 }
@@ -504,5 +503,9 @@
 .main-sidebar .logo-xs,
 .main-sidebar .logo-xl,
 .sidebar .user-panel .info {
-  @include transition(margin-left $transition-speed linear, opacity $transition-speed ease, visibility $transition-speed ease);
+  @include transition(
+    margin-left $transition-speed linear,
+    opacity $transition-speed ease,
+    visibility $transition-speed ease
+  );
 }

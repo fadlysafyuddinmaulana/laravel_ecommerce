@@ -15,12 +15,11 @@
     z-index: ($zindex-modal + 2);
     justify-content: center;
     align-items: center;
-    background-color: rgba($black, .7);
+    background-color: rgba($black, 0.7);
     color: darken($gray-600, 2.5%);
     @include border-radius($modal-content-border-radius);
   }
 }
-
 
 // BG Color Variations Fixes
 .modal-content {
@@ -35,7 +34,7 @@
   &.bg-secondary,
   &.bg-info,
   &.bg-danger,
-  &.bg-success, {
+  &.bg-success {
     .close {
       color: $white;
       text-shadow: 0 1px 0 $black;
@@ -43,7 +42,7 @@
   }
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .modal-header,
   .modal-footer {
     border-color: $gray-600;

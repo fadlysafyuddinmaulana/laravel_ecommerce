@@ -20,7 +20,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "${{ env.NODE }}"
+          node-version: '${{ env.NODE }}'
           cache: npm
 
       - name: Install npm dependencies
@@ -32,7 +32,7 @@ jobs:
       - name: Zip distribution files
         uses: montudor/action-zip@v1
         with:
-          args: "zip -qq admin-lte-${{env.RELEASE_VERSION}}.zip -d dist"
+          args: 'zip -qq admin-lte-${{env.RELEASE_VERSION}}.zip -d dist'
 
       - name: Create changelog text
         id: changelog

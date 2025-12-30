@@ -4,20 +4,29 @@ export default class Sparkline {
     this.options = { ...Sparkline.options, ...options };
 
     init: {
-      this.element.innerHTML = "<canvas></canvas>";
+      this.element.innerHTML = '<canvas></canvas>';
       this.canvas = this.element.firstChild;
-      this.context = this.canvas.getContext("2d");
+      this.context = this.canvas.getContext('2d');
       this.ratio = window.devicePixelRatio || 1;
 
       if (this.options.tooltip) {
-        this.canvas.style.position = "relative";
-        this.canvas.addEventListener('mousemove', e => {
-          const x = e.offsetX || e.layerX || 0;
-          const delta = ((this.options.width - this.options.dotRadius * 2) / (this._points.length - 1));
-          const index = minmax(0, Math.round((x - this.options.dotRadius) / delta), this._points.length - 1);
+        this.canvas.style.position = 'relative';
+        this.canvas.addEventListener(
+          'mousemove',
+          (e) => {
+            const x = e.offsetX || e.layerX || 0;
+            const delta =
+              (this.options.width - this.options.dotRadius * 2) / (this._points.length - 1);
+            const index = minmax(
+              0,
+              Math.round((x - this.options.dotRadius) / delta),
+              this._points.length - 1,
+            );
 
-          this.canvas.title = this.options.tooltip(this._points[index], index, this._points);
-        }, false);
+            this.canvas.title = this.options.tooltip(this._points[index], index, this._points);
+          },
+          false,
+        );
       }
     }
   }
@@ -48,15 +57,28 @@ export default class Sparkline {
 
     const minValue = Math.min.apply(Math, points);
     const maxValue = Math.max.apply(Math, points);
-    const bottomValue = this.options.minValue != undefined ? this.options.minValue : Math.min(minValue, this.options.maxMinValue != undefined ? this.options.maxMinValue : minValue);
-    const topValue = this.options.maxValue != undefined ? this.options.maxValue : Math.max(maxValue, this.options.minMaxValue != undefined ? this.options.minMaxValue : maxValue);
+    const bottomValue =
+      this.options.minValue != undefined
+        ? this.options.minValue
+        : Math.min(
+            minValue,
+            this.options.maxMinValue != undefined ? this.options.maxMinValue : minValue,
+          );
+    const topValue =
+      this.options.maxValue != undefined
+        ? this.options.maxValue
+        : Math.max(
+            maxValue,
+            this.options.minMaxValue != undefined ? this.options.minMaxValue : maxValue,
+          );
     let minX = offsetX;
     let maxX = offsetX;
 
     let x = offsetX;
-    const y = index => (topValue === bottomValue)
-      ? offsetY + height / 2
-      : (offsetY + height) - ((points[index] - bottomValue) / (topValue - bottomValue)) * height;
+    const y = (index) =>
+      topValue === bottomValue
+        ? offsetY + height / 2
+        : offsetY + height - ((points[index] - bottomValue) / (topValue - bottomValue)) * height;
     const delta = width / (points.length - 1);
 
     const line = (style, x, y) => {
@@ -71,7 +93,7 @@ export default class Sparkline {
       this.context.lineTo(style.direction != 'left' ? width + offsetX : x, y);
       this.context.stroke();
       this.context.restore();
-    }
+    };
 
     const dot = (color, lineStyle, x, y) => {
       this.context.beginPath();
@@ -79,7 +101,7 @@ export default class Sparkline {
       this.context.arc(x, y, this.options.dotRadius * this.ratio, 0, Math.PI * 2, false);
       this.context.fill();
       line(lineStyle, x, y);
-    }
+    };
 
     this.context.save();
 
@@ -131,10 +153,30 @@ export default class Sparkline {
     line(this.options.bottomLine, 0, offsetY);
     line(this.options.topLine, 0, height + offsetY + lineWidth / 2);
 
-    dot(this.options.startColor, this.options.startLine, offsetX + (points.length == 1 ? width / 2 : 0), y(0));
-    dot(this.options.endColor, this.options.endLine, offsetX + (points.length == 1 ? width / 2 : width), y(points.length - 1));
-    dot(this.options.minColor, this.options.minLine, minX + (points.length == 1 ? width / 2 : 0), y(points.indexOf(minValue)));
-    dot(this.options.maxColor, this.options.maxLine, maxX + (points.length == 1 ? width / 2 : 0), y(points.indexOf(maxValue)));
+    dot(
+      this.options.startColor,
+      this.options.startLine,
+      offsetX + (points.length == 1 ? width / 2 : 0),
+      y(0),
+    );
+    dot(
+      this.options.endColor,
+      this.options.endLine,
+      offsetX + (points.length == 1 ? width / 2 : width),
+      y(points.length - 1),
+    );
+    dot(
+      this.options.minColor,
+      this.options.minLine,
+      minX + (points.length == 1 ? width / 2 : 0),
+      y(points.indexOf(minValue)),
+    );
+    dot(
+      this.options.maxColor,
+      this.options.maxLine,
+      maxX + (points.length == 1 ? width / 2 : 0),
+      y(points.indexOf(maxValue)),
+    );
   }
 
   static init(element, options) {
@@ -151,12 +193,12 @@ export default class Sparkline {
 Sparkline.options = {
   width: 100,
   height: null,
-  lineColor: "black",
+  lineColor: 'black',
   lineWidth: 1.5,
-  startColor: "transparent",
-  endColor: "black",
-  maxColor: "transparent",
-  minColor: "transparent",
+  startColor: 'transparent',
+  endColor: 'black',
+  maxColor: 'transparent',
+  minColor: 'transparent',
   minValue: null,
   maxValue: null,
   minMaxValue: null,
@@ -171,7 +213,7 @@ Sparkline.options = {
   maxLine: false,
   bottomLine: false,
   topLine: false,
-  averageLine: false
+  averageLine: false,
 };
 
 function minmax(a, b, c) {

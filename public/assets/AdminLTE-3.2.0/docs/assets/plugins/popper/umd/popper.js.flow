@@ -146,11 +146,7 @@ declare class Popper {
   popper: Element;
   reference: Element | ReferenceObject;
 
-  constructor(
-    reference: Element | ReferenceObject,
-    popper: Element,
-    options?: Options
-  ): Instance;
+  constructor(reference: Element | ReferenceObject, popper: Element, options?: Options): Instance;
 }
 
 declare export default typeof Popper;

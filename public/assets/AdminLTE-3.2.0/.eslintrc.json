@@ -14,10 +14,7 @@
   "rules": {
     "arrow-body-style": "off",
     "capitalized-comments": "off",
-    "comma-dangle": [
-      "error",
-      "never"
-    ],
+    "comma-dangle": ["error", "never"],
     "eqeqeq": "off",
     "indent": [
       "error",
@@ -27,10 +24,7 @@
         "SwitchCase": 1
       }
     ],
-    "multiline-ternary": [
-      "error",
-      "always-multiline"
-    ],
+    "multiline-ternary": ["error", "always-multiline"],
     "new-cap": [
       "error",
       {
@@ -40,21 +34,12 @@
     "no-eq-null": "off",
     "no-negated-condition": "off",
     "no-console": "error",
-    "object-curly-spacing": [
-      "error",
-      "always"
-    ],
-    "operator-linebreak": [
-      "error",
-      "after"
-    ],
+    "object-curly-spacing": ["error", "always"],
+    "operator-linebreak": ["error", "after"],
     "prefer-template": "error",
     "prefer-named-capture-group": "off",
 
-    "semi": [
-      "error",
-      "never"
-    ],
+    "semi": ["error", "never"],
     "unicorn/filename-case": "off",
     "unicorn/consistent-destructuring": "off",
     "unicorn/no-array-callback-reference": "off",

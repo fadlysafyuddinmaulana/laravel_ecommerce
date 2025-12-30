@@ -7,7 +7,7 @@ on:
       - v4-dev
   pull_request:
     branches:
-      - "**"
+      - '**'
 
 env:
   FORCE_COLOR: 2
@@ -25,12 +25,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "${{ env.NODE }}"
+          node-version: '${{ env.NODE }}'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "${{ env.RUBY }}"
+          ruby-version: '${{ env.RUBY }}'
           bundler-cache: true
           working-directory: docs
 

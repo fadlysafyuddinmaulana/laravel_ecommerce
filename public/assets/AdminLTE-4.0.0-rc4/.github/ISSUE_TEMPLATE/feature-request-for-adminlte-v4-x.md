@@ -1,10 +1,9 @@
 ---
 name: Feature request for AdminLTE v4.x
 about: Suggest an idea for this project
-title: "[FEATURE]"
+title: '[FEATURE]'
 labels: type:enhancement, version:4.x
 assignees: ''
-
 ---
 
 **Is your feature request related to a problem? Please describe.**

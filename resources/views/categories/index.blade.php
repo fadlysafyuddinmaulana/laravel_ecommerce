@@ -11,14 +11,14 @@
 
 @section('content')
     <div class="container-fluid">
-        
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        
         <div class="row">
             <div class="col-12">
                 <div class="row g-2 mb-3 justify-content-end">
+                    <div class="col-md-2">
+                        <button type="button" id="bulkDeleteBtn" class="btn btn-danger w-100" disabled>
+                            <i class="fa-solid fa-trash-can"></i> Delete Selected
+                        </button>
+                    </div>
                     <div class="col-md-2">
                         <a href="{{ route('categories.create') }}" class="btn btn-success w-100">+ New Category</a>
                     </div>
@@ -30,10 +30,15 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" width="5%">No</th>
+                        <form id="bulkDeleteForm" action="{{ route('categories.bulk-delete') }}" method="POST">
+                            @csrf
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" width="5%">
+                                            <input type="checkbox" id="selectAll">
+                                        </th>
+                                        <th class="text-center" width="5%">No</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th width="150">Actions</th>
@@ -43,21 +48,29 @@
                                 @php $no = 1; @endphp
                                 @forelse($categories as $category)
                                     <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" class="row-checkbox" name="ids[]" value="{{ $category->id }}">
+                                        </td>
                                         <td class="text-center">{{ $no++ }}</td>
-                                        <td><strong>{{ $category->name }}</strong></td>
+                                        <td><strong>{{ $category->category_name }}</strong></td>
                                         <td>{{ $category->description ?? '-' }}</td>
                                         <td class="text-center align-middle">
                                             <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                            <a href="{{ route('categories.destroy', $category) }}" class="btn btn-sm btn-danger" onclick="return confirm('Delete this category?')"><i class="fa-solid fa-trash-can"></i></a>
+                                            <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline delete-form">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash-can"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">No categories found.</td>
+                                        <td colspan="5" class="text-center">No categories found.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
+                        </form>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -100,6 +113,87 @@
             $("#example1").DataTable({
                 "responsive": true,
                 "autoWidth": false,
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": [0, 1, 4],
+                    "searchable": false
+                }],
+                "order": [
+                    [2, 'asc']
+                ],
+                "fnDrawCallback": function(oSettings) {
+                    // Auto numbering
+                    var api = this.api();
+                    var startIndex = api.context[0]._iDisplayStart;
+                    api.column(1, {
+                        order: 'applied'
+                    }).nodes().each(function(cell, i) {
+                        cell.innerHTML = startIndex + i + 1;
+                    });
+                }
+            });
+            
+            // SweetAlert2 Delete Confirmation
+            $('.btn-delete').on('click', function(e) {
+                e.preventDefault();
+                var form = $(this).closest('form');
+                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+
+            // Checkbox functionality
+            $('#selectAll').on('click', function() {
+                $('.row-checkbox').prop('checked', this.checked);
+                toggleBulkDeleteBtn();
+            });
+
+            $('.row-checkbox').on('change', function() {
+                var allChecked = $('.row-checkbox:checked').length === $('.row-checkbox').length;
+                $('#selectAll').prop('checked', allChecked);
+                toggleBulkDeleteBtn();
+            });
+
+            function toggleBulkDeleteBtn() {
+                var checkedCount = $('.row-checkbox:checked').length;
+                if (checkedCount > 0) {
+                    $('#bulkDeleteBtn').prop('disabled', false);
+                } else {
+                    $('#bulkDeleteBtn').prop('disabled', true);
+                }
+            }
+
+            // Bulk delete confirmation
+            $('#bulkDeleteBtn').on('click', function(e) {
+                e.preventDefault();
+                var checkedCount = $('.row-checkbox:checked').length;
+                
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: `You are about to delete ${checkedCount} categor(y|ies)!`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete them!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#bulkDeleteForm').submit();
+                    }
+                });
             });
         });
     </script>

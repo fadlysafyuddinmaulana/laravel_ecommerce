@@ -9,8 +9,8 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     
-    <!-- Font Awesome Icons v7.1.0 (Latest) -->
-    <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-7.1.0-web/css/all.min.css') }}">
+    <!-- Font Awesome Icons (v6.5.1 - Local) -->
+    <link rel="stylesheet" href="{{ asset('assets/fontawesome-free-6.5.1-web/css/all.min.css') }}">
     
     <!-- DataTables -->
     <link rel="stylesheet"
@@ -23,7 +23,21 @@
     <!-- AdminLTE -->
     <link rel="stylesheet" href="{{ asset('assets/AdminLTE-3.2.0/dist/css/adminlte.min.css') }}">
     
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    
     @stack('styles')
+</head>
+<style>
+    /* Dropdown user hover */
+    .user-dropdown:hover .dropdown-menu {
+        display: block !important;
+        margin-top: 0;
+    }
+    .user-dropdown .dropdown-menu {
+        margin-top: 0;
+    }
+</style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -70,6 +84,31 @@
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('assets/AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script>
+        // Global SweetAlert2 Toast untuk success message
+        @if(session('success'))
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            });
+
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('success') }}'
+            });
+        @endif
+    </script>
     
     @stack('scripts')
 </body>

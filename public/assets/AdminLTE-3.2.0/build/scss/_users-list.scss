@@ -3,7 +3,7 @@
 //
 
 .users-list {
-  @include list-unstyled ();
+  @include list-unstyled();
 
   > li {
     float: left;
@@ -44,7 +44,7 @@
   font-size: 12px;
 }
 
-@include dark-mode () {
+@include dark-mode() {
   .users-list-name {
     color: $gray-400;
   }
