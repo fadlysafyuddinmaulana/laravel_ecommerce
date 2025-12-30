@@ -21,7 +21,7 @@
                 </div>
             @endif
 
-                <form action="{{ route('auth.login.post') }}" method="post">
+                <form action="{{ route('login.post') }}" method="post">
                   @csrf
                     <div class="input-group mb-3">
                         <input type="text" name="login" class="form-control" placeholder="Email or Username" value="{{ old('login') }}" required autofocus/>
@@ -68,7 +68,7 @@
                     <a href="forgot-password.html">I forgot my password</a>
                 </p>
                 <p class="mb-0">
-                    <a href="{{ route('auth.register') }}" class="text-center">Register a new membership</a>
+                    <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
                 </p>
             </div>
             <!-- /.card-body -->

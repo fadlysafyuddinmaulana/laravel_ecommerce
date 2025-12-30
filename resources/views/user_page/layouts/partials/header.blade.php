@@ -38,7 +38,7 @@
                         <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
                     </li>
                     <li>
-                        <a href="{{ route('auth.login') }}" class="nav-link">
+                        <a href="{{ route('login') }}" class="nav-link">
                             <i class="fas fa-sign-in-alt me-2"></i> Login
                         </a>
                     </li>
@@ -63,8 +63,7 @@
                                 onclick="event.preventDefault(); document.getElementById('logout-link').submit();">
                                 <i class="fas fa-sign-out-alt mr-2"></i> Sign out
                             </a>
-                            <form id="logout-link" action="{{ route('auth.logout') }}" method="POST"
-                                style="display:none;">
+                            <form id="logout-link" action="{{ route('logout') }}" method="POST" style="display:none;">
                                 @csrf
                             </form>
                         </div>

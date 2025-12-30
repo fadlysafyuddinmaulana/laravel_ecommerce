@@ -37,19 +37,15 @@ class AuthWebController extends Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            'first_name'        => ['required', 'string', 'max:255'],
-            'last_name'         => ['required', 'string', 'max:255'],
-            'gender'            => ['nullable', 'string', 'in:male,female'],
-            'phone'             => ['nullable', 'string', 'max:20'],
-            'email'             => ['required', 'string', 'email', 'max:255', 'unique:customers,email'],
-            'username'          => ['required', 'string', 'max:255', 'unique:customers,username'],
-            'password'          => ['required', 'string', 'min:8', 'confirmed'],
-            'profile_image'     => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'date_of_birth'     => ['nullable', 'date'],
-            'address'           => ['nullable', 'string', 'max:255'],
-            'city'              => ['nullable', 'string', 'max:255'],
-            'state'             => ['nullable', 'string', 'max:255'],
-            'zip_code'          => ['nullable', 'string', 'max:255'],
+            'first_name'    => 'required|string|max:255',
+            'last_name'     => 'required|string|max:255',
+            'gender'        => 'nullable|string|in:male,female',
+            'phone'         => 'nullable|string|max:20',
+            'email'         => 'required|string|email|max:255|unique:customers',
+            'username'      => 'required|string|max:255|unique:customers',
+            'password'      => 'required|string|min:8|confirmed',
+            'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'date_of_birth' => 'nullable|date',
         ]);
 
         $data['password'] = Hash::make($data['password']);
@@ -58,17 +54,19 @@ class AuthWebController extends Controller
         // handle profile_image kalau perlu, set default dsb.
 
         $customer = Customer::create($data);
-
-        // login pakai guard yang sama dengan route /email/verify
+        
         Auth::login($customer);
-
-        // trigger email verification
-        event(new Registered($customer));
-
-        // arahkan ke halaman verify
-        return redirect()->route('verification.notice');
+        
+        // kirim email verifikasi (pakai SMTP Gmail dari .env)
+        $customer->sendEmailVerificationNotification();
+        
+        return redirect()->route('verification.notice')
+            ->with('success', 'Registrasi berhasil. Silakan cek email untuk verifikasi.');
     }
 
+    /**
+     * Handle an authentication attempt.
+     */
     public function login(Request $request)
     {
         $data = $request->validate([

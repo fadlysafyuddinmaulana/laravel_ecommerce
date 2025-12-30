@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -38,11 +39,6 @@ class Customer extends Authenticatable implements MustVerifyEmail
         'password',
         'profile_image',
         'date_of_birth',
-        'address',
-        'city',
-        'state',
-        'zip_code',
-        'role',
     ];
 
     protected $hidden = [
