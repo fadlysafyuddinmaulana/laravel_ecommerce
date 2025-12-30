@@ -1,6 +1,5 @@
 <!-- Start Header/Navigation -->
-<nav id="mainHeader" class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark fixed-top transition-bg"
-    arial-label="Furni navigation bar">
+<nav id="mainHeader" class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">Furni<span>.</span></a>
 
