@@ -10,7 +10,6 @@ use App\Http\Controllers\Web\DepartmentWebController;
 use App\Http\Controllers\Web\PositionsWebController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\HomeWebController;
-use Illuminate\Support\Facades\Route;
 
 // halaman notice
 Route::get('/email/verify', function () {
