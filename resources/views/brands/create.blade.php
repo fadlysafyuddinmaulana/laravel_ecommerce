@@ -34,9 +34,9 @@
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="category_name">Name *</label>
-                        <input type="text" name="category_name" class="form-control" id="category_name"
-                            value="{{ old('category_name') }}" placeholder="Enter category name" required>
+                        <label for="brand_name">Name *</label>
+                        <input type="text" name="brand_name" class="form-control" id="brand_name"
+                            value="{{ old('brand_name') }}" placeholder="Enter brand name" required>
                     </div>
                 </div>
                 <!-- /.card-body -->

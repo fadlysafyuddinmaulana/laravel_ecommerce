@@ -39,11 +39,11 @@
                    onclick="event.preventDefault(); document.getElementById('logout-link').submit();">
                     <i class="fas fa-sign-out-alt mr-2"></i> Sign out
                 </a>
-                <form id="logout-link" action="{{ route('auth.logout') }}" method="POST" style="display:none;">
+                <form id="logout-link" action="{{ route('logout') }}" method="POST" style="display:none;">
                     @csrf
                 </form>
                 @else
-                <a href="{{ route('auth.login') }}" class="dropdown-item">
+                <a href="{{ route('login') }}" class="dropdown-item">
                     <i class="fas fa-sign-in-alt mr-2"></i> Login
                 </a>
                 @endif

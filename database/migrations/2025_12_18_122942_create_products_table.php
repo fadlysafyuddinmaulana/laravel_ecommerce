@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
 
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('brand', 25)->nullable();
+            $table->string('brand_id', 25)->nullable();
             $table->text('image')->nullable();
 
             $table->string('status', 20)->default('active');

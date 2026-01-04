@@ -74,15 +74,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->routeIs('brands.*') ? 'active' : '' }}">
+                            <a href="{{ route('brands.index') }}"
+                                class="nav-link {{ request()->routeIs('brands.*') ? 'active' : '' }}">
                                 <i class="fas fa-tags nav-icon"></i>
                                 <p>Brands</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->routeIs('reviews.*') ? 'active' : '' }}">
-                                <i class="fas fa-star nav-icon"></i>
-                                <p>Reviews</p>
                             </a>
                         </li>
                         <li class="nav-item">

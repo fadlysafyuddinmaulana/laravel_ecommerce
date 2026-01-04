@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -30,7 +30,6 @@ class CategoryWebController extends Controller
     {
         $data = $request->validate([
             'category_name' => 'required|string|max:255',
-            'description'   => 'nullable|string',
         ]);
 
         $category = Category::create($data);

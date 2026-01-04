@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Web;
+namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;

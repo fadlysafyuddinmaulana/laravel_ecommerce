@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\ProductWebController;
 use App\Http\Controllers\Web\CategoryWebController;
+use App\Http\Controllers\Web\BrandWebController;
 use App\Http\Controllers\Web\EmployeeWebController;
 use App\Http\Controllers\Web\DepartmentWebController;
 use App\Http\Controllers\Web\PositionsWebController;
@@ -68,6 +69,14 @@ Route::get('/categories/{category}/edit', [CategoryWebController::class, 'edit']
 Route::put('/categories/{category}', [CategoryWebController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{category}', [CategoryWebController::class, 'destroy'])->name('categories.destroy');
 
+// Brand Routes
+Route::get('/brands', [BrandWebController::class, 'index'])->name('brands.index');
+Route::get('/brands/create', [BrandWebController::class, 'create'])->name('brands.create');
+Route::post('/brands', [BrandWebController::class, 'store'])->name('brands.store');
+Route::get('/brands/{brand}/edit', [BrandWebController::class, 'edit'])->name('brands.edit');
+Route::put('/brands/{brand}', [BrandWebController::class, 'update'])->name('brands.update');
+Route::delete('/brands/{brand}', [BrandWebController::class, 'destroy'])->name('brands.destroy');
+
 // Employee Routes
 Route::get('/employees', [EmployeeWebController::class, 'index'])->name('employees.index');
 Route::get('/employees/create', [EmployeeWebController::class, 'create'])->name('employees.create');
@@ -95,6 +104,7 @@ Route::delete('/positions/{position}', [PositionsWebController::class, 'destroy'
 // Bulk delete routes
 Route::post('/products/bulk-delete', [ProductWebController::class, 'bulkDelete'])->name('products.bulk-delete');
 Route::post('/categories/bulk-delete', [CategoryWebController::class, 'bulkDelete'])->name('categories.bulk-delete');
+Route::post('/brands/bulk-delete', [BrandWebController::class, 'bulkDelete'])->name('brands.bulk-delete');
 Route::post('/employees/bulk-delete', [EmployeeWebController::class, 'bulkDelete'])->name('employees.bulk-delete');
 Route::post('/departments/bulk-delete', [DepartmentWebController::class, 'bulkDelete'])->name('departments.bulk-delete');
 Route::post('/positions/bulk-delete', [PositionsWebController::class, 'bulkDelete'])->name('positions.bulk-delete');
