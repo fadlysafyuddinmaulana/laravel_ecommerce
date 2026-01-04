@@ -20,4 +20,9 @@ class Product extends Model
         'status',
         'is_featured',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

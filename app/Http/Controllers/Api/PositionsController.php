@@ -6,6 +6,7 @@ use App\Models\Position;
 use App\Models\Positions;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 
 class PositionsController extends Controller
 {

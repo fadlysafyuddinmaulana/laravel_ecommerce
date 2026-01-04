@@ -3,25 +3,40 @@
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\ProductWebController;
-use App\Http\Controllers\Web\CategoryWebController;
-use App\Http\Controllers\Web\BrandWebController;
-use App\Http\Controllers\Web\EmployeeWebController;
-use App\Http\Controllers\Web\DepartmentWebController;
-use App\Http\Controllers\Web\PositionsWebController;
-use App\Http\Controllers\Web\AuthWebController;
-use App\Http\Controllers\Web\HomeWebController;
+use App\Http\Controllers\ProductWebController;
+use App\Http\Controllers\CategoryWebController;
+use App\Http\Controllers\BrandWebController;
+use App\Http\Controllers\EmployeeWebController;
+use App\Http\Controllers\DepartmentWebController;
+use App\Http\Controllers\PositionsWebController;
+use App\Http\Controllers\AuthWebController;
+use App\Http\Controllers\HomeWebController;
+use App\Http\Controllers\CartWebController;
 
 // halaman notice
 Route::get('/email/verify', function () {
+    // Jika sudah verified, redirect ke home
+    if (auth()->user() && auth()->user()->hasVerifiedEmail()) {
+        return redirect('/')->with('info', 'Email Anda sudah terverifikasi.');
+    }
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
 // link verifikasi
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    // Check jika sudah verified sebelumnya
+    if ($request->user()->hasVerifiedEmail()) {
+        return redirect('/')->with('info', 'Email Anda sudah terverifikasi sebelumnya.');
+    }
+    
     $request->fulfill(); // set email_verified_at
-    return redirect()->route('landing')
-        ->with('success', 'Email berhasil diverifikasi.');
+    
+    // Set session untuk trigger auto refresh di halaman home
+    session()->flash('email_verified', true);
+    session()->flash('success', 'Email berhasil diverifikasi!');
+    
+    // Redirect langsung ke home
+    return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
 // resend verifikasi
@@ -40,8 +55,12 @@ Route::get('/', function () {
 })->name('landing');
 
 Route::get('/dashboard', function () {
+    // Cek jika user adalah customer, redirect ke home
+    if (auth()->check() && auth()->user()->role === 'customer') {
+        return redirect('/')->with('error', 'Akses ditolak. Halaman ini hanya untuk admin dan pegawai.');
+    }
     return view('pages.dashboard', ['layout' => 'layouts.app']);
-})->name('dashboard');
+})->middleware('auth')->name('dashboard');
 
 // Authentication Routes
 Route::get('/login', [AuthWebController::class, 'showLoginForm'])->name('login');
@@ -52,6 +71,14 @@ Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
 
 Route::get('/home', [HomeWebController::class, 'index'])->middleware(['auth'])->name('landing');
 Route::get('/shop', [HomeWebController::class, 'shop'])->name('shop');
+Route::get('/product/{id}', [ProductWebController::class, 'show'])->name('product.show');
+
+// Cart Routes
+Route::get('/cart', [CartWebController::class, 'index'])->name('cart');
+Route::post('/cart/add', [CartWebController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartWebController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove/{id}', [CartWebController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartWebController::class, 'clear'])->name('cart.clear');
 
 // Resource Routes
 Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');

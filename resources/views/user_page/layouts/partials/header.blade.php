@@ -32,10 +32,75 @@
             </ul>
 
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <!-- Cart Dropdown -->
+                <li class="nav-item dropdown cart-dropdown">
+                    <a class="nav-link position-relative" href="#" id="cartDropdown" role="button">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        @if (session('cart') && count(session('cart')) > 0)
+                            <span class="cart-badge" id="cartCount">
+                                {{ count(session('cart')) }}
+                            </span>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-cart dropdown-menu-end" aria-labelledby="cartDropdown">
+                        <div class="cart-dropdown-header px-3 py-2 border-bottom">
+                            <h6 class="mb-0">Keranjang (<span
+                                    id="cartItemCount">{{ session('cart') ? count(session('cart')) : 0 }}</span>)</h6>
+                        </div>
+                        <div class="cart-dropdown-body" id="cartDropdownBody">
+                            @if (session('cart') && count(session('cart')) > 0)
+                                @foreach (session('cart') as $id => $item)
+                                    <div class="cart-item d-flex p-3 border-bottom" data-id="{{ $id }}">
+                                        <div class="cart-item-image me-3">
+                                            <img src="{{ asset('storage/' . ($item['image'] ?? 'default.png')) }}"
+                                                alt="{{ $item['name'] }}" class="rounded"
+                                                style="width: 60px; height: 60px; object-fit: cover;">
+                                        </div>
+                                        <div class="cart-item-details flex-grow-1">
+                                            <h6 class="mb-1 text-truncate" style="max-width: 200px;">
+                                                {{ $item['name'] }}</h6>
+                                            <p class="mb-1 text-muted small">{{ $item['quantity'] }} x Rp
+                                                {{ number_format($item['price'], 0, ',', '.') }}</p>
+                                            <p class="mb-0 fw-bold text-success">Rp
+                                                {{ number_format($item['quantity'] * $item['price'], 0, ',', '.') }}
+                                            </p>
+                                        </div>
+                                        <button class="btn btn-sm btn-link text-danger p-0 ms-2"
+                                            onclick="removeFromCart({{ $id }})">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="empty-cart text-center py-5">
+                                    <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">Keranjang Anda kosong</p>
+                                </div>
+                            @endif
+                        </div>
+                        @if (session('cart') && count(session('cart')) > 0)
+                            <div class="cart-dropdown-footer p-3 border-top">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Total</span>
+                                    <strong class="text-success" id="cartTotal">
+                                        Rp
+                                        {{ number_format(
+                                            collect(session('cart'))->sum(function ($item) {
+                                                return $item['quantity'] * $item['price'];
+                                            }),
+                                            0,
+                                            ',',
+                                            '.',
+                                        ) }}
+                                    </strong>
+                                </div>
+                                <a href="{{ route('cart') }}" class="btn btn-success w-100">Lihat Keranjang</a>
+                            </div>
+                        @endif
+                    </div>
+                </li>
+
                 @if (!Auth::check())
-                    <li>
-                        <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
-                    </li>
                     <li>
                         <a href="{{ route('login') }}" class="nav-link">
                             <i class="fas fa-sign-in-alt me-2"></i> Login
@@ -62,7 +127,8 @@
                                 onclick="event.preventDefault(); document.getElementById('logout-link').submit();">
                                 <i class="fas fa-sign-out-alt mr-2"></i> Sign out
                             </a>
-                            <form id="logout-link" action="{{ route('logout') }}" method="POST" style="display:none;">
+                            <form id="logout-link" action="{{ route('logout') }}" method="POST"
+                                style="display:none;">
                                 @csrf
                             </form>
                         </div>
@@ -88,7 +154,22 @@
             }
         });
 
-        // Dropdown on hover for desktop
+        // Cart Dropdown on hover
+        var cartDropdown = document.querySelector('.cart-dropdown');
+        if (window.matchMedia('(min-width: 768px)').matches && cartDropdown) {
+            cartDropdown.addEventListener('mouseenter', function() {
+                var dropdownMenu = this.querySelector('.dropdown-menu-cart');
+                this.classList.add('show');
+                dropdownMenu.classList.add('show');
+            });
+            cartDropdown.addEventListener('mouseleave', function() {
+                var dropdownMenu = this.querySelector('.dropdown-menu-cart');
+                this.classList.remove('show');
+                dropdownMenu.classList.remove('show');
+            });
+        }
+
+        // User Dropdown on hover for desktop
         var userDropdown = document.querySelector('.user-dropdown');
         if (window.matchMedia('(min-width: 768px)').matches && userDropdown) {
             userDropdown.addEventListener('mouseenter', function() {
@@ -103,8 +184,117 @@
             });
         }
     });
+
+    // Remove from cart function
+    function removeFromCart(productId) {
+        if (confirm('Hapus item dari keranjang?')) {
+            fetch(`/cart/remove/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    }
+                });
+        }
+    }
 </script>
+
 <style>
+    /* Cart Badge - Tokopedia Style */
+    .cart-badge {
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        background-color: #ee4d2d;
+        color: white;
+        border-radius: 12px;
+        padding: 2px 6px;
+        font-size: 11px;
+        font-weight: 700;
+        line-height: 1.4;
+        min-width: 20px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+
+    .cart-dropdown .nav-link {
+        position: relative;
+        padding: 0.5rem 1rem;
+    }
+
+    .cart-dropdown .nav-link i {
+        font-size: 1.3rem;
+    }
+
+    /* Cart Dropdown */
+    .dropdown-menu-cart {
+        width: 380px;
+        max-height: 500px;
+        border: none;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .cart-dropdown-header {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+
+    .cart-dropdown-body {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .cart-dropdown-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .cart-dropdown-body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .cart-dropdown-body::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+
+    .cart-item {
+        transition: background-color 0.2s;
+    }
+
+    .cart-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .cart-item-image img {
+        border: 1px solid #e9ecef;
+    }
+
+    .empty-cart i {
+        opacity: 0.3;
+    }
+
+    /* Header scrolled state */
+    .header-scrolled .navbar-brand,
+    .header-scrolled .nav-link {
+        color: #212529 !important;
+    }
+
+    @media (max-width: 767px) {
+        .dropdown-menu-cart {
+            width: 100vw;
+            max-width: 100%;
+        }
+    }
+
     .transition-bg {
         transition: background-color 0.3s, box-shadow 0.3s;
     }

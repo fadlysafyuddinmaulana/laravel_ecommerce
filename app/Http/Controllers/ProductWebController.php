@@ -94,6 +94,20 @@ class ProductWebController extends \App\Http\Controllers\Controller
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
 
+    public function show($id)
+    {
+        $product = Product::with('category')->findOrFail($id);
+        
+        // Get related products from the same category
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('status', 'active')
+            ->limit(4)
+            ->get();
+        
+        return view('user_page.pages.product-detail', compact('product', 'relatedProducts'));
+    }
+
     public function destroy(Product $product)
     {
         $product->delete();

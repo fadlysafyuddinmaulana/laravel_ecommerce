@@ -56,7 +56,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="e.g. MySecret123"
-                            value="MySecret123" required>
+                            value="12345678" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="input-group mb-3">
                         <input type="password" name="password_confirmation" class="form-control"
-                            placeholder="Retype password" value="MySecret123" required>
+                            placeholder="Retype password" value="12345678" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
