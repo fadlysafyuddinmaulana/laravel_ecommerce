@@ -47,6 +47,7 @@ class ProductWebController extends \App\Http\Controllers\Controller
             'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status'      => 'nullable|string|max:20',
             'is_featured' => 'boolean',
+            'has_discount' => 'boolean',
         ]);
 
         // Handle file upload
@@ -79,6 +80,7 @@ class ProductWebController extends \App\Http\Controllers\Controller
             'image'       => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status'      => 'nullable|string|max:20',
             'is_featured' => 'boolean',
+            'has_discount' => 'boolean',
         ]);
 
         // Handle file upload

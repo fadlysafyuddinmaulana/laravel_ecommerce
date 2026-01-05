@@ -12,6 +12,10 @@ use App\Http\Controllers\PositionsWebController;
 use App\Http\Controllers\AuthWebController;
 use App\Http\Controllers\HomeWebController;
 use App\Http\Controllers\CartWebController;
+use App\Http\Controllers\CheckoutWebController;
+use App\Http\Controllers\CustomerWebController;
+use App\Http\Controllers\TestimonialWebController;
+use App\Http\Controllers\PageContentWebController;
 
 // halaman notice
 Route::get('/email/verify', function () {
@@ -50,17 +54,16 @@ Route::post('/email/verification-notification', function (Request $request) {
     return back()->with('status', 'Link verifikasi baru sudah dikirim.');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-Route::get('/', function () {
-    return view('user_page.pages.index');
-})->name('landing');
+Route::get('/', [HomeWebController::class, 'index'])->name('landing');
 
 Route::get('/dashboard', function () {
+    // TESTING: Middleware auth di-comment untuk kemudahan akses
     // Cek jika user adalah customer, redirect ke home
-    if (auth()->check() && auth()->user()->role === 'customer') {
-        return redirect('/')->with('error', 'Akses ditolak. Halaman ini hanya untuk admin dan pegawai.');
-    }
+    // if (auth()->check() && auth()->user()->role === 'customer') {
+    //     return redirect('/')->with('error', 'Akses ditolak. Halaman ini hanya untuk admin dan pegawai.');
+    // }
     return view('pages.dashboard', ['layout' => 'layouts.app']);
-})->middleware('auth')->name('dashboard');
+})->name('dashboard'); // ->middleware('auth')
 
 // Authentication Routes
 Route::get('/login', [AuthWebController::class, 'showLoginForm'])->name('login');
@@ -69,16 +72,25 @@ Route::get('/register', [AuthWebController::class, 'showRegisterForm'])->name('r
 Route::post('/register', [AuthWebController::class, 'register'])->name('register.post');
 Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
 
-Route::get('/home', [HomeWebController::class, 'index'])->middleware(['auth'])->name('landing');
+//Public Routes
 Route::get('/shop', [HomeWebController::class, 'shop'])->name('shop');
 Route::get('/product/{id}', [ProductWebController::class, 'show'])->name('product.show');
+Route::get('/about', [HomeWebController::class, 'about'])->name('about');
+Route::get('/services', [HomeWebController::class, 'services'])->name('services');
+Route::get('/blog', [HomeWebController::class, 'blog'])->name('blog');
+Route::get('/contact', [HomeWebController::class, 'contact'])->name('contact');
 
 // Cart Routes
 Route::get('/cart', [CartWebController::class, 'index'])->name('cart');
+Route::get('/cart/dropdown', [CartWebController::class, 'dropdown'])->name('cart.dropdown');
 Route::post('/cart/add', [CartWebController::class, 'add'])->name('cart.add');
 Route::post('/cart/update', [CartWebController::class, 'update'])->name('cart.update');
 Route::post('/cart/remove/{id}', [CartWebController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartWebController::class, 'clear'])->name('cart.clear');
+
+// Checkout Routes
+Route::get('/checkout', [CheckoutWebController::class, 'index'])->name('checkout');
+Route::post('/checkout/process', [CheckoutWebController::class, 'process'])->name('checkout.process');
 
 // Resource Routes
 Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');
@@ -103,6 +115,13 @@ Route::post('/brands', [BrandWebController::class, 'store'])->name('brands.store
 Route::get('/brands/{brand}/edit', [BrandWebController::class, 'edit'])->name('brands.edit');
 Route::put('/brands/{brand}', [BrandWebController::class, 'update'])->name('brands.update');
 Route::delete('/brands/{brand}', [BrandWebController::class, 'destroy'])->name('brands.destroy');
+
+// Customer Routes
+Route::get('/customers', [CustomerWebController::class, 'index'])->name('customers.index');
+Route::post('/customers/bulk-delete', [CustomerWebController::class, 'bulkDelete'])->name('customers.bulk-delete');
+Route::get('/customers/{customer}/edit', [CustomerWebController::class, 'edit'])->name('customers.edit');
+Route::put('/customers/{customer}', [CustomerWebController::class, 'update'])->name('customers.update');
+Route::delete('/customers/{customer}', [CustomerWebController::class, 'destroy'])->name('customers.destroy');
 
 // Employee Routes
 Route::get('/employees', [EmployeeWebController::class, 'index'])->name('employees.index');
@@ -135,3 +154,19 @@ Route::post('/brands/bulk-delete', [BrandWebController::class, 'bulkDelete'])->n
 Route::post('/employees/bulk-delete', [EmployeeWebController::class, 'bulkDelete'])->name('employees.bulk-delete');
 Route::post('/departments/bulk-delete', [DepartmentWebController::class, 'bulkDelete'])->name('departments.bulk-delete');
 Route::post('/positions/bulk-delete', [PositionsWebController::class, 'bulkDelete'])->name('positions.bulk-delete');
+
+// Page Contents Routes (CMS)
+Route::get('/page-contents', [PageContentWebController::class, 'index'])->name('page-contents.index');
+Route::get('/page-contents/create', [PageContentWebController::class, 'create'])->name('page-contents.create');
+Route::post('/page-contents', [PageContentWebController::class, 'store'])->name('page-contents.store');
+Route::get('/page-contents/{pageContent}/edit', [PageContentWebController::class, 'edit'])->name('page-contents.edit');
+Route::put('/page-contents/{pageContent}', [PageContentWebController::class, 'update'])->name('page-contents.update');
+Route::delete('/page-contents/{pageContent}', [PageContentWebController::class, 'destroy'])->name('page-contents.destroy');
+
+// Testimonials Routes
+Route::get('/testimonials', [TestimonialWebController::class, 'index'])->name('testimonials.index');
+Route::get('/testimonials/create', [TestimonialWebController::class, 'create'])->name('testimonials.create');
+Route::post('/testimonials', [TestimonialWebController::class, 'store'])->name('testimonials.store');
+Route::get('/testimonials/{testimonial}/edit', [TestimonialWebController::class, 'edit'])->name('testimonials.edit');
+Route::put('/testimonials/{testimonial}', [TestimonialWebController::class, 'update'])->name('testimonials.update');
+Route::delete('/testimonials/{testimonial}', [TestimonialWebController::class, 'destroy'])->name('testimonials.destroy');

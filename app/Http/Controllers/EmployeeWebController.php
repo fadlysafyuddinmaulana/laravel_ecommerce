@@ -41,19 +41,15 @@ class EmployeeWebController extends Controller
             'username'      => 'required|string|max:255|unique:employees',
             'password'      => 'required|string|min:8',
             'profile_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-            'position_code' => 'required|string',
-            'department_code' => 'required|string',
+            'position_code' => 'required|integer',
+            'department_code' => 'required|integer',
             'hire_date'     => 'nullable|date',
             'status'        => 'nullable|string|max:20',
         ]);
 
-        // Mapping position_code ke position_id
-        $position = \App\Models\Positions::where('position_code', $data['position_code'])->first();
-        $data['position_id'] = $position ? $position->id : null;
-
-        // Mapping department_code ke department_id
-        $department = \App\Models\Department::where('department_code', $data['department_code'])->first();
-        $data['department_id'] = $department ? $department->id : null;
+        // Map position_code dan department_code ke position_id dan department_id
+        $data['position_id'] = $data['position_code'];
+        $data['department_id'] = $data['department_code'];
 
         unset($data['position_code'], $data['department_code']);
 
@@ -104,13 +100,9 @@ class EmployeeWebController extends Controller
             'status'        => 'nullable|string|max:20',
         ]);
 
-        // Mapping position_code ke position_id
-        $position = \App\Models\Positions::where('position_code', $data['position_code'])->first();
-        $data['position_id'] = $position ? $position->id : null;
-
-        // Mapping department_code ke department_id
-        $department = \App\Models\Department::where('department_code', $data['department_code'])->first();
-        $data['department_id'] = $department ? $department->id : null;
+        // Map position_code dan department_code ke position_id dan department_id
+        $data['position_id'] = $data['position_code'];
+        $data['department_id'] = $data['department_code'];
 
         unset($data['position_code'], $data['department_code']);
 

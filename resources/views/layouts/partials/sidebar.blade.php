@@ -90,8 +90,10 @@
                 </li>
 
                 <!-- Customers -->
-                <li class="nav-item {{ request()->routeIs('customers.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('customers.*') ? 'active' : '' }}">
+                <li
+                    class="nav-item {{ request()->routeIs('customers.*') || request()->routeIs('customer.dashboard') ? 'menu-open' : '' }}">
+                    <a href="#"
+                        class="nav-link {{ request()->routeIs('customers.*') || request()->routeIs('customer.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Customers
@@ -100,8 +102,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link {{ request()->routeIs('customers.index') ? 'active' : '' }}">
+                            <a href="{{ route('customers.index') }}"
+                                class="nav-link {{ request()->routeIs('customers.index') || request()->routeIs('customers.edit') ? 'active' : '' }}">
                                 <i class="fas fa-user-friends nav-icon"></i>
                                 <p>All Customers</p>
                             </a>
@@ -353,9 +355,9 @@
                 </li>
                 <!-- Content Management -->
                 <li
-                    class="nav-item {{ request()->routeIs('pages.*') || request()->routeIs('banners.*') || request()->routeIs('blogs.*') || request()->routeIs('faqs.*') ? 'menu-open' : '' }}">
+                    class="nav-item {{ request()->routeIs('page-contents.*') || request()->routeIs('testimonials.*') || request()->routeIs('banners.*') || request()->routeIs('blogs.*') || request()->routeIs('faqs.*') ? 'menu-open' : '' }}">
                     <a href="#"
-                        class="nav-link {{ request()->routeIs('pages.*') || request()->routeIs('banners.*') || request()->routeIs('blogs.*') || request()->routeIs('faqs.*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('page-contents.*') || request()->routeIs('testimonials.*') || request()->routeIs('banners.*') || request()->routeIs('blogs.*') || request()->routeIs('faqs.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
                             Content Management
@@ -364,10 +366,17 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link {{ request()->routeIs('pages.index') ? 'active' : '' }}">
+                            <a href="{{ route('page-contents.index') }}"
+                                class="nav-link {{ request()->routeIs('page-contents.index') ? 'active' : '' }}">
                                 <i class="fas fa-file-alt nav-icon"></i>
-                                <p>Pages</p>
+                                <p>Page Contents (CMS)</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('testimonials.index') }}"
+                                class="nav-link {{ request()->routeIs('testimonials.index') ? 'active' : '' }}">
+                                <i class="fas fa-quote-left nav-icon"></i>
+                                <p>Testimonials</p>
                             </a>
                         </li>
                         <li class="nav-item">

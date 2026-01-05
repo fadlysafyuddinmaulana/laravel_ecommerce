@@ -355,9 +355,7 @@
                             .map(cb => cb.value);
 
                         if (selectedItems.length > 0) {
-                            alert('Checkout functionality will be implemented soon!\nSelected items: ' +
-                                selectedItems.join(', '));
-                            // window.location.href = '/checkout';
+                            window.location.href = '{{ route('checkout') }}';
                         }
                     });
                 }

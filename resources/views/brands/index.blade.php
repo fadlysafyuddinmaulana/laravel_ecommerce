@@ -39,36 +39,40 @@
                                             <input type="checkbox" id="selectAll">
                                         </th>
                                         <th class="text-center" width="5%">No</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th width="150">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php $no = 1; @endphp
-                                @forelse($brands as $brand)
-                                    <tr>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="row-checkbox" name="ids[]" value="{{ $category->id }}">
-                                        </td>
-                                        <td class="text-center">{{ $no++ }}</td>
-                                        <td><strong>{{ $brand->brand_name }}</strong></td>
-                                        <td class="text-center align-middle">
-                                            <a href="{{ route('brands.edit', $brand) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('brands.destroy', $brand) }}" method="POST" class="d-inline delete-form">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash-can"></i></button>
-                                            </form>
-                                        </td>
+                                        <th>Name</th>
+                                        <th width="150">Actions</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No brands found.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php $no = 1; @endphp
+                                    @forelse($brands as $brand)
+                                        <tr>
+                                            <td class="text-center">
+                                                <input type="checkbox" class="row-checkbox" name="ids[]"
+                                                    value="{{ $brand->id }}">
+                                            </td>
+                                            <td class="text-center">{{ $no++ }}</td>
+                                            <td><strong>{{ $brand->brand_name }}</strong></td>
+                                            <td class="text-center align-middle">
+                                                <a href="{{ route('brands.edit', $brand) }}"
+                                                    class="btn btn-sm btn-primary"><i
+                                                        class="fa-regular fa-pen-to-square"></i></a>
+                                                <form action="{{ route('brands.destroy', $brand) }}" method="POST"
+                                                    class="d-inline delete-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-sm btn-danger btn-delete"><i
+                                                            class="fa-solid fa-trash-can"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">No brands found.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </form>
                     </div>
                     <!-- /.card-body -->
@@ -95,8 +99,10 @@
     <!-- DataTables & Plugins -->
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}">
+    </script>
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}">
+    </script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js') }}"></script>
@@ -131,12 +137,12 @@
                     });
                 }
             });
-            
+
             // SweetAlert2 Delete Confirmation
             $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
-                
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -178,7 +184,7 @@
             $('#bulkDeleteBtn').on('click', function(e) {
                 e.preventDefault();
                 var checkedCount = $('.row-checkbox:checked').length;
-                
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: `You are about to delete ${checkedCount} categor(y|ies)!`,

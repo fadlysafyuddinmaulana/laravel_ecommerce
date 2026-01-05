@@ -1,273 +1,381 @@
-		<div class="untree_co-section">
-		    <div class="container">
-		      <div class="row mb-5">
-				@extends('user_page.layouts.app')
+@extends('user_page.layouts.app')
 
-				@section('title', 'Checkout')
+@section('title', 'Checkout')
 
-				@section('content')
-		        <div class="col-md-12">
-		          <div class="border p-4 rounded" role="alert">
-		            Returning customer? <a href="#">Click here</a> to login
-		          </div>
-		        </div>
-		      </div>
-		      <div class="row">
-		        <div class="col-md-6 mb-5 mb-md-0">
-		          <h2 class="h3 mb-3 text-black">Billing Details</h2>
-		          <div class="p-3 p-lg-5 border bg-white">
-		            <div class="form-group">
-		              <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-		              <select id="c_country" class="form-control">
-		                <option value="1">Select a country</option>    
-		                <option value="2">bangladesh</option>    
-		                <option value="3">Algeria</option>    
-		                <option value="4">Afghanistan</option>    
-		                <option value="5">Ghana</option>    
-		                <option value="6">Albania</option>    
-		                <option value="7">Bahrain</option>    
-		                <option value="8">Colombia</option>    
-		                <option value="9">Dominican Republic</option>    
-		              </select>
-		            </div>
-		            <div class="form-group row">
-		              <div class="col-md-6">
-		                <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_fname" name="c_fname">
-		              </div>
-		              <div class="col-md-6">
-		                <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_lname" name="c_lname">
-		              </div>
-		            </div>
+@push('styles')
+    <style>
+        body {
+            background: #f8f9fa;
+        }
 
-		            <div class="form-group row">
-		              <div class="col-md-12">
-		                <label for="c_companyname" class="text-black">Company Name </label>
-		                <input type="text" class="form-control" id="c_companyname" name="c_companyname">
-		              </div>
-		            </div>
+        .checkout-wrapper {
+            padding: 40px 0;
+            min-height: 100vh;
+        }
 
-		            <div class="form-group row">
-		              <div class="col-md-12">
-		                <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">
-		              </div>
-		            </div>
+        .page-title {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
 
-		            <div class="form-group mt-3">
-		              <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-		            </div>
+        .card {
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem;
+            margin-bottom: 20px;
+        }
 
-		            <div class="form-group row">
-		              <div class="col-md-6">
-		                <label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_state_country" name="c_state_country">
-		              </div>
-		              <div class="col-md-6">
-		                <label for="c_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
-		              </div>
-		            </div>
+        .card-header {
+            background-color: #f7f7f9;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            padding: 0.75rem 1.25rem;
+        }
 
-		            <div class="form-group row mb-5">
-		              <div class="col-md-6">
-		                <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_email_address" name="c_email_address">
-		              </div>
-		              <div class="col-md-6">
-		                <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-		                <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
-		              </div>
-		            </div>
+        .card-header h4 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 400;
+        }
 
-		            <div class="form-group">
-		              <label for="c_create_account" class="text-black" data-bs-toggle="collapse" href="#create_an_account" role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1" id="c_create_account"> Create an account?</label>
-		              <div class="collapse" id="create_an_account">
-		                <div class="py-2 mb-4">
-		                  <p class="mb-3">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-		                  <div class="form-group">
-		                    <label for="c_account_password" class="text-black">Account Password</label>
-		                    <input type="email" class="form-control" id="c_account_password" name="c_account_password" placeholder="">
-		                  </div>
-		                </div>
-		              </div>
-		            </div>
+        .card-body {
+            padding: 1.25rem;
+        }
 
+        .list-group-item {
+            border-left: 0;
+            border-right: 0;
+            border-radius: 0;
+        }
 
-		            <div class="form-group">
-		              <label for="c_ship_different_address" class="text-black" data-bs-toggle="collapse" href="#ship_different_address" role="button" aria-expanded="false" aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address"> Ship To A Different Address?</label>
-		              <div class="collapse" id="ship_different_address">
-		                <div class="py-2">
+        .list-group-item:first-child {
+            border-top: 0;
+        }
 
-		                  <div class="form-group">
-		                    <label for="c_diff_country" class="text-black">Country <span class="text-danger">*</span></label>
-		                    <select id="c_diff_country" class="form-control">
-		                      <option value="1">Select a country</option>    
-		                      <option value="2">bangladesh</option>    
-		                      <option value="3">Algeria</option>    
-		                      <option value="4">Afghanistan</option>    
-		                      <option value="5">Ghana</option>    
-		                      <option value="6">Albania</option>    
-		                      <option value="7">Bahrain</option>    
-		                      <option value="8">Colombia</option>    
-		                      <option value="9">Dominican Republic</option>    
-		                    </select>
-		                  </div>
+        .badge-secondary {
+            background-color: #6c757d;
+        }
 
+        .text-muted {
+            font-size: 0.875rem;
+        }
 
-		                  <div class="form-group row">
-		                    <div class="col-md-6">
-		                      <label for="c_diff_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname">
-		                    </div>
-		                    <div class="col-md-6">
-		                      <label for="c_diff_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname">
-		                    </div>
-		                  </div>
+        .form-control:focus {
+            border-color: #80bdff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
 
-		                  <div class="form-group row">
-		                    <div class="col-md-12">
-		                      <label for="c_diff_companyname" class="text-black">Company Name </label>
-		                      <input type="text" class="form-control" id="c_diff_companyname" name="c_diff_companyname">
-				@endsection
-		                    </div>
-		                  </div>
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
 
-		                  <div class="form-group row  mb-3">
-		                    <div class="col-md-12">
-		                      <label for="c_diff_address" class="text-black">Address <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_address" name="c_diff_address" placeholder="Street address">
-		                    </div>
-		                  </div>
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
 
-		                  <div class="form-group">
-		                    <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-		                  </div>
+        .btn-lg {
+            padding: 0.5rem 1rem;
+            font-size: 1.25rem;
+        }
 
-		                  <div class="form-group row">
-		                    <div class="col-md-6">
-		                      <label for="c_diff_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_state_country" name="c_diff_state_country">
-		                    </div>
-		                    <div class="col-md-6">
-		                      <label for="c_diff_postal_zip" class="text-black">Posta / Zip <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_postal_zip" name="c_diff_postal_zip">
-		                    </div>
-		                  </div>
+        hr {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+@endpush
 
-		                  <div class="form-group row mb-5">
-		                    <div class="col-md-6">
-		                      <label for="c_diff_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_email_address" name="c_diff_email_address">
-		                    </div>
-		                    <div class="col-md-6">
-		                      <label for="c_diff_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-		                      <input type="text" class="form-control" id="c_diff_phone" name="c_diff_phone" placeholder="Phone Number">
-		                    </div>
-		                  </div>
+@section('content')
+    <div class="checkout-wrapper">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="page-title">Checkout</h2>
+            </div>
 
-		                </div>
+            <div class="row">
+                <!-- Order Summary (Right Side on Desktop) -->
+                <div class="col-md-4 order-md-2 mb-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="mb-0">
+                                <span class="text-muted">Your cart</span>
+                                <span class="badge badge-secondary badge-pill ml-2">{{ count($cart) }}</span>
+                            </h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush">
+                                @foreach ($cart as $id => $item)
+                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                        <div class="d-flex align-items-center">
+                                            @if (isset($item['image']))
+                                                <img src="{{ asset('storage/' . $item['image']) }}"
+                                                    alt="{{ $item['name'] }}" class="mr-3"
+                                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                            @else
+                                                <img src="{{ asset('assets/furni-1.0.0/images/product-1.png') }}"
+                                                    alt="{{ $item['name'] }}" class="mr-3"
+                                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
+                                            @endif
+                                            <div>
+                                                <h6 class="my-0">{{ $item['name'] }}</h6>
+                                                <small class="text-muted">Qty: {{ $item['quantity'] }}</small>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted">${{ number_format($item['price'], 2) }}</span>
+                                    </li>
+                                @endforeach
 
-		              </div>
-		            </div>
+                                <!-- Price Details -->
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Subtotal</span>
+                                    <strong>${{ number_format($subtotal, 2) }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Delivery Fee</span>
+                                    <strong>${{ number_format($delivery, 2) }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span class="text-success">Discount</span>
+                                    <strong class="text-success">-${{ number_format($discount, 2) }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Tax (10%)</span>
+                                    <strong>${{ number_format($tax, 2) }}</strong>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span>Total (USD)</span>
+                                    <strong>${{ number_format($total, 2) }}</strong>
+                                </li>
+                            </ul>
 
-		            <div class="form-group">
-		              <label for="c_order_notes" class="text-black">Order Notes</label>
-		              <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
-		            </div>
+                            <!-- Promo Code -->
+                            <div class="card-body">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Promo code">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-secondary">Redeem</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-		          </div>
-		        </div>
-		        <div class="col-md-6">
+                <!-- Checkout Form (Left Side) -->
+                <div class="col-md-8 order-md-1">
+                    <form action="{{ route('checkout.process') }}" method="POST" class="needs-validation" novalidate>
+                        @csrf
 
-		          <div class="row mb-5">
-		            <div class="col-md-12">
-		              <h2 class="h3 mb-3 text-black">Coupon Code</h2>
-		              <div class="p-3 p-lg-5 border bg-white">
+                        <!-- Delivery Address Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">Delivery Address</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName">First name</label>
+                                        <input type="text" class="form-control" id="firstName" name="first_name"
+                                            placeholder="John" required>
+                                        <div class="invalid-feedback">
+                                            Valid first name is required.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName">Last name</label>
+                                        <input type="text" class="form-control" id="lastName" name="last_name"
+                                            placeholder="Doe" required>
+                                        <div class="invalid-feedback">
+                                            Valid last name is required.
+                                        </div>
+                                    </div>
+                                </div>
 
-		                <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
-		                <div class="input-group w-75 couponcode-wrap">
-		                  <input type="text" class="form-control me-2" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
-		                  <div class="input-group-append">
-		                    <button class="btn btn-black btn-sm" type="button" id="button-addon2">Apply</button>
-		                  </div>
-		                </div>
+                                <div class="mb-3">
+                                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="you@example.com">
+                                </div>
 
-		              </div>
-		            </div>
-		          </div>
+                                <div class="mb-3">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address"
+                                        placeholder="1234 Main St" required>
+                                    <div class="invalid-feedback">
+                                        Please enter your shipping address.
+                                    </div>
+                                </div>
 
-		          <div class="row mb-5">
-		            <div class="col-md-12">
-		              <h2 class="h3 mb-3 text-black">Your Order</h2>
-		              <div class="p-3 p-lg-5 border bg-white">
-		                <table class="table site-block-order-table mb-5">
-		                  <thead>
-		                    <th>Product</th>
-		                    <th>Total</th>
-		                  </thead>
-		                  <tbody>
-		                    <tr>
-		                      <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
-		                      <td>$250.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
-		                      <td>$100.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-		                      <td class="text-black">$350.00</td>
-		                    </tr>
-		                    <tr>
-		                      <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-		                      <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
-		                    </tr>
-		                  </tbody>
-		                </table>
+                                <div class="mb-3">
+                                    <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+                                    <input type="text" class="form-control" id="address2" name="address2"
+                                        placeholder="Apartment or suite">
+                                </div>
 
-		                <div class="border p-3 mb-3">
-		                  <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
+                                <div class="row">
+                                    <div class="col-md-5 mb-3">
+                                        <label for="country">Country</label>
+                                        <select class="custom-select d-block w-100" id="country" name="country" required>
+                                            <option value="">Choose...</option>
+                                            <option value="United States">United States</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please select a valid country.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="state">State</label>
+                                        <select class="custom-select d-block w-100" id="state" name="state"
+                                            required>
+                                            <option value="">Choose...</option>
+                                            <option value="NSW">NSW</option>
+                                            <option value="VIC">VIC</option>
+                                            <option value="QLD">QLD</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Please provide a valid state.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label for="zip">Zip</label>
+                                        <input type="text" class="form-control" id="zip" name="zip"
+                                            placeholder="2753" required>
+                                        <div class="invalid-feedback">
+                                            Zip code required.
+                                        </div>
+                                    </div>
+                                </div>
 
-		                  <div class="collapse" id="collapsebank">
-		                    <div class="py-2">
-		                      <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-		                    </div>
-		                  </div>
-		                </div>
+                                <hr class="mb-4">
 
-		                <div class="border p-3 mb-3">
-		                  <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsecheque" role="button" aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="same-address" checked>
+                                    <label class="custom-control-label" for="same-address">Shipping address is the same as
+                                        my billing address</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="save-info">
+                                    <label class="custom-control-label" for="save-info">Save this information for next
+                                        time</label>
+                                </div>
+                            </div>
+                        </div>
 
-		                  <div class="collapse" id="collapsecheque">
-		                    <div class="py-2">
-		                      <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-		                    </div>
-		                  </div>
-		                </div>
+                        <!-- Payment Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">Payment</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-block my-3">
+                                    <div class="custom-control custom-radio">
+                                        <input id="credit" name="paymentMethod" type="radio"
+                                            class="custom-control-input" checked required>
+                                        <label class="custom-control-label" for="credit">Credit card</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="debit" name="paymentMethod" type="radio"
+                                            class="custom-control-input" required>
+                                        <label class="custom-control-label" for="debit">Debit card</label>
+                                    </div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="paypal" name="paymentMethod" type="radio"
+                                            class="custom-control-input" required>
+                                        <label class="custom-control-label" for="paypal">PayPal</label>
+                                    </div>
+                                </div>
 
-		                <div class="border p-3 mb-5">
-		                  <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsepaypal" role="button" aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cc-name">Name on card</label>
+                                        <input type="text" class="form-control" id="cc-name" name="card_name"
+                                            placeholder="Full name as displayed on card" required>
+                                        <small class="text-muted">Full name as displayed on card</small>
+                                        <div class="invalid-feedback">
+                                            Name on card is required
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cc-number">Credit card number</label>
+                                        <input type="text" class="form-control" id="cc-number" name="card_number"
+                                            placeholder="1234 5678 9012 3456" required>
+                                        <div class="invalid-feedback">
+                                            Credit card number is required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <label for="cc-expiration">Expiration</label>
+                                        <input type="text" class="form-control" id="cc-expiration" name="card_expiry"
+                                            placeholder="MM/YY" required>
+                                        <div class="invalid-feedback">
+                                            Expiration date required
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label for="cc-cvv">CVV</label>
+                                        <input type="text" class="form-control" id="cc-cvv" name="card_cvv"
+                                            placeholder="123" required>
+                                        <div class="invalid-feedback">
+                                            Security code required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-		                  <div class="collapse" id="collapsepaypal">
-		                    <div class="py-2">
-		                      <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-		                    </div>
-		                  </div>
-		                </div>
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
 
-		                <div class="form-group">
-		                  <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">Place Order</button>
-		                </div>
+@push('scripts')
+    <script>
+        // Bootstrap form validation
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
 
-		              </div>
-		            </div>
-		          </div>
+        // Format card number input
+        const cardNumberInput = document.getElementById('cc-number');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s/g, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                e.target.value = formattedValue;
+            });
+        }
 
-		        </div>
-		      </div>
-		      <!-- </form> -->
-		    </div>
-		  </div>
+        // Format expiry input
+        const expiryInput = document.getElementById('cc-expiration');
+        if (expiryInput) {
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                }
+                e.target.value = value;
+            });
+        }
+    </script>
+@endpush

@@ -147,43 +147,78 @@
                     <!-- Products Grid -->
                     <div class="row">
                         @forelse ($products as $product)
-                            <!-- Product Item -->
-                            <div class="col-12 col-md-6 col-lg-4 mb-4">
-                                <a class="product-item" href="{{ route('product.show', $product->id) }}">
-                                    <div class="product-image-wrapper">
-                                        @if ($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}"
-                                                class="img-fluid product-thumbnail" alt="{{ $product->name }}">
-                                        @else
-                                            <img src="{{ asset('assets/furni-1.0.0/images/product-3.png') }}"
-                                                class="img-fluid product-thumbnail" alt="{{ $product->name }}">
-                                        @endif
+                            <!-- Product Item - Bootstrap Card Style -->
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="card h-100 border shadow-sm">
+                                    <a href="{{ route('product.show', $product->id) }}" class="text-decoration-none">
+                                        <div class="position-relative">
+                                            {{-- Product Image --}}
+                                            <div class="ratio ratio-1x1">
+                                                @if ($product->image)
+                                                    <img src="{{ asset('assets/furni-1.0.0/images/product-3.png') }}"
+                                                        alt="{{ $product->name }}" class="w-100 h-100">
+                                                @else
+                                                    <img src="{{ asset('assets/furni-1.0.0/images/product-3.png') }}"
+                                                        class="card-img-top" alt="{{ $product->name }}">
+                                                @endif
+                                            </div>
 
-                                        @if ($product->is_featured)
-                                            <span class="badge-featured">Featured</span>
-                                        @endif
+                                            {{-- Discount Badge --}}
+                                            @if ($product->is_featured)
+                                                <span
+                                                    class="badge bg-danger position-absolute top-0 start-0 m-2">HOT</span>
+                                            @endif
 
-                                        @if ($product->stock < 10 && $product->stock > 0)
-                                            <span class="badge-stock">Only {{ $product->stock }} left</span>
-                                        @elseif($product->stock == 0)
-                                            <span class="badge-stock out-of-stock">Out of Stock</span>
-                                        @endif
-                                    </div>
+                                            {{-- Stock Badge --}}
+                                            @if ($product->stock == 0)
+                                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                                                    style="background: rgba(0,0,0,0.5);">
+                                                    <span class="badge bg-danger">Stok Habis</span>
+                                                </div>
+                                            @endif
+                                        </div>
 
-                                    <div class="product-details">
-                                        @if ($product->category)
-                                            <span
-                                                class="product-category">{{ $product->category->category_name ?? $product->category->name }}</span>
-                                        @endif
-                                        <h3 class="product-title">{{ Str::limit($product->name ?? '-', 50) }}</h3>
-                                        <strong
-                                            class="product-price">{{ 'Rp ' . number_format($product->price ?? 0, 0, ',', '.') }}</strong>
-                                    </div>
+                                        <div class="card-body p-2">
+                                            {{-- Product Name --}}
+                                            <h6 class="card-title mb-1 text-dark"
+                                                style="font-size: 13px; line-height: 1.3; height: 34px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                                                {{ Str::limit($product->name ?? '-', 60) }}
+                                            </h6>
 
-                                    <span class="icon-cross">
-                                        <img src="{{ asset('assets/furni-1.0.0/images/cross.svg') }}" class="img-fluid">
-                                    </span>
-                                </a>
+                                            {{-- Price --}}
+                                            <p class="fw-bold mb-1 text-dark" style="font-size: 16px;">
+                                                {{ 'Rp' . number_format($product->price ?? 0, 0, ',', '.') }}
+                                            </p>
+
+                                            {{-- Category Tag --}}
+                                            @if ($product->category)
+                                                <span class="badge bg-light text-secondary mb-1" style="font-size: 10px;">
+                                                    <i class="fas fa-tag"></i>
+                                                    {{ $product->category->category_name ?? $product->category->name }}
+                                                </span>
+                                            @endif
+
+                                            {{-- Rating & Stock --}}
+                                            <div class="d-flex align-items-center text-muted mb-1"
+                                                style="font-size: 11px;">
+                                                <i class="fas fa-star text-warning me-1"></i>
+                                                <span class="me-1">4.5</span>
+                                                <span class="me-1">|</span>
+                                                <span>{{ $product->stock > 0 ? 'Stok: ' . $product->stock : 'Habis' }}</span>
+                                            </div>
+
+                                            {{-- Store Info --}}
+                                            <div class="d-flex align-items-center border-top pt-1 mt-1 text-muted"
+                                                style="font-size: 10px;">
+                                                <i class="fas fa-store me-1"></i>
+                                                <span class="flex-grow-1">Official Store</span>
+                                                @if ($product->is_featured)
+                                                    <i class="fas fa-check-circle text-primary"></i>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         @empty
                             <div class="col-12 text-center py-5">
@@ -394,121 +429,18 @@
             font-size: 14px;
         }
 
-        /* Product Item Styling */
-        .product-item {
-            display: block;
-            text-decoration: none;
-            background: #fff;
-            border-radius: 12px;
-            overflow: hidden;
+        /* Minimal Custom CSS for Bootstrap Cards */
+        .card:hover {
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            height: 100%;
         }
 
-        .product-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-            text-decoration: none;
-        }
-
-        .product-image-wrapper {
-            position: relative;
-            overflow: hidden;
-            background: #f9fafb;
-            aspect-ratio: 1;
-        }
-
-        .product-thumbnail {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .card-img-top {
             transition: transform 0.3s ease;
         }
 
-        .product-item:hover .product-thumbnail {
+        .card:hover .card-img-top {
             transform: scale(1.05);
-        }
-
-        .badge-featured,
-        .badge-stock {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            background-color: #3b5d50;
-            color: white;
-            z-index: 1;
-        }
-
-        .badge-stock {
-            left: auto;
-            right: 10px;
-            background-color: #f59e0b;
-        }
-
-        .badge-stock.out-of-stock {
-            background-color: #ef4444;
-        }
-
-        .product-details {
-            padding: 15px;
-        }
-
-        .product-category {
-            display: inline-block;
-            font-size: 11px;
-            color: #6b7280;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .product-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .product-price {
-            display: block;
-            font-size: 18px;
-            font-weight: 700;
-            color: #3b5d50;
-        }
-
-        .icon-cross {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(59, 93, 80, 0.1);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .product-item:hover .icon-cross {
-            background: #3b5d50;
-        }
-
-        .icon-cross img {
-            width: 20px;
-            height: 20px;
-            filter: brightness(0) invert(0.3);
-        }
-
-        .product-item:hover .icon-cross img {
-            filter: brightness(0) invert(1);
         }
 
         /* Empty State */

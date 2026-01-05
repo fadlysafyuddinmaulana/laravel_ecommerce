@@ -17,16 +17,16 @@
                     <a class="nav-link" href="{{ route('shop') }}">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="#">About us</a>
+                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="#">Services</a>
+                    <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}" href="#">Blog</a>
+                    <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="#">Contact
+                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact
                         us</a>
                 </li>
             </ul>
@@ -78,25 +78,24 @@
                                 </div>
                             @endif
                         </div>
-                        @if (session('cart') && count(session('cart')) > 0)
-                            <div class="cart-dropdown-footer p-3 border-top">
-                                <div class="d-flex justify-content-between mb-2">
-                                    <span>Total</span>
-                                    <strong class="text-success" id="cartTotal">
-                                        Rp
-                                        {{ number_format(
-                                            collect(session('cart'))->sum(function ($item) {
-                                                return $item['quantity'] * $item['price'];
-                                            }),
-                                            0,
-                                            ',',
-                                            '.',
-                                        ) }}
-                                    </strong>
-                                </div>
-                                <a href="{{ route('cart') }}" class="btn btn-success w-100">Lihat Keranjang</a>
+                        <div class="cart-dropdown-footer p-3 border-top" id="cartDropdownFooter"
+                            style="display: {{ session('cart') && count(session('cart')) > 0 ? 'block' : 'none' }}">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total</span>
+                                <strong class="text-success" id="cartTotal">
+                                    Rp
+                                    {{ number_format(
+                                        collect(session('cart'))->sum(function ($item) {
+                                            return $item['quantity'] * $item['price'];
+                                        }),
+                                        0,
+                                        ',',
+                                        '.',
+                                    ) }}
+                                </strong>
                             </div>
-                        @endif
+                            <a href="{{ route('cart') }}" class="btn btn-success w-100">Lihat Keranjang</a>
+                        </div>
                     </div>
                 </li>
 
@@ -154,18 +153,23 @@
             }
         });
 
-        // Cart Dropdown on hover
+        // Cart Dropdown on hover with delay
         var cartDropdown = document.querySelector('.cart-dropdown');
+        var cartDropdownTimeout;
         if (window.matchMedia('(min-width: 768px)').matches && cartDropdown) {
             cartDropdown.addEventListener('mouseenter', function() {
+                clearTimeout(cartDropdownTimeout);
                 var dropdownMenu = this.querySelector('.dropdown-menu-cart');
                 this.classList.add('show');
                 dropdownMenu.classList.add('show');
             });
             cartDropdown.addEventListener('mouseleave', function() {
                 var dropdownMenu = this.querySelector('.dropdown-menu-cart');
-                this.classList.remove('show');
-                dropdownMenu.classList.remove('show');
+                var dropdown = this;
+                cartDropdownTimeout = setTimeout(function() {
+                    dropdown.classList.remove('show');
+                    dropdownMenu.classList.remove('show');
+                }, 300); // 300ms delay
             });
         }
 
@@ -185,6 +189,70 @@
         }
     });
 
+    // Refresh cart dropdown function
+    function refreshCartDropdown() {
+        fetch('/cart/dropdown', {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update cart count badge
+                    const cartBadge = document.getElementById('cartCount');
+                    const cartItemCount = document.getElementById('cartItemCount');
+
+                    if (data.cart_count > 0) {
+                        if (cartBadge) {
+                            cartBadge.textContent = data.cart_count;
+                            cartBadge.style.display = 'inline-block';
+                        } else {
+                            const cartLink = document.getElementById('cartDropdown');
+                            if (cartLink) {
+                                const badge = document.createElement('span');
+                                badge.className = 'cart-badge';
+                                badge.id = 'cartCount';
+                                badge.textContent = data.cart_count;
+                                cartLink.appendChild(badge);
+                            }
+                        }
+                        if (cartItemCount) {
+                            cartItemCount.textContent = data.cart_count;
+                        }
+                    } else {
+                        if (cartBadge) cartBadge.style.display = 'none';
+                        if (cartItemCount) cartItemCount.textContent = '0';
+                    }
+
+                    // Update dropdown body
+                    const cartDropdownBody = document.getElementById('cartDropdownBody');
+                    if (cartDropdownBody) {
+                        cartDropdownBody.innerHTML = data.html;
+                    }
+
+                    // Update total and footer visibility
+                    const cartDropdownFooter = document.getElementById('cartDropdownFooter');
+                    const cartTotal = document.getElementById('cartTotal');
+
+                    if (data.cart_count > 0) {
+                        if (cartDropdownFooter) {
+                            cartDropdownFooter.style.display = 'block';
+                        }
+                        if (cartTotal && data.total) {
+                            cartTotal.innerHTML = 'Rp ' + data.total;
+                        }
+                    } else {
+                        if (cartDropdownFooter) {
+                            cartDropdownFooter.style.display = 'none';
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error('Error refreshing cart:', error));
+    }
+
     // Remove from cart function
     function removeFromCart(productId) {
         if (confirm('Hapus item dari keranjang?')) {
@@ -198,7 +266,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        location.reload();
+                        refreshCartDropdown();
                     }
                 });
         }

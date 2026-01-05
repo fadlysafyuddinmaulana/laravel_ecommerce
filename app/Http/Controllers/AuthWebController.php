@@ -72,40 +72,46 @@ class AuthWebController extends Controller
         $data = $request->validate([
             'login'    => ['required', 'string'], // username atau email
             'password' => ['required', 'string'],
-            'type'     => ['required', 'in:employee,customer'],
         ]);
 
-        if ($data['type'] === 'employee') {
-            $user = Employee::where('username', $data['login'])
-                ->orWhere('email', $data['login'])
-                ->first();
-        } else {
+        // Auto-detect: cek di tabel Employee terlebih dahulu
+        $user = Employee::where('username', $data['login'])
+            ->orWhere('email', $data['login'])
+            ->first();
+        
+        $isEmployee = false;
+        
+        // Jika tidak ditemukan di Employee, cek di Customer
+        if (!$user) {
             $user = Customer::where('username', $data['login'])
                 ->orWhere('email', $data['login'])
                 ->first();
+        } else {
+            $isEmployee = true;
         }
 
         if (! $user || ! Hash::check($data['password'], $user->password)) {
             return back()
-                ->withInput($request->only('login', 'type'))
+                ->withInput($request->only('login'))
                 ->withErrors(['login' => 'Invalid credentials provided.']);
         }
 
         Auth::login($user, $request->boolean('remember'));
 
-        // kalau customer & belum verified → tahan di halaman verify
-        if ($data['type'] === 'customer'
-            && $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail
-            && ! $user->hasVerifiedEmail()) {
-
-            return redirect()->route('verification.notice');
-        }
-
-        if ($data['type'] === 'customer') {
+        // Redirect berdasarkan role
+        if ($isEmployee) {
+            // Employee → Dashboard (Admin Panel)
+            return redirect()->route('dashboard');
+        } else {
+            // Customer → cek email verification
+            if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail
+                && ! $user->hasVerifiedEmail()) {
+                return redirect()->route('verification.notice');
+            }
+            
+            // Customer → Landing/Home Page
             return redirect()->route('landing');
         }
-
-        return redirect()->route('dashboard');
     }
 
     public function logout(Request $request)

@@ -482,6 +482,38 @@
 
     @push('scripts')
         <script>
+            // Function to update cart badge
+            function updateCartBadge(count) {
+                const cartBadge = document.getElementById('cartCount');
+                const cartItemCount = document.getElementById('cartItemCount');
+
+                if (count > 0) {
+                    if (cartBadge) {
+                        cartBadge.textContent = count;
+                        cartBadge.style.display = 'inline-block';
+                    } else {
+                        // Create badge if it doesn't exist
+                        const cartLink = document.getElementById('cartDropdown');
+                        if (cartLink) {
+                            const newBadge = document.createElement('span');
+                            newBadge.className = 'cart-badge';
+                            newBadge.id = 'cartCount';
+                            newBadge.textContent = count;
+                            cartLink.appendChild(newBadge);
+                        }
+                    }
+
+                    // Update cart item count in dropdown header
+                    if (cartItemCount) {
+                        cartItemCount.textContent = count;
+                    }
+                } else {
+                    if (cartBadge) {
+                        cartBadge.style.display = 'none';
+                    }
+                }
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
                 // Quantity controls
                 const quantityInput = document.getElementById('quantity');
@@ -534,10 +566,9 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success) {
-                                    // Update cart count in header
-                                    const cartBadge = document.getElementById('cartCount');
-                                    if (cartBadge) {
-                                        cartBadge.textContent = data.cart_count;
+                                    // Refresh cart dropdown to show new item
+                                    if (typeof refreshCartDropdown === 'function') {
+                                        refreshCartDropdown();
                                     }
 
                                     // Show success message
@@ -553,7 +584,7 @@
                                         button.disabled = false;
                                     }, 2000);
 
-                                    // Optional: Show toast notification
+                                    // Show toast notification
                                     alert(data.message);
                                 } else {
                                     alert('Error: ' + data.message);

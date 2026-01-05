@@ -12,19 +12,20 @@
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-            {{-- Tampilkan error validasi --}}
-            @if($errors->any())
-                <div class="alert alert-danger">
-                        @foreach($errors->all() as $err)
+                {{-- Tampilkan error validasi --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        @foreach ($errors->all() as $err)
                             <div>{{ $err }}</div>
                         @endforeach
-                </div>
-            @endif
+                    </div>
+                @endif
 
                 <form action="{{ route('login.post') }}" method="post">
-                  @csrf
+                    @csrf
                     <div class="input-group mb-3">
-                        <input type="text" name="login" class="form-control" placeholder="Email or Username" value="{{ old('login') }}" required autofocus/>
+                        <input type="text" name="login" class="form-control" placeholder="Email or Username"
+                            value="{{ old('login') }}" required autofocus />
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -32,17 +33,18 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required />
+                        <input type="password" name="password" id="password-field" class="form-control"
+                            placeholder="Password" required />
                         <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                            <div class="input-group-text" style="cursor: pointer;" id="toggle-password">
+                                <span class="fas fa-eye" id="eye-icon"></span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" id="remember" />
+                                <input type="checkbox" id="remember" name="remember" />
                                 <label for="remember">Remember Me</label>
                             </div>
                         </div>
@@ -76,4 +78,24 @@
         <!-- /.card -->
     </div>
     <!-- /.login-box -->
+
+    @push('scripts')
+        <script>
+            // Toggle password visibility
+            document.getElementById('toggle-password').addEventListener('click', function() {
+                const passwordField = document.getElementById('password-field');
+                const eyeIcon = document.getElementById('eye-icon');
+
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                }
+            });
+        </script>
+    @endpush
 @endsection

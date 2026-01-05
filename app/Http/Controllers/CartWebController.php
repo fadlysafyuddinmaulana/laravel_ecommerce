@@ -88,6 +88,60 @@ class CartWebController extends Controller
     }
 
     /**
+     * Get cart dropdown content (for AJAX refresh)
+     */
+    public function dropdown()
+    {
+        $cart = session()->get('cart', []);
+        $cartCount = count($cart);
+        
+        // Generate HTML for cart items
+        $html = '';
+        
+        if ($cartCount > 0) {
+            foreach ($cart as $id => $item) {
+                $imageUrl = asset('storage/' . ($item['image'] ?? 'default.png'));
+                $itemName = $item['name'];
+                $quantity = $item['quantity'];
+                $price = number_format($item['price'], 0, ',', '.');
+                $subtotal = number_format($quantity * $item['price'], 0, ',', '.');
+                
+                $html .= '<div class="cart-item d-flex p-3 border-bottom" data-id="' . $id . '">';
+                $html .= '  <div class="cart-item-image me-3">';
+                $html .= '    <img src="' . $imageUrl . '" alt="' . $itemName . '" class="rounded" style="width: 60px; height: 60px; object-fit: cover;">';
+                $html .= '  </div>';
+                $html .= '  <div class="cart-item-details flex-grow-1">';
+                $html .= '    <h6 class="mb-1 text-truncate" style="max-width: 200px;">' . $itemName . '</h6>';
+                $html .= '    <p class="mb-1 text-muted small">' . $quantity . ' x Rp ' . $price . '</p>';
+                $html .= '    <p class="mb-0 fw-bold text-success">Rp ' . $subtotal . '</p>';
+                $html .= '  </div>';
+                $html .= '  <button class="btn btn-sm btn-link text-danger p-0 ms-2" onclick="removeFromCart(' . $id . ')">';
+                $html .= '    <i class="fas fa-trash"></i>';
+                $html .= '  </button>';
+                $html .= '</div>';
+            }
+            
+            // Add footer with total and button
+            $total = collect($cart)->sum(function ($item) {
+                return $item['quantity'] * $item['price'];
+            });
+            $totalFormatted = number_format($total, 0, ',', '.');
+        } else {
+            $html = '<div class="empty-cart text-center py-5">';
+            $html .= '  <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>';
+            $html .= '  <p class="text-muted">Keranjang Anda kosong</p>';
+            $html .= '</div>';
+        }
+        
+        return response()->json([
+            'success' => true,
+            'html' => $html,
+            'cart_count' => $cartCount,
+            'total' => isset($totalFormatted) ? $totalFormatted : '0'
+        ]);
+    }
+
+    /**
      * Remove product from cart
      */
     public function remove($id)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,9 +14,35 @@ class HomeWebController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('created_at', 'desc')->get();
+        // Get featured products for showcase (limit to 3)
+        $featuredProducts = Product::featured()
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
 
-        return view('user_page.pages.home', compact('products'));
+        // Get new products
+        $newProducts = Product::newProducts()
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        // Get discount products
+        $discountProducts = Product::withDiscount()
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        // Get active testimonials (max 3)
+        $testimonials = Testimonial::active()
+            ->limit(3)
+            ->get();
+
+        return view('user_page.pages.index', compact(
+            'featuredProducts',
+            'newProducts',
+            'discountProducts',
+            'testimonials'
+        ));
     }
     
     /**
@@ -61,50 +88,33 @@ class HomeWebController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      */
-    public function create()
+    public function about()
     {
-        //
+        // Get active testimonials for about page
+        $testimonials = Testimonial::active()->limit(3)->get();
+
+        return view('user_page.pages.about', compact('testimonials'));
+    }
+    
+    public function services()
+    {
+        return view('user_page.pages.services');
+    }
+    
+    public function blog()
+    {
+        // Paginate blog posts (9 per page)
+        // TODO: Create Blog model and migration
+        // For now, using products as placeholder
+        $blogs = Product::orderBy('created_at', 'desc')->paginate(9);
+
+        return view('user_page.pages.blog', compact('blogs'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function contact()
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('user_page.pages.contact');
     }
 }
