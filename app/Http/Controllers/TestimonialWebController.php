@@ -114,4 +114,18 @@ class TestimonialWebController extends Controller
         return redirect()->route('testimonials.index')
             ->with('success', 'Testimonial deleted successfully.');
     }
+
+    /**
+     * Toggle the active status of the testimonial.
+     */
+    public function toggleActive(Testimonial $testimonial)
+    {
+        $testimonial->is_active = !$testimonial->is_active;
+        $testimonial->save();
+        
+        $status = $testimonial->is_active ? 'activated' : 'deactivated';
+        
+        return redirect()->route('testimonials.index')
+            ->with('success', "Testimonial successfully {$status}.");
+    }
 }

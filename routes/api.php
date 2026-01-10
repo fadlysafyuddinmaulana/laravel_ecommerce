@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\PositionsController;
+use App\Http\Controllers\Api\AddressController;
 
 // Contoh bawaan Sanctum:
 Route::get('/user', function (Request $request) {
@@ -74,3 +75,15 @@ Route::apiResource('positions', PositionsController::class)->names([
     'update' => 'api.positions.update',
     'destroy' => 'api.positions.destroy',
 ]);
+
+// Address API for dynamic dropdowns
+Route::prefix('addresses')->group(function () {
+    Route::get('/countries', [AddressController::class, 'getCountries'])
+        ->name('api.addresses.countries');
+    Route::get('/provinces/{country}', [AddressController::class, 'getProvinces'])
+        ->name('api.addresses.provinces');
+    Route::get('/cities/{country}/{province}', [AddressController::class, 'getCities'])
+        ->name('api.addresses.cities');
+    Route::get('/postal-code/{country}/{province}/{city}', [AddressController::class, 'getPostalCode'])
+        ->name('api.addresses.postal-code');
+});

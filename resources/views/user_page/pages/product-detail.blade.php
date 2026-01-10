@@ -585,16 +585,33 @@
                                     }, 2000);
 
                                     // Show toast notification
-                                    alert(data.message);
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil!',
+                                        text: data.message,
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true
+                                    });
                                 } else {
-                                    alert('Error: ' + data.message);
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Error!',
+                                        text: data.message
+                                    });
                                     button.innerHTML = originalText;
                                     button.disabled = false;
                                 }
                             })
                             .catch(error => {
                                 console.error('Error:', error);
-                                alert('Terjadi kesalahan saat menambahkan ke keranjang');
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Terjadi Kesalahan!',
+                                    text: 'Terjadi kesalahan saat menambahkan ke keranjang'
+                                });
                                 button.innerHTML = originalText;
                                 button.disabled = false;
                             });
@@ -689,7 +706,11 @@
                 const chatBtn = document.getElementById('chatBtn');
                 if (chatBtn) {
                     chatBtn.addEventListener('click', function() {
-                        alert('Chat feature will be implemented soon!');
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Coming Soon!',
+                            text: 'Chat feature will be implemented soon!'
+                        });
                     });
                 }
 

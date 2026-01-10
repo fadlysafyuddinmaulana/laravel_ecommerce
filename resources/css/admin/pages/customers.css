@@ -1,0 +1,13 @@
+/* Customer list customization */
+.badge-pink {
+  background-color: #e83e8c;
+  color: white;
+}
+
+.detail-row {
+  background-color: #f8f9fa;
+}
+
+.detail-row td {
+  padding: 15px !important;
+}

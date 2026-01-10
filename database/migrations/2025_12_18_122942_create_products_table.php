@@ -19,12 +19,14 @@ return new class extends Migration
             $table->decimal('price', 12, 2);
             $table->integer('stock')->default(0);
 
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('brand_id', 25)->nullable();
+            $table->unsignedBigInteger('id_category')->nullable();
+            $table->unsignedBigInteger('id_brand')->nullable();
             $table->text('image')->nullable();
 
+            $table->enum('is_visible', ['show', 'hide'])->default('show');
             $table->string('status', 20)->default('active');
             $table->boolean('is_featured')->default(false);
+            $table->boolean('has_discount')->default(false);
 
             $table->timestamps();
         });

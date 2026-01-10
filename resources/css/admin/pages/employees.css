@@ -1,0 +1,23 @@
+/* Employee expandable row details */
+.employee-details {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-left: 3px solid #17a2b8;
+}
+
+.employee-details dl {
+  margin-bottom: 0;
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 8px 15px;
+}
+
+.employee-details dt {
+  font-weight: 600;
+  color: #495057;
+}
+
+.employee-details dd {
+  margin-bottom: 0;
+  color: #6c757d;
+}

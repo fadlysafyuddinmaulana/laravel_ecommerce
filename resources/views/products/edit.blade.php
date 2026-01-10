@@ -53,12 +53,12 @@
 
             <div class="mb-3">
                 <label class="form-label">Category</label>
-                <select name="category_id" class="form-control">
+                <select name="id_category" class="form-control" id="id_category">
                     <option value="">-- Select Category --</option>
                     @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            {{ old('category_id', $product->category_id) == $category->id ? 'selected' : '' }}>
-                            {{ $category->category_name }}
+                        <option value="{{ $category->id_category }}"
+                            {{ old('id_category', $product->id_category) == $category->id_category ? 'selected' : '' }}>
+                            {{ $category->name }}
                         </option>
                     @endforeach
                 </select>
@@ -67,8 +67,15 @@
 
             <div class="mb-3">
                 <label class="form-label">Brand</label>
-                <input type="text" name="brand" class="form-control" maxlength="25"
-                    value="{{ old('brand', $product->brand) }}">
+                <select name="id_brand" class="form-control" id="id_brand">
+                    <option value="">-- Select Brand --</option>
+                    @foreach (\App\Models\Brand::orderBy('name')->get() as $brand)
+                        <option value="{{ $brand->id_brand }}"
+                            {{ old('id_brand', $product->id_brand) == $brand->id_brand ? 'selected' : '' }}>
+                            {{ $brand->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3">
@@ -103,6 +110,19 @@
                 <input type="checkbox" name="is_featured" value="1" class="form-check-input" id="isFeatured"
                     {{ old('is_featured', $product->is_featured) ? 'checked' : '' }}>
                 <label class="form-check-label" for="isFeatured">Featured Product</label>
+            </div>
+
+            <div class="form-group">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="is_visible" name="is_visible" value="1"
+                        {{ old('is_visible', $product->is_visible ?? 1) ? 'checked' : '' }}>
+                    <label class="custom-control-label" for="is_visible">
+                        Show in Frontend
+                    </label>
+                </div>
+                <small class="form-text text-muted">
+                    Uncheck to hide this product from customers
+                </small>
             </div>
 
             <div class="mb-3 form-check">
@@ -147,9 +167,15 @@
     <script>
         $(function() {
             // Initialize Select2
-            $('#category_id').select2({
+            $('#id_category').select2({
                 theme: 'bootstrap4',
                 placeholder: '-- Select Category --',
+                allowClear: true
+            });
+
+            $('#id_brand').select2({
+                theme: 'bootstrap4',
+                placeholder: '-- Select Brand --',
                 allowClear: true
             });
 

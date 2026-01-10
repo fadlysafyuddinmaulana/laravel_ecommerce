@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-        protected $fillable = [
-        'category_name',
+    protected $primaryKey = 'id_brand';
+    
+    protected $fillable = [
+        'name',
     ];
 }

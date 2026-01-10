@@ -341,9 +341,20 @@
                 document.querySelectorAll('.delete-item').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const id = this.dataset.id;
-                        if (confirm('Hapus item dari keranjang?')) {
-                            deleteCartItem(id);
-                        }
+                        Swal.fire({
+                            title: 'Hapus item?',
+                            text: 'Hapus item dari keranjang?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Ya, hapus!',
+                            cancelButtonText: 'Batal'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                deleteCartItem(id);
+                            }
+                        });
                     });
                 });
 

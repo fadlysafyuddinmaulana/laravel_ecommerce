@@ -1,0 +1,8 @@
+/* intl-tel-input customization for AdminLTE */
+.iti {
+  width: 100%;
+}
+
+.iti__flag-container {
+  z-index: 2;
+}

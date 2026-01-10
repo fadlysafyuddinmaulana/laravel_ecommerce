@@ -13,14 +13,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="row g-2 mb-3 justify-content-end">
-                    <div class="col-md-2">
-                        <button type="button" id="bulkDeleteBtn" class="btn btn-danger w-100" disabled>
-                            <i class="fa-solid fa-trash-can"></i> Delete Selected
+                <div class="row g-2 align-items-center justify-content-end mb-3">
+                    <div class="col-auto">
+                        <button type="button" id="bulkDeleteBtn" class="btn btn-filter-danger" disabled>
+                            <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>
-                    <div class="col-md-2">
-                        <a href="{{ route('categories.create') }}" class="btn btn-success w-100">+ New Category</a>
+                    <div class="col-auto">
+                        <a href="{{ route('categories.create') }}" class="btn btn-filter-success">+ New Category</a>
                     </div>
                 </div>
 
@@ -39,37 +39,49 @@
                                             <input type="checkbox" id="selectAll">
                                         </th>
                                         <th class="text-center" width="5%">No</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th width="150">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php $no = 1; @endphp
-                                @forelse($categories as $category)
-                                    <tr>
-                                        <td class="text-center">
-                                            <input type="checkbox" class="row-checkbox" name="ids[]" value="{{ $category->id }}">
-                                        </td>
-                                        <td class="text-center">{{ $no++ }}</td>
-                                        <td><strong>{{ $category->category_name }}</strong></td>
-                                        <td>{{ $category->description ?? '-' }}</td>
-                                        <td class="text-center align-middle">
-                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                                            <form action="{{ route('categories.destroy', $category) }}" method="POST" class="d-inline delete-form">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-sm btn-danger btn-delete"><i class="fa-solid fa-trash-can"></i></button>
-                                            </form>
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th width="150">Actions</th>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">No categories found.</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php $no = 1; @endphp
+                                    @forelse($categories as $category)
+                                        <tr>
+                                            <td class="text-center">
+                                                <input type="checkbox" class="row-checkbox" name="ids[]"
+                                                    value="{{ $category->id }}">
+                                            </td>
+                                            <td class="text-center">{{ $no++ }}</td>
+                                            <td><strong>{{ $category->category_name }}</strong></td>
+                                            <td>{{ $category->description ?? '-' }}</td>
+                                            <td class="text-center align-middle">
+                                                <div class="d-flex justify-content-center align-items-center"
+                                                    style="gap: 8px;">
+                                                    <a href="{{ route('categories.edit', $category) }}"
+                                                        class="btn btn-figma-action" title="Edit Category">
+                                                        <i class="fa-regular fa-pen-to-square"></i>
+                                                    </a>
+                                                    <form action="{{ route('categories.destroy', $category) }}"
+                                                        method="POST" class="delete-form">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button"
+                                                            class="btn btn-figma-action text-danger btn-delete"
+                                                            title="Delete Category">
+                                                            <i class="fa-solid fa-trash-can"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">No categories found.</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </form>
                     </div>
                     <!-- /.card-body -->
@@ -90,14 +102,118 @@
         href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet"
         href="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Figma Filter Buttons */
+        .btn-filter-danger,
+        .btn-filter-success {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: 1px solid;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn-filter-danger {
+            background: #EF4444;
+            border-color: #EF4444;
+            color: #FFFFFF;
+        }
+
+        .btn-filter-danger:hover:not(:disabled) {
+            background: #DC2626;
+            border-color: #DC2626;
+            color: #FFFFFF;
+            box-shadow: 0px 2px 6px rgba(239, 68, 68, 0.25);
+        }
+
+        .btn-filter-danger:active:not(:disabled) {
+            background: #B91C1C;
+            border-color: #B91C1C;
+        }
+
+        .btn-filter-danger:disabled {
+            background: #FCA5A5;
+            border-color: #FCA5A5;
+            color: #FFFFFF;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-filter-success {
+            background: #10B981;
+            border-color: #10B981;
+            color: #FFFFFF;
+        }
+
+        .btn-filter-success:hover:not(:disabled) {
+            background: #059669;
+            border-color: #059669;
+            color: #FFFFFF;
+            box-shadow: 0px 2px 6px rgba(16, 185, 129, 0.25);
+        }
+
+        .btn-filter-success:active:not(:disabled) {
+            background: #047857;
+            border-color: #047857;
+        }
+
+        /* Figma Action Buttons */
+        .btn-figma-action {
+            background: #FDFDFD !important;
+            border: 1px solid #DCDCDC !important;
+            border-radius: 4px !important;
+            padding: 8px 12px !important;
+            color: #292929 !important;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .btn-figma-action:hover {
+            background: #F5F5F5 !important;
+            border-color: #B8B8B8 !important;
+            box-shadow: 0px 2px 4px rgba(36, 36, 36, 0.08);
+            color: #292929 !important;
+        }
+
+        .btn-figma-action:focus,
+        .btn-figma-action:active {
+            box-shadow: 0px 0px 0px 3px rgba(82, 82, 82, 0.1) !important;
+            outline: none !important;
+        }
+
+        .btn-figma-action.text-danger {
+            color: #DC2626 !important;
+        }
+
+        .btn-figma-action.text-danger:hover {
+            background: #FEF2F2 !important;
+            color: #DC2626 !important;
+        }
+    </style>
 @endpush
 
 @push('scripts')
     <!-- DataTables & Plugins -->
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}">
+    </script>
+    <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}">
+    </script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/AdminLTE-3.2.0/plugins/jszip/jszip.min.js') }}"></script>
@@ -132,12 +248,12 @@
                     });
                 }
             });
-            
+
             // SweetAlert2 Delete Confirmation
             $('.btn-delete').on('click', function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
-                
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
@@ -179,7 +295,7 @@
             $('#bulkDeleteBtn').on('click', function(e) {
                 e.preventDefault();
                 var checkedCount = $('.row-checkbox:checked').length;
-                
+
                 Swal.fire({
                     title: 'Are you sure?',
                     text: `You are about to delete ${checkedCount} categor(y|ies)!`,

@@ -154,8 +154,8 @@
                     </ul>
                 </li>
                 <!-- Orders -->
-                <li class="nav-item {{ request()->routeIs('orders.*') ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->routeIs('admin.orders.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
                             Orders
@@ -164,15 +164,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link {{ request()->routeIs('orders.index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.orders.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.orders.index') || request()->routeIs('admin.orders.show') ? 'active' : '' }}">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>All Orders</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link {{ request()->routeIs('orders.history') ? 'active' : '' }}">
+                            <a href="{{ route('admin.orders.history') }}"
+                                class="nav-link {{ request()->routeIs('admin.orders.history') ? 'active' : '' }}">
                                 <i class="fas fa-history nav-icon"></i>
                                 <p>Order History</p>
                             </a>

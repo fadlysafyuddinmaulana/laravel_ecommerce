@@ -1,0 +1,10 @@
+/* Order show page - print styles */
+@media print {
+  .card-header,
+  .btn,
+  .main-header,
+  .main-sidebar,
+  .breadcrumb {
+    display: none !important;
+  }
+}

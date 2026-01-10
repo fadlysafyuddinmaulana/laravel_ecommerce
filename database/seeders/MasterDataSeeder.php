@@ -15,11 +15,11 @@ class MasterDataSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         DB::table('brands')->insert([
-            ['brand_name' => 'Samsung', 'created_at' => now(), 'updated_at' => now()],
-            ['brand_name' => 'Apple',   'created_at' => now(), 'updated_at' => now()],
-            ['brand_name' => 'Xiaomi',  'created_at' => now(), 'updated_at' => now()],
-            ['brand_name' => 'Asus',    'created_at' => now(), 'updated_at' => now()],
-            ['brand_name' => 'Lenovo',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Samsung', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Apple',   'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Xiaomi',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Asus',    'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Lenovo',  'created_at' => now(), 'updated_at' => now()],
         ]);
 
         /*
@@ -136,16 +136,16 @@ class MasterDataSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
         DB::table('categories')->insert([
-            ['category_name' => 'Elektronik',        'created_at' => now(), 'updated_at' => now()],
-            ['category_name' => 'Aksesoris',         'created_at' => now(), 'updated_at' => now()],
-            ['category_name' => 'Peralatan Kantor',  'created_at' => now(), 'updated_at' => now()],
-            ['category_name' => 'Furniture',         'created_at' => now(), 'updated_at' => now()],
-            ['category_name' => 'Lainnya',           'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Elektronik',        'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Aksesoris',         'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Peralatan Kantor',  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Furniture',         'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Lainnya',           'created_at' => now(), 'updated_at' => now()],
         ]);
 
         /*
         |--------------------------------------------------------------------------
-        | EMPLOYEES (1 data contoh)
+        | EMPLOYEES (contoh 1 data)
         |--------------------------------------------------------------------------
         */
         DB::table('employees')->insert([
@@ -170,15 +170,15 @@ class MasterDataSeeder extends Seeder
 
         /*
         |--------------------------------------------------------------------------
-        | PRODUCTS (25 data)
+        | PRODUCTS (contoh, id_brand diisi dari kolom id_brand tabel brands)
         |--------------------------------------------------------------------------
         */
-        $categoryId   = DB::table('categories')->where('category_name', 'Elektronik')->value('id');
-        $brandSamsung = DB::table('brands')->where('brand_name', 'Samsung')->value('id');
-        $brandApple   = DB::table('brands')->where('brand_name', 'Apple')->value('id');
-        $brandXiaomi  = DB::table('brands')->where('brand_name', 'Xiaomi')->value('id');
-        $brandAsus    = DB::table('brands')->where('brand_name', 'Asus')->value('id');
-        $brandLenovo  = DB::table('brands')->where('brand_name', 'Lenovo')->value('id');
+        $categoryId   = DB::table('categories')->where('name', 'Elektronik')->value('id_category');
+        $brandSamsung = DB::table('brands')->where('name', 'Samsung')->value('id_brand');
+        $brandApple   = DB::table('brands')->where('name', 'Apple')->value('id_brand');
+        $brandXiaomi  = DB::table('brands')->where('name', 'Xiaomi')->value('id_brand');
+        $brandAsus    = DB::table('brands')->where('name', 'Asus')->value('id_brand');
+        $brandLenovo  = DB::table('brands')->where('name', 'Lenovo')->value('id_brand');
 
         $products = [
             [
@@ -186,127 +186,131 @@ class MasterDataSeeder extends Seeder
                 'description' => 'Smartphone entry-level dengan layar luas dan baterai besar.',
                 'price'       => 2499000.00,
                 'stock'       => 10,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandSamsung,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandSamsung,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => true,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'Samsung Galaxy S23',
                 'description' => 'Smartphone flagship dengan performa tinggi.',
                 'price'       => 14999000.00,
                 'stock'       => 5,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandSamsung,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandSamsung,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => true,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'iPhone 14',
                 'description' => 'Smartphone premium dari Apple.',
                 'price'       => 15999000.00,
                 'stock'       => 4,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandApple,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandApple,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => true,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'iPhone 13',
-                'description' => 'Smartphone Apple generasi sebelumnya dengan performa masih kencang.',
+                'description' => 'Smartphone Apple generasi sebelumnya.',
                 'price'       => 12999000.00,
                 'stock'       => 6,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandApple,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandApple,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => false,
+                'has_discount' => true,
             ],
             [
                 'name'        => 'Xiaomi Redmi Note 12',
                 'description' => 'Smartphone dengan value for money tinggi.',
                 'price'       => 2999000.00,
                 'stock'       => 15,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandXiaomi,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandXiaomi,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => false,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'Xiaomi Redmi 13C',
                 'description' => 'Smartphone murah dengan baterai besar.',
                 'price'       => 1999000.00,
                 'stock'       => 20,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandXiaomi,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandXiaomi,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => false,
+                'has_discount' => true,
             ],
             [
                 'name'        => 'Asus ROG Phone 7',
                 'description' => 'Smartphone gaming dengan spesifikasi tinggi.',
                 'price'       => 17999000.00,
                 'stock'       => 3,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandAsus,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandAsus,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => true,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'Asus Zenfone 10',
                 'description' => 'Smartphone compact dengan performa flagship.',
                 'price'       => 10999000.00,
                 'stock'       => 4,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandAsus,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandAsus,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => false,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'Lenovo Tab M10',
                 'description' => 'Tablet untuk hiburan dan belajar.',
                 'price'       => 3499000.00,
                 'stock'       => 8,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandLenovo,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandLenovo,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => false,
+                'has_discount' => false,
             ],
             [
                 'name'        => 'Lenovo IdeaPad Slim 3',
                 'description' => 'Laptop entry-level untuk kebutuhan harian.',
                 'price'       => 5999000.00,
                 'stock'       => 5,
-                'category_id' => $categoryId,
-                'brand_id'    => $brandLenovo,
+                'id_category' => $categoryId,
+                'id_brand'    => $brandLenovo,
                 'image'       => null,
+                'is_visible'  => 'show',
                 'status'      => 'active',
                 'is_featured' => true,
+                'has_discount' => false,
             ],
-            // 15 data tambahan
-            ['name' => 'Samsung Galaxy A05',      'description' => 'Smartphone budget Samsung.',                    'price' => 1799000.00,  'stock' => 25, 'category_id' => $categoryId, 'brand_id' => $brandSamsung, 'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'Samsung Galaxy M34',      'description' => 'Baterai besar dan layar AMOLED.',               'price' => 3299000.00,  'stock' => 12, 'category_id' => $categoryId, 'brand_id' => $brandSamsung, 'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'iPhone SE 3',             'description' => 'iPhone kecil dengan chip kencang.',             'price' => 7999000.00,  'stock' => 7,  'category_id' => $categoryId, 'brand_id' => $brandApple,   'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'iPad 10th Gen',           'description' => 'Tablet serbaguna dari Apple.',                  'price' => 8999000.00,  'stock' => 6,  'category_id' => $categoryId, 'brand_id' => $brandApple,   'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'MacBook Air M2',          'description' => 'Laptop tipis dengan chip M2.',                  'price' => 17999000.00, 'stock' => 3,  'category_id' => $categoryId, 'brand_id' => $brandApple,   'image' => null, 'status' => 'active', 'is_featured' => true],
-            ['name' => 'Xiaomi Pad 6',            'description' => 'Tablet Android dengan layar 120Hz.',            'price' => 4999000.00,  'stock' => 9,  'category_id' => $categoryId, 'brand_id' => $brandXiaomi,  'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'Xiaomi 13T',              'description' => 'Smartphone dengan kamera Leica.',               'price' => 6999000.00,  'stock' => 6,  'category_id' => $categoryId, 'brand_id' => $brandXiaomi,  'image' => null, 'status' => 'active', 'is_featured' => true],
-            ['name' => 'Asus Vivobook 15',        'description' => 'Laptop untuk kuliah dan kerja.',                'price' => 7499000.00,  'stock' => 5,  'category_id' => $categoryId, 'brand_id' => $brandAsus,    'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'Asus TUF Gaming F15',     'description' => 'Laptop gaming mid-range.',                      'price' => 13999000.00, 'stock' => 4,  'category_id' => $categoryId, 'brand_id' => $brandAsus,    'image' => null, 'status' => 'active', 'is_featured' => true],
-            ['name' => 'Lenovo Legion 5',         'description' => 'Laptop gaming dengan performa tinggi.',         'price' => 15999000.00, 'stock' => 3,  'category_id' => $categoryId, 'brand_id' => $brandLenovo,  'image' => null, 'status' => 'active', 'is_featured' => true],
-            ['name' => 'Lenovo ThinkPad E14',     'description' => 'Laptop bisnis yang tangguh.',                  'price' => 10999000.00, 'stock' => 4,  'category_id' => $categoryId, 'brand_id' => $brandLenovo,  'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'Samsung Monitor 24"',     'description' => 'Monitor Full HD 75Hz.',                         'price' => 1899000.00,  'stock' => 11, 'category_id' => $categoryId, 'brand_id' => $brandSamsung, 'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'Apple AirPods 3',         'description' => 'TWS original Apple.',                           'price' => 3499000.00,  'stock' => 10, 'category_id' => $categoryId, 'brand_id' => $brandApple,   'image' => null, 'status' => 'active', 'is_featured' => true],
-            ['name' => 'Xiaomi Buds 4 Pro',       'description' => 'TWS dengan ANC.',                               'price' => 1599000.00,  'stock' => 14, 'category_id' => $categoryId, 'brand_id' => $brandXiaomi,  'image' => null, 'status' => 'active', 'is_featured' => false],
-            ['name' => 'Lenovo Wireless Mouse',   'description' => 'Mouse wireless simpel.',                        'price' => 199000.00,   'stock' => 30, 'category_id' => $categoryId, 'brand_id' => $brandLenovo,  'image' => null, 'status' => 'active', 'is_featured' => false],
         ];
 
         foreach ($products as &$product) {

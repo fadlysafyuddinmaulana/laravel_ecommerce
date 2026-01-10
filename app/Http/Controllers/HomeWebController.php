@@ -15,9 +15,9 @@ class HomeWebController extends Controller
     public function index()
     {
         // Get featured products for showcase (limit to 3)
-        $featuredProducts = Product::featured()
-            ->orderBy('created_at', 'desc')
-            ->limit(3)
+        // Hanya filter berdasarkan is_featured, tidak perlu is_visible
+        $featuredProducts = Product::where('is_featured', 1)
+            ->take(3)
             ->get();
 
         // Get new products
@@ -50,7 +50,7 @@ class HomeWebController extends Controller
      */
     public function shop(Request $request)
     {
-        $query = Product::query();
+        $query = Product::where('is_visible', 'show'); // Filter hanya produk yang visible
 
         // Filter by search
         if ($request->filled('search')) {
@@ -58,13 +58,15 @@ class HomeWebController extends Controller
             $query->where(function($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
                   ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('brand', 'like', "%{$search}%");
+                  ->orWhereHas('brand', function($brandQuery) use ($search) {
+                      $brandQuery->where('name', 'like', "%{$search}%");
+                  });
             });
         }
 
         // Filter by category
         if ($request->filled('category')) {
-            $query->where('category_id', $request->category);
+            $query->where('id_category', $request->category);
         }
 
         // Filter by price range

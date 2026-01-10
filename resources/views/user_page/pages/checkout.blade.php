@@ -59,7 +59,8 @@
             font-size: 0.875rem;
         }
 
-        .form-control:focus {
+        .form-control:focus,
+        .custom-select:focus {
             border-color: #80bdff;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
@@ -83,13 +84,45 @@
             margin-top: 1rem;
             margin-bottom: 1rem;
         }
+
+        /* Improved spacing for form fields */
+        .row {
+            gap: 0;
+        }
+
+        .row>[class*='col-'] {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem !important;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #495057;
+        }
+
+        label .text-danger {
+            color: #dc3545;
+            font-size: 0.875rem;
+        }
+
+        /* Disabled select styling */
+        select:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
     </style>
 @endpush
 
 @section('content')
     <div class="checkout-wrapper">
         <div class="container">
-            <div class="text-center mb-4">
+            <div class="text-center mb-5">
                 <h2 class="page-title">Checkout</h2>
             </div>
 
@@ -214,38 +247,42 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-5 mb-3">
-                                        <label for="country">Country</label>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="country">Country <span class="text-danger">*</span></label>
                                         <select class="custom-select d-block w-100" id="country" name="country" required>
-                                            <option value="">Choose...</option>
-                                            <option value="United States">United States</option>
-                                            <option value="Australia">Australia</option>
-                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="">Choose country...</option>
                                         </select>
                                         <div class="invalid-feedback">
-                                            Please select a valid country.
+                                            Please select a country.
                                         </div>
                                     </div>
                                     <div class="col-md-4 mb-3">
-                                        <label for="state">State</label>
-                                        <select class="custom-select d-block w-100" id="state" name="state"
-                                            required>
-                                            <option value="">Choose...</option>
-                                            <option value="NSW">NSW</option>
-                                            <option value="VIC">VIC</option>
-                                            <option value="QLD">QLD</option>
+                                        <label for="province">Province <span class="text-danger">*</span></label>
+                                        <select class="custom-select d-block w-100" id="province" name="province"
+                                            required disabled>
+                                            <option value="">Choose province...</option>
                                         </select>
                                         <div class="invalid-feedback">
-                                            Please provide a valid state.
+                                            Please select a province.
                                         </div>
                                     </div>
-                                    <div class="col-md-3 mb-3">
-                                        <label for="zip">Zip</label>
-                                        <input type="text" class="form-control" id="zip" name="zip"
-                                            placeholder="2753" required>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="city">City <span class="text-danger">*</span></label>
+                                        <select class="custom-select d-block w-100" id="city" name="city"
+                                            required disabled>
+                                            <option value="">Choose city...</option>
+                                        </select>
                                         <div class="invalid-feedback">
-                                            Zip code required.
+                                            Please select a city.
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="postal_code">Postal Code</label>
+                                        <input type="text" class="form-control" id="postal_code" name="postal_code"
+                                            placeholder="Automatically filled" readonly>
                                     </div>
                                 </div>
 
@@ -328,8 +365,8 @@
                             </div>
                         </div>
 
-                        <hr class="mb-4">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+                        <hr class="mb-5">
+                        <button class="btn btn-primary btn-lg btn-block mb-5" type="submit">Continue to checkout</button>
                     </form>
                 </div>
             </div>
@@ -377,5 +414,97 @@
                 e.target.value = value;
             });
         }
+
+        // Dynamic Address Dropdowns
+        const countrySelect = document.getElementById('country');
+        const provinceSelect = document.getElementById('province');
+        const citySelect = document.getElementById('city');
+        const postalCodeInput = document.getElementById('postal_code');
+
+        // Load countries on page load
+        fetch('/api/addresses/countries')
+            .then(response => response.json())
+            .then(countries => {
+                countries.forEach(country => {
+                    const option = document.createElement('option');
+                    option.value = country;
+                    option.textContent = country;
+                    countrySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error loading countries:', error));
+
+        // Load provinces when country changes
+        countrySelect.addEventListener('change', function() {
+            const country = this.value;
+
+            // Reset dependent dropdowns
+            provinceSelect.innerHTML = '<option value="">Choose province...</option>';
+            citySelect.innerHTML = '<option value="">Choose city...</option>';
+            postalCodeInput.value = '';
+
+            if (!country) {
+                provinceSelect.disabled = true;
+                citySelect.disabled = true;
+                return;
+            }
+
+            provinceSelect.disabled = true;
+            citySelect.disabled = true;
+
+            fetch(`/api/addresses/provinces/${encodeURIComponent(country)}`)
+                .then(response => response.json())
+                .then(provinces => {
+                    provinces.forEach(province => {
+                        const option = document.createElement('option');
+                        option.value = province;
+                        option.textContent = province;
+                        provinceSelect.appendChild(option);
+                    });
+                    provinceSelect.disabled = false;
+                })
+                .catch(error => console.error('Error loading provinces:', error));
+        });
+
+        // Load cities when province changes
+        provinceSelect.addEventListener('change', function() {
+            const country = countrySelect.value;
+            const province = this.value;
+
+            // Reset dependent dropdowns
+            citySelect.innerHTML = '<option value="">Choose city...</option>';
+            postalCodeInput.value = '';
+
+            if (!province) {
+                citySelect.disabled = true;
+                return;
+            }
+
+            citySelect.disabled = true;
+
+            fetch(`/api/addresses/cities/${encodeURIComponent(country)}/${encodeURIComponent(province)}`)
+                .then(response => response.json())
+                .then(cities => {
+                    cities.forEach(cityData => {
+                        const option = document.createElement('option');
+                        option.value = cityData.city;
+                        option.textContent = cityData.city;
+                        option.dataset.postalCode = cityData.postal_code;
+                        citySelect.appendChild(option);
+                    });
+                    citySelect.disabled = false;
+                })
+                .catch(error => console.error('Error loading cities:', error));
+        });
+
+        // Auto-fill postal code when city changes
+        citySelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            if (selectedOption && selectedOption.dataset.postalCode) {
+                postalCodeInput.value = selectedOption.dataset.postalCode;
+            } else {
+                postalCodeInput.value = '';
+            }
+        });
     </script>
 @endpush

@@ -1,0 +1,178 @@
+/* Orders Index Page - User Dashboard */
+.orders-section {
+  background-color: #f8f9fa;
+  padding: 60px 0;
+  min-height: 80vh;
+}
+
+.page-header {
+  margin-bottom: 40px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #2f2f2f;
+}
+
+.orders-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+}
+
+.filter-section {
+  margin-bottom: 25px;
+}
+
+.status-badge {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Order Success Page */
+.success-section {
+  background-color: #f8f9fa;
+  padding: 80px 0;
+  min-height: 80vh;
+}
+
+.success-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 50px;
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.success-icon {
+  width: 100px;
+  height: 100px;
+  background-color: #d1e7dd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+}
+
+.success-icon i {
+  font-size: 50px;
+  color: #0f5132;
+}
+
+.success-card h1 {
+  color: #0f5132;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.success-card .order-number {
+  font-size: 1.25rem;
+  color: #6c757d;
+  margin-bottom: 30px;
+}
+
+/* Order Track Page */
+.track-section {
+  background-color: #f8f9fa;
+  padding: 80px 0;
+  min-height: 80vh;
+}
+
+.track-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.track-form {
+  max-width: 500px;
+  margin: 0 auto 40px;
+}
+
+.track-input-group {
+  position: relative;
+}
+
+.track-input-group input {
+  padding-right: 120px;
+  height: 50px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+}
+
+.track-input-group input:focus {
+  border-color: #3b5d50;
+  box-shadow: 0 0 0 0.2rem rgba(59, 93, 80, 0.25);
+}
+
+.track-input-group button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Order Details Page */
+.order-details-section {
+  background-color: #f8f9fa;
+  padding: 60px 0;
+  min-height: 80vh;
+}
+
+.order-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+.order-header {
+  border-bottom: 2px solid #3b5d50;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.order-header h2 {
+  color: #2f2f2f;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.order-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.info-item {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.info-item label {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.info-item .value {
+  color: #2f2f2f;
+  font-size: 1rem;
+}

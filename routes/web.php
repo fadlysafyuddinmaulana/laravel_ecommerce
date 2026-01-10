@@ -16,6 +16,7 @@ use App\Http\Controllers\CheckoutWebController;
 use App\Http\Controllers\CustomerWebController;
 use App\Http\Controllers\TestimonialWebController;
 use App\Http\Controllers\PageContentWebController;
+use App\Http\Controllers\AdminOrderWebController;
 
 // halaman notice
 Route::get('/email/verify', function () {
@@ -92,12 +93,24 @@ Route::post('/cart/clear', [CartWebController::class, 'clear'])->name('cart.clea
 Route::get('/checkout', [CheckoutWebController::class, 'index'])->name('checkout');
 Route::post('/checkout/process', [CheckoutWebController::class, 'process'])->name('checkout.process');
 
+// Order Routes (User Area)
+Route::get('/orders', [App\Http\Controllers\OrderWebController::class, 'index'])->name('orders.index');
+Route::get('/orders/track', [App\Http\Controllers\OrderWebController::class, 'track'])->name('orders.track');
+Route::get('/orders/success/{orderNumber}', [App\Http\Controllers\OrderWebController::class, 'success'])->name('orders.success');
+Route::get('/orders/{orderNumber}', [App\Http\Controllers\OrderWebController::class, 'show'])->name('orders.show');
+
 // Resource Routes
 Route::get('/products', [ProductWebController::class, 'index'])->name('products.index');
 Route::get('/products/create', [ProductWebController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductWebController::class, 'store'])->name('products.store');
+// Route dengan path spesifik HARUS sebelum route dengan parameter {product}
+Route::post('/products/bulk-delete', [ProductWebController::class, 'bulkDelete'])->name('products.bulk-delete');
+Route::post('/products/bulk-toggle-visibility', [ProductWebController::class, 'bulkToggleVisibility'])->name('products.bulk-toggle-visibility');
+Route::post('/products/bulk-toggle-featured', [ProductWebController::class, 'bulkToggleFeatured'])->name('products.bulk-toggle-featured');
 Route::get('/products/{product}/edit', [ProductWebController::class, 'edit'])->name('products.edit');
 Route::put('/products/{product}', [ProductWebController::class, 'update'])->name('products.update');
+Route::patch('/products/{product}/toggle-visibility', [ProductWebController::class, 'toggleVisibility'])->name('products.toggle-visibility');
+Route::patch('/products/{product}/toggle-featured', [ProductWebController::class, 'toggleFeatured'])->name('products.toggle-featured');
 Route::delete('/products/{product}', [ProductWebController::class, 'destroy'])->name('products.destroy');
 
 // Category Routes
@@ -148,7 +161,6 @@ Route::put('/positions/{position}', [PositionsWebController::class, 'update'])->
 Route::delete('/positions/{position}', [PositionsWebController::class, 'destroy'])->name('positions.destroy');
 
 // Bulk delete routes
-Route::post('/products/bulk-delete', [ProductWebController::class, 'bulkDelete'])->name('products.bulk-delete');
 Route::post('/categories/bulk-delete', [CategoryWebController::class, 'bulkDelete'])->name('categories.bulk-delete');
 Route::post('/brands/bulk-delete', [BrandWebController::class, 'bulkDelete'])->name('brands.bulk-delete');
 Route::post('/employees/bulk-delete', [EmployeeWebController::class, 'bulkDelete'])->name('employees.bulk-delete');
@@ -169,4 +181,12 @@ Route::get('/testimonials/create', [TestimonialWebController::class, 'create'])-
 Route::post('/testimonials', [TestimonialWebController::class, 'store'])->name('testimonials.store');
 Route::get('/testimonials/{testimonial}/edit', [TestimonialWebController::class, 'edit'])->name('testimonials.edit');
 Route::put('/testimonials/{testimonial}', [TestimonialWebController::class, 'update'])->name('testimonials.update');
+Route::patch('/testimonials/{testimonial}/toggle-active', [TestimonialWebController::class, 'toggleActive'])->name('testimonials.toggle-active');
 Route::delete('/testimonials/{testimonial}', [TestimonialWebController::class, 'destroy'])->name('testimonials.destroy');
+
+// Admin Order Routes
+Route::get('/admin/orders', [AdminOrderWebController::class, 'index'])->name('admin.orders.index');
+Route::get('/admin/orders/history', [AdminOrderWebController::class, 'history'])->name('admin.orders.history');
+Route::get('/admin/orders/{orderNumber}', [AdminOrderWebController::class, 'show'])->name('admin.orders.show');
+Route::patch('/admin/orders/{orderNumber}/status', [AdminOrderWebController::class, 'updateStatus'])->name('admin.orders.updateStatus');
+Route::delete('/admin/orders/{orderNumber}', [AdminOrderWebController::class, 'destroy'])->name('admin.orders.destroy');

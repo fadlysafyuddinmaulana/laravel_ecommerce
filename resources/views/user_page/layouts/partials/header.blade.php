@@ -17,17 +17,36 @@
                     <a class="nav-link" href="{{ route('shop') }}">Shop</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">About us</a>
+                    <a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}"
+                        href="{{ route('about') }}">About us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}" href="{{ route('services') }}">Services</a>
+                    <a class="nav-link {{ request()->routeIs('services') ? 'active' : '' }}"
+                        href="{{ route('services') }}">Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}" href="{{ route('blog') }}">Blog</a>
+                    <a class="nav-link {{ request()->routeIs('blog') ? 'active' : '' }}"
+                        href="{{ route('blog') }}">Blog</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Contact
+                    <a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
+                        href="{{ route('contact') }}">Contact
                         us</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{ request()->routeIs('orders.*') ? 'active' : '' }}"
+                        href="#" id="ordersDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Orders
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="ordersDropdown">
+                        <li><a class="dropdown-item" href="{{ route('orders.index') }}"><i
+                                    class="fas fa-list me-2"></i>My Orders</a></li>
+                        <li><a class="dropdown-item" href="{{ route('orders.index') }}?status=pending"><i
+                                    class="fas fa-clock me-2"></i>Pending Orders</a></li>
+                        <li><a class="dropdown-item" href="{{ route('orders.index') }}?status=completed"><i
+                                    class="fas fa-check-circle me-2"></i>Completed Orders</a></li>
+                    </ul>
                 </li>
             </ul>
 
